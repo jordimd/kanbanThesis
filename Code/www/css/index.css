@@ -1,0 +1,37 @@
+
+#board{
+	width:1200px;
+	border:solid;
+	
+}
+
+
+
+table.kanboard{
+	border-collapse:collapse;
+	vertical-align:text-top;
+	border-spacing: 0;
+}
+
+tbody, thead tr { display: block; }
+
+tbody{
+	vertical-align:text-top;
+	height:500px;
+	overflow-y: auto;
+	overflow-x: auto;
+}
+
+tbody td, thead th {
+    width: 350px;
+}
+
+
+
+
+#task{
+	height:100px;
+	width:250px;
+	margin-top:20px;
+	border:solid;
+}

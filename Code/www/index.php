@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Untitled Document</title>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
 <link href="css/index.css" rel="stylesheet" type="text/css">
         
 	<?php
@@ -18,7 +18,10 @@
 	
     <body>
     
-		<table width="200" border="1" align="center" cellspacing="0">
+    	<div id="board">
+    
+		<table class="kanboard" border="1" align="center">
+        	<thead>
           <tr>
           
           <?php 
@@ -31,13 +34,16 @@
 
 				$row = mysql_fetch_array($query);?>
               
-              <th scope="col"><?php echo $row['name']?></th>
+              <th><h2><?php echo $row['name']?></h2></th>
              	<?php 
 			} ?>
             
           </tr>
+          </thead>
+          
+          <tbody>
           <tr>
-		  <?php
+		  <?php	
 					
 			$query = mysql_query("SELECT * FROM state");
 			
@@ -45,7 +51,9 @@
 
 				$row = mysql_fetch_array($query);
 				
-				?><td><?php 
+				?><td align="center">
+				
+				<?php 
 				
 				$state_name=$row['idstate'];
 				
@@ -56,10 +64,11 @@
 				for($j=0;$j<$lines;$j++){
 	
 					$row2 = mysql_fetch_array($query2);?>
-					
-					
-					<div>
-					<h1><?php echo $row2['name']?></h1>
+
+					<div id="task">
+                    
+						<p><?php echo $row2['name']?></p>
+                  	
 					
 					</div>
 					<?php 
@@ -70,8 +79,9 @@
 			} ?>
 
           </tr>
+          </tbody>
         </table>
-        
+        </div>
 
         <?php
 		mysql_close($con);
