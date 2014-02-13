@@ -6,7 +6,14 @@
         	die('Could not connect: ' . mysql_error());
         }
         mysql_select_db("kanban_DB", $con);
-		
+    ?>
+    
+   	
+    
+		<table class="kanboard" border="0">
+          <tr>
+          
+          <?php 
 			
 			$query = mysql_query("SELECT * FROM state ORDER BY idstate");
 	 		
@@ -16,14 +23,14 @@
 
 				$row = mysql_fetch_array($query);?>
               
-              	<div id="kanboard" align="center">
+              <th class="cellClass" align="center">
               		<div id="laneName">
                     
                     	<p><?php echo $row['name']?></p>
                     
             		</div>
                     
-                    <div id="hline">
+                    <div id="line">
                     
                     
                     </div>
@@ -53,14 +60,14 @@
                         
                         
                  	</div>
-                    
-                  </div>
               
-              
+              </th>
              	<?php 
 			} ?>
             
-
+          </tr>
+          
+        </table>
         
 
         <?php

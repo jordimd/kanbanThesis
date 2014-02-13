@@ -1,40 +1,48 @@
 body, head{
-	overflow:auto;
+	width:100%;
+	
 }
 
 #board{
 	position:absolute;
 	width:80%;
 	height:80%;
-	overflow-y: hidden;
+	overflow:auto;
 	margin:0 10%;
-	border:solid;
+	overflow-y: hidden;
 	white-space: nowrap;
-	display:block;
+	
+	
 }
 
-#kanboard{
-	position:relative;
-	width:300px;
-	padding-bottom:20px;
-	float:left;
-	border-right:solid;
+table.kanboard{
+	border-collapse:collapse;
+	border-top:solid;
+	border-bottom:solid;
+	border-left:solid;
 	
+}
+
+.cellClass {
+	vertical-align:text-top;
+	border-right:solid;
+	padding:0;
+	padding-bottom:20px;
 }
 
 #laneName{
 	position:relative;
 }
-#hline{
+#line{
 	position:relative;
 	border-top:solid;
+	
 }
 
-
 #lane{
-	height:509px;
+	height:503px;
 	overflow:auto;
-	
+	width:380px;
 }
 #task{
 	height:100px;
