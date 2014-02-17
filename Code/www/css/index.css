@@ -1,5 +1,5 @@
 body, head{
-	width:100%;
+	width:auto;
 	
 }
 
@@ -19,6 +19,7 @@ body, head{
 	overflow-y: hidden;
 	white-space: nowrap;
 	top:100px;
+	border:none;
 	
 	
 }
@@ -54,14 +55,15 @@ table.kanboard{
 	
 }
 
-#lane{
+.laneClass{
 	height:478px;
 	overflow:auto;
 	width:380px;
 	padding-bottom:20px;
 
 }
-#task{
+
+.taskClass{
 	height:50px;
 	width:65%;
 	margin-top:20px;

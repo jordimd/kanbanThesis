@@ -4,7 +4,10 @@
 <meta charset="UTF-8">
 <title>Board</title>
 <link href="css/index.css" rel="stylesheet" type="text/css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
 
 <script>
@@ -33,6 +36,38 @@ function showNewTask(id){
 }
 </script>
 
+<script>
+$(document).ready(function() {
+
+    $('.laneClass').sortable({
+    	connectWith: '.laneClass'
+		
+	});
+	
+	$('.laneClass').sortable({
+		stop: function (event, ui){
+			
+			var idtask = ui.item.attr('id');
+			var idstate = ui.item.parent().attr('id');
+
+			$.post("moveTask.php",
+			{
+			  idtask:idtask,
+			  idstate:idstate,
+			  moveTaskLane:"ok"
+			},
+			function(){
+			  window.location.replace("index.php");
+			});
+		}
+		
+	});
+
+ });
+ 
+</script>
+
+
 
 <?php
         $con=mysql_connect("localhost", "root", "kanban");  
@@ -47,7 +82,6 @@ function showNewTask(id){
 
 <body>
 
-		
 		<table class="kanboard" border="0">
           <tr>
           
@@ -76,7 +110,7 @@ function showNewTask(id){
 
                     </div>
                  
-                	<div id="lane" dropzone="move">
+                	<div id="<?php echo $row['idstate']?>" class="laneClass">
                     
                                                     
                     <div id="newTask<?php echo $row['idstate']?>" class="taskInfo" style="	top:0px; border-top:solid;">
@@ -111,13 +145,13 @@ function showNewTask(id){
 				
 								$row2 = mysql_fetch_array($query2);?>
 
-								<div id="task" draggable="true" style="background-color: 
+								<div id="<?php echo $row2['idtask']?>" class="taskClass" style="background-color: 
 								
-								<?php switch ($row2['priority']){
-									case 1: ?> #FFFF99 <?php break;
-									case 2: ?> #CCFF99 <?php break;
-									case 3: ?> #FF9999 <?php break;
-								} ?>">
+									<?php switch ($row2['priority']){
+                                        case 1: ?> #FFFF99 <?php break;
+                                        case 2: ?> #CCFF99 <?php break;
+                                        case 3: ?> #FF9999 <?php break;
+                                    } ?>">
 								
 									<p><?php echo $row2['name']?> 
                                 	<button class="buttonInfo" onclick="showInfo(<?php echo $row2['idtask']?>)">Info</button></p>

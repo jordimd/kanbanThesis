@@ -1,4 +1,5 @@
 <?php
+
 	$con=mysql_connect("localhost", "root", "kanban");  
 	// Check connection
 	if (!$con){
@@ -22,6 +23,7 @@
 	if($deleteLane)
 		mysql_query("DELETE FROM state WHERE idstate='$idstate'");
 		
+
 	mysql_close($con);
 			
 	header("Location: index.php");
