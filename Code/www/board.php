@@ -38,7 +38,7 @@ function showNewTask(id){
 
 <script>
 $(document).ready(function() {
-
+/*
     $('.laneClass').sortable({
     	connectWith: '.laneClass'
 		
@@ -49,22 +49,23 @@ $(document).ready(function() {
 			
 			var idtask = ui.item.attr('id');
 			var idstate = ui.item.parent().attr('id');
-
+			
 			$.post("moveTask.php",
 			{
 			  idtask:idtask,
 			  idstate:idstate,
 			  moveTaskLane:"ok"
 			},
-			function(){
-			  window.location.replace("index.php");
+			function(data,status){
+				alert("Data: " + data + "\nStatus: " + status);
+				window.location.replace("index.php");
 			});
 		}
 		
 	});
-
+ */
  });
- 
+
 </script>
 
 
