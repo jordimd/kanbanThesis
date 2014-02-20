@@ -24,6 +24,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `kanban_DB`.`state` (
   `idstate` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
+  `pos` INT NOT NULL,
   PRIMARY KEY (`idstate`),
   UNIQUE INDEX `idstate_UNIQUE` (`idstate` ASC))
 ENGINE = InnoDB;
