@@ -20,6 +20,17 @@ function alertTasks(){
 	alert("Are you sure to delete the tasks inside?")	
 }
 
+function showEdit(id) {
+	
+	if(document.getElementById('editState_'+id).style.display == "block"){
+   		document.getElementById('editState_'+id).style.display = "none";
+	}
+	else
+		if(document.getElementById('editState_'+id).style.display = "none"){
+			document.getElementById('editState_'+id).style.display = "block";
+		}
+}
+
 $(document).ready(function () {
 	$("#sortable").sortable({
 		stop: function () {
@@ -59,12 +70,23 @@ $(document).ready(function () {
 
 			$row = mysql_fetch_array($query);?>
             
-    		<div id="item-<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
+    		<div id="item_<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
             <form method="post" action="editBoard.php" style="float:right;">
             <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-            <input type="submit" value="Modify" name="updateState">
             <input type="submit" onClick="alertTasks()" value="Delete" name="deleteState">
             </form>
+            <button class="buttonInfo" onClick="showEdit(<? echo $row['idstate']?>)">Edit</button>
+            
+            	<div id="editState_<? echo $row['idstate']?>" class="stateEdit">
+                
+                <form method="post" action="editBoard.php">
+                <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
+                Name: <input type="text" name="name" value="<? echo $row['name']?>">
+                <input type="submit" class="buttonInfo" value="Modify" name="updateState">
+                </form>
+
+               </div>
+            
            </div>
  
         <? } ?>

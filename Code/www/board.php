@@ -10,8 +10,8 @@ function showInfo(id) {
 			document.getElementById('info_'+id).style.display = "block";
 			document.getElementById('task_'+id).style.marginBottom = "190px";
 		}
-	
 }
+
 function edit(id) {
 			
 	document.getElementById('info_'+id).style.display = "none";

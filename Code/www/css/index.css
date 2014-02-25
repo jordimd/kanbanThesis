@@ -94,3 +94,11 @@ body, head{
 	border:solid;
 	width:300px;
 }
+
+.stateEdit{
+	position:relative;
+	width:100%;
+	margin-top:15px;
+	display:none;
+	text-align:left;	
+}

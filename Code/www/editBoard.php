@@ -18,7 +18,10 @@ include 'connectionDB.php';
 	if($deleteState){
 		mysql_query("DELETE FROM task WHERE idstate='$idstate'");
 		mysql_query("DELETE FROM state WHERE idstate='$idstate'");
-		
+	}
+	
+	if($updateState){
+		mysql_query("UPDATE state SET name='$name' WHERE idstate='$idstate'");
 	}
 		
 	if($moveTaskLane=="ok")
