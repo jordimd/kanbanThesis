@@ -2,10 +2,12 @@ body, head{
 	width:auto;
 }
 
-#modLane{
-	padding-left: 20px;
+#modState{
+	padding:20px;
 	display:none;
-	border:solid;
+	width:auto;
+	height:auto;
+	max-height:70%;
 }
 
 .board{
@@ -69,11 +71,9 @@ body, head{
 	display:block;
 }
 
-
 .buttonInfo{
 	float:right;
 }
-
 
 .taskInfo{
 	position:relative;
@@ -86,4 +86,11 @@ body, head{
 	display:none;
 	text-align:left;
 	margin-left:-23px;
+}
+
+.listClass{
+	padding:15px;
+	margin-top:10px;
+	border:solid;
+	width:300px;
 }

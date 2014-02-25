@@ -24,7 +24,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `kanban_DB`.`state` (
   `idstate` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `pos` INT NOT NULL,
+  `pos` INT NULL,
   PRIMARY KEY (`idstate`),
   UNIQUE INDEX `idstate_UNIQUE` (`idstate` ASC))
 ENGINE = InnoDB;
@@ -35,6 +35,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kanban_DB`.`task` (
   `idtask` INT NOT NULL AUTO_INCREMENT,
+  `pos` INT NULL,
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NULL,
   `priority` INT NOT NULL,
@@ -78,3 +79,15 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+-- -----------------------------------------------------
+-- Data for table `kanban_DB`.`state`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `kanban_DB`;
+INSERT INTO `kanban_DB`.`state` (`idstate`, `name`, `pos`) VALUES (NULL, 'TO DO', 1);
+INSERT INTO `kanban_DB`.`state` (`idstate`, `name`, `pos`) VALUES (NULL, 'DOING', 2);
+INSERT INTO `kanban_DB`.`state` (`idstate`, `name`, `pos`) VALUES (NULL, 'DONE', 3);
+
+COMMIT;
+

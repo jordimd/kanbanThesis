@@ -5,25 +5,29 @@
 <title>Kanban Board</title>
 <link href="css/index.css" rel="stylesheet" type="text/css">
 
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
 
 <script>
 function change(){
-	$('#modLane').toggle();
+	$('#modState').toggle();
 	$('#idBoard').toggle();
 }
 
+function alertTasks(){
+	alert("Are you sure to delete the tasks inside?")	
+}
+
 $(document).ready(function () {
-	$("ul#sortable").sortable({
+	$("#sortable").sortable({
 		stop: function () {
 				
 			var order = $(this).sortable("serialize");
-			var test
 			$.post("editBoard.php", order, function(){});
 		}
-	});
+	}).disableSelection();
 });
 
 </script>
@@ -34,25 +38,18 @@ $(document).ready(function () {
 <button onClick="change()">Toggle</button>
 
 <div id="idBoard" class="board">
-	<? include('board.php'); ?>
+	<? include 'board.php' ?>
 </div>
 
-<div id="modLane" class="board">
-	<form action="editBoard.php" method="post" name="newLane">
+<div id="modState" class="board">
+	<form action="editBoard.php" method="post">
 	<p>New State: <input type="text" name="name">
-    <input type="submit" value="Add" name="addLane"></p>
+    <input type="submit" value="Add" name="addState"></p>
     </form>
     
+    <div id="sortable" style="margin-top:40px">
     
-    <ul id="sortable">
-    
-    <?
-        $con=mysql_connect("localhost", "root", "kanban");  
-        // Check connection
-        if (!$con){
-        	die('Could not connect: ' . mysql_error());
-        }
-        mysql_select_db("kanban_DB", $con);
+    <? include 'connectionDB.php';
 		
 		$query = mysql_query("SELECT * FROM state ORDER BY pos");
 		
@@ -62,20 +59,19 @@ $(document).ready(function () {
 
 			$row = mysql_fetch_array($query);?>
             
-    		<li id="item-<? echo $row['idstate']?>"><? echo $row['name']?></li>
+    		<div id="item-<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
+            <form method="post" action="editBoard.php" style="float:right;">
+            <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
+            <input type="submit" value="Modify" name="updateState">
+            <input type="submit" onClick="alertTasks()" value="Delete" name="deleteState">
+            </form>
+           </div>
  
         <? } ?>
     
-	</ul>
-    	
-        
-        
-    
+	</div>
+   
 </div>
-
-
-
-
 
 </body>
 </html>

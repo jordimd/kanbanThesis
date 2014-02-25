@@ -1,70 +1,60 @@
 <script>
 function showInfo(id) {
 	
-	if(document.getElementById('info'+id).style.display == "block"){
-   		document.getElementById('info'+id).style.display = "none";
-		document.getElementById('task'+id).style.marginBottom = "0px";
+	if(document.getElementById('info_'+id).style.display == "block"){
+   		document.getElementById('info_'+id).style.display = "none";
+		document.getElementById('task_'+id).style.marginBottom = "0px";
 	}
 	else
-		if(document.getElementById('edit'+id).style.display = "none"){
-			document.getElementById('info'+id).style.display = "block";
-			document.getElementById('task'+id).style.marginBottom = "190px";
+		if(document.getElementById('edit_'+id).style.display = "none"){
+			document.getElementById('info_'+id).style.display = "block";
+			document.getElementById('task_'+id).style.marginBottom = "190px";
 		}
 	
 }
 function edit(id) {
 			
-	document.getElementById('info'+id).style.display = "none";
-	document.getElementById('edit'+id).style.display = "block";
-	document.getElementById('task'+id).style.marginBottom = "326px";
+	document.getElementById('info_'+id).style.display = "none";
+	document.getElementById('edit_'+id).style.display = "block";
+	document.getElementById('task_'+id).style.marginBottom = "326px";
 }
 
 function showNewTask(id){
 	
-	if(document.getElementById('newTask'+id).style.display == "block")
-   		document.getElementById('newTask'+id).style.display = "none";
+	if(document.getElementById('newTask_'+id).style.display == "block")
+   		document.getElementById('newTask_'+id).style.display = "none";
 	else
-		if(document.getElementById('newTask'+id).style.display = "none")
-			document.getElementById('newTask'+id).style.display = "block";
+		if(document.getElementById('newTask_'+id).style.display = "none")
+			document.getElementById('newTask_'+id).style.display = "block";
 }
 
 $(document).ready(function() {
 
-	
 	$('.laneClass').sortable({
 		
 		connectWith: '.laneClass',
 		stop: function (event, ui){
-
+			
+			var order = $(this).sortable("serialize");
+			$.post("editBoard.php", order, function(){});
+			
 			var idtask = ui.item.attr('id');
 			var idstate = ui.item.parent().attr('id');
-			//alert("New position: " + ui.item.index());
-			
+
 			$.post("editBoard.php",
 			{
-			  idtask:idtask.split('task')[1],
-			  idstate:idstate.split('state')[1],
+			  idtask:idtask.split('task_')[1],
+			  idstate:idstate.split('state_')[1],
 			  moveTaskLane:"ok"
 			},
 			function(data,status){
 			  //window.location.replace("index.php");
-			});
+			}); 
 		}
-	});
+	}).disableSelection();
 });
  
 </script>
-
-
-
-<?
-        $con=mysql_connect("localhost", "root", "kanban");  
-        // Check connection
-        if (!$con){
-        	die('Could not connect: ' . mysql_error());
-        }
-        mysql_select_db("kanban_DB", $con);
-    ?>
     
 </head>
 
@@ -73,7 +63,8 @@ $(document).ready(function() {
 		<table class="kanboard" border="0">
           <tr>
           
-          <?
+          <? include 'connectionDB.php';
+		  
 			$query = mysql_query("SELECT * FROM state ORDER BY pos");
 	 		
 			$columns=mysql_num_rows($query); //numero de columnas
@@ -97,10 +88,10 @@ $(document).ready(function() {
 
                     </div>
                  
-                	<div id="state<? echo $row['idstate']?>" class="laneClass">
+                	<div id="state_<? echo $row['idstate']?>" class="laneClass">
                     
                                                     
-                    <div id="newTask<? echo $row['idstate']?>" class="taskInfo" 
+                    <div id="newTask_<? echo $row['idstate']?>" class="taskInfo" 
                     style="border-top:solid; width:65%; margin-left:0px;">
                     
                         <form name="formTask" method="post" action="editBoard.php">
@@ -125,7 +116,7 @@ $(document).ready(function() {
 				
 							$state_id=$row['idstate'];
 							
-							$query2 = mysql_query("SELECT * FROM task WHERE idstate='$state_id' ORDER BY priority, end");
+							$query2 = mysql_query("SELECT * FROM task WHERE idstate='$state_id' ORDER BY pos, end, priority");
 							
 							$lines=mysql_num_rows($query2);
 							
@@ -133,7 +124,7 @@ $(document).ready(function() {
 				
 								$row2 = mysql_fetch_array($query2);?>
 
-								<div id="task<? echo $row2['idtask']?>" class="taskClass" style="background-color: 
+								<div id="task_<? echo $row2['idtask']?>" class="taskClass" style="background-color: 
 								
 									<? switch ($row2['priority']){
                                         case 1: ?> #FFFF99 <? break;
@@ -145,7 +136,7 @@ $(document).ready(function() {
                                 	<button class="buttonInfo" onclick="showInfo(<? echo $row2['idtask']?>)">Info</button></p>
 
 								
-                                 <div id="info<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
+                                 <div id="info_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
                                     
                                     <? switch ($row2['priority']){
                                         case 1: ?> #FFFF99 <? break;
@@ -161,7 +152,7 @@ $(document).ready(function() {
                                     <button class="buttonInfo" onClick="edit(<? echo $row2['idtask']?>)">Edit</button></p>
                                     </div>
                                     
-                                 <div id="edit<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
+                                 <div id="edit_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
                                     
                                     <? switch ($row2['priority']){
                                         case 1: ?> #FFFF99 <? break;
@@ -184,7 +175,7 @@ $(document).ready(function() {
                                     <p>End: <input type="date" name="end" value="<? echo $row2['end']?>"></p>
                                     <p><input type="submit" value="Delete" name="deleteTask">
                                     <input type="submit" class="buttonInfo" value="Modify" name="updateTask"></p>
-                                    </form>    
+                                    </form>
     
                                     </div>
                                     

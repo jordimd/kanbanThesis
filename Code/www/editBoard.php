@@ -1,11 +1,6 @@
 <?php
 
-	$con=mysql_connect("localhost", "root", "kanban");  
-	// Check connection
-	if (!$con){
-		die('Could not connect: ' . mysql_error());
-	}
-	mysql_select_db("kanban_DB", $con);
+include 'connectionDB.php';
 	
 	extract($_REQUEST);
 
@@ -17,11 +12,14 @@
 	}
 	if($updateTask)
 		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner', start='$start', end='$end' WHERE idtask='$idtask'");
-	if($addLane)
-		mysql_query("INSERT INTO state (name) VALUES ('$name')");
+	if($addState)
+		mysql_query("INSERT INTO state (name, pos) VALUES ('$name',1000)");
 	
-	if($deleteLane)
+	if($deleteState){
+		mysql_query("DELETE FROM task WHERE idstate='$idstate'");
 		mysql_query("DELETE FROM state WHERE idstate='$idstate'");
+		
+	}
 		
 	if($moveTaskLane=="ok")
 		mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
@@ -35,7 +33,18 @@
 			mysql_query("UPDATE state SET pos='$i' WHERE idstate='$key'");
 			$i++;
 		}
-	}		
+	}	
+	
+	if($_POST['task']){
+
+		$i = 1;
+			
+		foreach ($_POST['task'] as $key) {
+			
+			mysql_query("UPDATE task SET pos='$i' WHERE idtask='$key'");
+			$i++;
+		}
+	}	
 
 	mysql_close($con);
 			
