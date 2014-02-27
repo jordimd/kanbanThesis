@@ -1,99 +1,54 @@
+<? include 'session.php'?>
+
 <!doctype html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Kanban Board</title>
-<link href="css/index.css" rel="stylesheet" type="text/css">
-
+<link href="css/index.css" rel="stylesheet" type="text/css"/> 
+<link href="css/board.css" rel="stylesheet" type="text/css"/> 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
+<script src="js/scripts.js" type="text/javascript"></script>
 
-<script>
-function change(){
-	$('#modState').toggle();
-	$('#idBoard').toggle();
-}
 
-function alertTasks(){
-	alert("Are you sure to delete the tasks inside?")	
-}
-
-function showEdit(id) {
-	
-	if(document.getElementById('editState_'+id).style.display == "block"){
-   		document.getElementById('editState_'+id).style.display = "none";
-	}
-	else
-		if(document.getElementById('editState_'+id).style.display = "none"){
-			document.getElementById('editState_'+id).style.display = "block";
-		}
-}
-
-$(document).ready(function () {
-	$("#sortable").sortable({
-		stop: function () {
-				
-			var order = $(this).sortable("serialize");
-			$.post("editBoard.php", order, function(){});
-		}
-	}).disableSelection();
-});
-
-</script>
 
 </head>
 
 <body>
-<button onClick="change()">Toggle</button>
 
-<div id="idBoard" class="board">
-	<? include 'board.php' ?>
+<?
+	if($_SESSION['logged']){
+		
+		 include 'main.php';
+	}
+	else{ ?>
+		
+        <div id="login">
+        <form action="login.php" method="post">
+        <p>User: <input type="email" name="mail" required> </p>
+        <p>Password: <input type="password" name="password" title="Enter a password between 4 to 20 characters" pattern="\S{4,20}" required></p>
+        <input type="submit" value="Login" name="Login">
+        </form>        
+        <button onClick="register()">Register</button>
+        
+		</div>
+        
+        <div id="register">
+    	 <form name="formRegister" action="register.php" method="post" onSubmit="return validateForm()">
+        <p><input type="text" name="name" placeholder="Name" title="The name must be between 2 to 15 characters" pattern="\S{3,15}" required> </p>
+        <p><input type="email" name="mail" placeholder="Email" required> </p>
+        <p><input type="password" name="password" placeholder="Password" title="Enter a password between 4 to 20 characters" pattern="\S{4,20}" required></p>
+        <p><input type="password" name="password2" placeholder="Repeat the password" title="Repeat the previous password" required></p>
+        <p><input type="submit" value="Register"><button onClick="cancel()">Cancel</button></p>
+        </form>
+    
 </div>
-
-<div id="modState" class="board">
-	<form action="editBoard.php" method="post">
-	<p>New State: <input type="text" name="name">
-    <input type="submit" value="Add" name="addState"></p>
-    </form>
-    
-    <div id="sortable" style="margin-top:40px">
-    
-    <? include 'connectionDB.php';
 		
-		$query = mysql_query("SELECT * FROM state ORDER BY pos");
-		
-		$columns=mysql_num_rows($query); //numero de columnas
-		
-		for($i=0;$i<$columns;$i++){
-
-			$row = mysql_fetch_array($query);?>
-            
-    		<div id="item_<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
-            <form method="post" action="editBoard.php" style="float:right;">
-            <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-            <input type="submit" onClick="alertTasks()" value="Delete" name="deleteState">
-            </form>
-            <button class="buttonInfo" onClick="showEdit(<? echo $row['idstate']?>)">Edit</button>
-            
-            	<div id="editState_<? echo $row['idstate']?>" class="stateEdit">
-                
-                <form method="post" action="editBoard.php">
-                <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-                Name: <input type="text" name="name" value="<? echo $row['name']?>">
-                <input type="submit" class="buttonInfo" value="Modify" name="updateState">
-                </form>
-
-               </div>
-            
-           </div>
- 
-        <? } ?>
+	<? }?>
     
-	</div>
-   
-</div>
 
 </body>
 </html>

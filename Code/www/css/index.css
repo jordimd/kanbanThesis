@@ -1,5 +1,21 @@
-body, head{
-	width:auto;
+@charset "UTF-8";
+/* CSS Document */
+
+#login{
+	position:fixed;
+	border:solid;
+	margin:20% 40%;
+	padding:10px;	
+	display:block;
+}
+
+#register{
+	position:fixed;
+	border:solid;
+	margin:15% 43%;
+	padding-left:10px;
+	padding-right:10px;
+	display:none;
 }
 
 #modState{
@@ -10,89 +26,12 @@ body, head{
 	max-height:70%;
 }
 
-.board{
-	position:absolute;
-	width:80%;
-	height:80%;
-	overflow:auto;
-	margin:0 10%;
-	top:100px;
-	border:none;
-	
-}
-
-.kanboard{
-	border-collapse:collapse;
-	border-top:solid;
-	border-bottom:solid;
-	border-left:solid;
-	
-}
-
-.kanboard th{
-	vertical-align:text-top;
-	border-right:solid;
-	padding:0;
-}
-
-#laneName{
-	position:relative;
-}
-#line{
-	border-top:solid;
-}
-
-#addTask{
-	margin-top:-3px;
-	margin-right:-3px;
-	height:22px;
-	width:29px;
-	float:right;
-	border:solid;
-	
-}
-
-.laneClass{
-	height:478px;
-	overflow:auto;
-	width:380px;
-	padding-bottom:20px;
-
-}
-
-.taskClass{
-	height:50px;
-	width:65%;
-	margin-top:20px;
-	border:solid;
-	text-align:left;
-	padding-left:20px;
-	padding-right:20px;
-	display:block;
-}
-
-.buttonInfo{
-	float:right;
-}
-
-.taskInfo{
-	position:relative;
-	width:100%;
-	border-bottom:solid;
-	border-left:solid;
-	border-right:solid;
-	padding-left:20px;
-	padding-right:20px;
-	display:none;
-	text-align:left;
-	margin-left:-23px;
-}
-
 .listClass{
 	padding:15px;
 	margin-top:10px;
 	border:solid;
 	width:300px;
+	cursor:move;
 }
 
 .stateEdit{
