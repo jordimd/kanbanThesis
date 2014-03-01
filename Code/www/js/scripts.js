@@ -27,8 +27,6 @@ function openProject(){
 function change(){
 	$('#modState').toggle();
 	$('#idBoard').toggle();
-	
-	
 }
 
 function logout(){

@@ -52,6 +52,6 @@ $idboard=$logged['idboard'];
 
 	mysql_close($con);
 
-	//header("Location: project.php");
-	//exit();
+	header("Location: project.php");
+	exit();
 ?>
