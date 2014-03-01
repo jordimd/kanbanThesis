@@ -19,9 +19,16 @@ function validateForm() {
 	}			
 }
 
+function openProject(){
+	
+	document.getElementById("openProject").submit();
+}
+
 function change(){
 	$('#modState').toggle();
 	$('#idBoard').toggle();
+	
+	
 }
 
 function logout(){

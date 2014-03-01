@@ -2,14 +2,12 @@
 /* CSS Document */
 
 .board{
-	position:absolute;
-	width:80%;
-	height:80%;
+	position:fixed;
 	overflow:auto;
-	margin:0 10%;
-	top:100px;
-	border:none;
-	
+	margin-top:5%;
+	margin-left:10%;
+	max-height:80%;
+	max-width:1140px;
 }
 
 .kanboard{
@@ -27,8 +25,9 @@
 }
 
 #laneName{
-	position:relative;
+	margin-top:1px;
 }
+
 #line{
 	border-top:solid;
 }
@@ -46,7 +45,7 @@
 .laneClass{
 	height:478px;
 	overflow:auto;
-	width:380px;
+	width:376px;
 	padding-bottom:20px;
 
 }
@@ -67,7 +66,7 @@
 }
 
 .taskInfo{
-	position:relative;
+	
 	width:100%;
 	border-bottom:solid;
 	border-left:solid;

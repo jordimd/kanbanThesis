@@ -19,14 +19,32 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `kanban_DB`.`board`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `kanban_DB`.`board` (
+  `idboard` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`idboard`),
+  UNIQUE INDEX `idboard_UNIQUE` (`idboard` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `kanban_DB`.`state`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kanban_DB`.`state` (
   `idstate` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `pos` INT NULL,
-  PRIMARY KEY (`idstate`),
-  UNIQUE INDEX `idstate_UNIQUE` (`idstate` ASC))
+  `idboard` INT NOT NULL,
+  PRIMARY KEY (`idstate`, `idboard`),
+  UNIQUE INDEX `idstate_UNIQUE` (`idstate` ASC),
+  INDEX `fk_state_board1_idx` (`idboard` ASC),
+  CONSTRAINT `fk_state_board1`
+    FOREIGN KEY (`idboard`)
+    REFERENCES `kanban_DB`.`board` (`idboard`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -55,22 +73,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `kanban_DB`.`user_has_task`
+-- Table `kanban_DB`.`userBoard`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `kanban_DB`.`user_has_task` (
+CREATE TABLE IF NOT EXISTS `kanban_DB`.`userBoard` (
   `iduser` INT NOT NULL,
-  `idtask` INT NOT NULL,
-  PRIMARY KEY (`iduser`, `idtask`),
-  INDEX `fk_user_has_task_task1_idx` (`idtask` ASC),
-  INDEX `fk_user_has_task_user_idx` (`iduser` ASC),
-  CONSTRAINT `fk_user_has_task_user`
+  `idboard` INT NOT NULL,
+  PRIMARY KEY (`iduser`, `idboard`),
+  INDEX `fk_user_has_board_board1_idx` (`idboard` ASC),
+  INDEX `fk_user_has_board_user1_idx` (`iduser` ASC),
+  CONSTRAINT `fk_user_has_board_user1`
     FOREIGN KEY (`iduser`)
     REFERENCES `kanban_DB`.`user` (`iduser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_has_task_task1`
-    FOREIGN KEY (`idtask`)
-    REFERENCES `kanban_DB`.`task` (`idtask`)
+  CONSTRAINT `fk_user_has_board_board1`
+    FOREIGN KEY (`idboard`)
+    REFERENCES `kanban_DB`.`board` (`idboard`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -79,15 +97,3 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
--- -----------------------------------------------------
--- Data for table `kanban_DB`.`state`
--- -----------------------------------------------------
-START TRANSACTION;
-USE `kanban_DB`;
-INSERT INTO `kanban_DB`.`state` (`idstate`, `name`, `pos`) VALUES (NULL, 'TO DO', 1);
-INSERT INTO `kanban_DB`.`state` (`idstate`, `name`, `pos`) VALUES (NULL, 'DOING', 2);
-INSERT INTO `kanban_DB`.`state` (`idstate`, `name`, `pos`) VALUES (NULL, 'DONE', 3);
-
-COMMIT;
-

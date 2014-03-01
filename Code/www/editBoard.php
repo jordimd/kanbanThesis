@@ -1,6 +1,9 @@
 <?php
 
+include 'session.php';
 include 'connectionDB.php';
+	
+$idboard=$logged['idboard'];	
 	
 	extract($_REQUEST);
 
@@ -11,9 +14,9 @@ include 'connectionDB.php';
 		mysql_query("INSERT INTO task (name, description, priority, owner, start, end, idstate) VALUES ('$name','$description','$priority','$owner','$start','$end','$idstate')");
 	}
 	if($updateTask)
-		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner', start='$start', end='$end' WHERE idtask='$idtask'");
+		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner',start='$start',end='$end' WHERE idtask='$idtask'");
 	if($addState)
-		mysql_query("INSERT INTO state (name, pos) VALUES ('$name',1000)");
+		mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('$name',1000,'$idboard')");
 	
 	if($deleteState){
 		mysql_query("DELETE FROM task WHERE idstate='$idstate'");
@@ -28,7 +31,6 @@ include 'connectionDB.php';
 		mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
 		
 	if($_POST['item']){
-
 		$i = 1;
 			
 		foreach ($_POST['item'] as $key) {
@@ -39,7 +41,6 @@ include 'connectionDB.php';
 	}	
 	
 	if($_POST['task']){
-
 		$i = 1;
 			
 		foreach ($_POST['task'] as $key) {
@@ -50,7 +51,7 @@ include 'connectionDB.php';
 	}	
 
 	mysql_close($con);
-			
-	header("Location: index.php");
-	exit();
+
+	//header("Location: project.php");
+	//exit();
 ?>

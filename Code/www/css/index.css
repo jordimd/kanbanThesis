@@ -13,9 +13,23 @@
 	position:fixed;
 	border:solid;
 	margin:15% 43%;
-	padding-left:10px;
-	padding-right:10px;
+	padding:10px;
 	display:none;
+}
+
+.projectClass{
+	padding:15px;
+	margin-top:10px;
+	border:solid;
+	width:300px;
+	display:block;
+}
+
+.showProjectClass{
+	display:none;
+	position:fixed;
+	height:100%;
+	width:100%;
 }
 
 #modState{
@@ -39,5 +53,6 @@
 	width:100%;
 	margin-top:15px;
 	display:none;
-	text-align:left;	
+	text-align:left;
+	margin-bottom:-15px;
 }

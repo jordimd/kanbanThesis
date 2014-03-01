@@ -1,51 +1,39 @@
-
-<button onClick="change()">Toggle</button>
+<? include 'session.php'?>
 
 <button onClick="logout()">Logout</button>
 
-<div id="idBoard" class="board">
-	<? include 'board.php' ?>
-</div>
+Hi <? echo $logged['name']?>!
 
-<div id="modState" class="board">
-	<form action="editBoard.php" method="post">
-	<p>New State: <input type="text" name="name">
-    <input type="submit" value="Add" name="addState"></p>
+<? include 'connectionDB.php'?>
+
+<div class="board">
+	<form action="editProject.php" method="post">
+    <p>New Project: <input type="text" name="name" required>
+    <input type="submit" value="Add" name="addProject"></p>
     </form>
-    
-    <div id="sortable" style="margin-top:40px">
-    
-    <? include 'connectionDB.php';
-		
-		$query = mysql_query("SELECT * FROM state ORDER BY pos");
-		
-		$columns=mysql_num_rows($query); //numero de columnas
-		
-		for($i=0;$i<$columns;$i++){
 
-			$row = mysql_fetch_array($query);?>
-            
-    		<div id="item_<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
-            <form method="post" action="editBoard.php" style="float:right;">
-            <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-            <input type="submit" onClick="alertTasks()" value="Delete" name="deleteState">
-            </form>
-            <button class="buttonInfo" onClick="showEdit(<? echo $row['idstate']?>)">Edit</button>
-            
-            	<div id="editState_<? echo $row['idstate']?>" class="stateEdit">
-                
-                <form method="post" action="editBoard.php">
-                <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-                Name: <input type="text" name="name" value="<? echo $row['name']?>">
-                <input type="submit" class="buttonInfo" value="Modify" name="updateState">
-                </form>
+<?
+$query = mysql_query("SELECT board.* FROM board, userBoard, user 
+WHERE board.idboard=userBoard.idboard and userBoard.iduser=user.iduser and user.name='".$logged['name']."'");
 
-               </div>
-            
-           </div>
- 
-        <? } ?>
+while ($row = mysql_fetch_array($query)){?>
+
+	<div class="projectClass">
+    <? echo $row['name']?>
+    <button style="float:right;" onClick="">Delete</button>
+    <div style="float:right;">
+        <form id="openProject" action="project.php" method="post">
+        <input type="hidden" value="<? echo $row['idboard']?>" name="id">
+        <button onClick="openProject()">Open</button>
+        
+        </form>
+        
+    </div>   
     
 	</div>
-   
+        
+<?
+}
+mysql_close($con);
+?>
 </div>
