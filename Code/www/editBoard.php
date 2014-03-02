@@ -10,9 +10,9 @@ $idboard=$logged['idboard'];
 	if($deleteTask)		
 		mysql_query("DELETE FROM task WHERE idtask='$idtask'");
 	
-	if($addTask){
+	if($addTask)
 		mysql_query("INSERT INTO task (name, description, priority, owner, start, end, idstate) VALUES ('$name','$description','$priority','$owner','$start','$end','$idstate')");
-	}
+	
 	if($updateTask)
 		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner',start='$start',end='$end' WHERE idtask='$idtask'");
 	if($addState)
@@ -23,9 +23,8 @@ $idboard=$logged['idboard'];
 		mysql_query("DELETE FROM state WHERE idstate='$idstate'");
 	}
 	
-	if($updateState){
+	if($updateState)
 		mysql_query("UPDATE state SET name='$name' WHERE idstate='$idstate'");
-	}
 		
 	if($moveTaskLane=="ok")
 		mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");

@@ -13,8 +13,8 @@ Hi <? echo $logged['name']?>!
     </form>
 
 <?
-$query = mysql_query("SELECT board.* FROM board, userBoard, user 
-WHERE board.idboard=userBoard.idboard and userBoard.iduser=user.iduser and user.name='".$logged['name']."'");
+$query = mysql_query("SELECT board.* FROM board, userBoard 
+WHERE board.idboard=userBoard.idboard and userBoard.iduser='".$logged['iduser']."'");
 
 while ($row = mysql_fetch_array($query)){?>
 
@@ -23,7 +23,7 @@ while ($row = mysql_fetch_array($query)){?>
         
          <div style="float:right">
             <form action="editProject.php" method="post">
-            <input type="hidden" value="<? echo $row['idboard']?>" name="id">
+            <input type="hidden" value="<? echo $row['idboard']?>" name="idboardDel">
             <button onClick="return alertSure('Are you sure you want to delete the entire project?')">Delete</button>
             </form>  
         </div> 
@@ -41,9 +41,9 @@ while ($row = mysql_fetch_array($query)){?>
         <div id="editProject_<? echo $row['idboard']?>" class="edit">
                 
             <form method="post" action="editProject.php">
-            <input type="hidden" name="idboard" value="<? echo $row['iboard']?>">
+            <input type="hidden" name="idboardUpdate" value="<? echo $row['idboard']?>">
             Name: <input type="text" name="name" value="<? echo $row['name']?>">
-            <input type="submit" class="buttonInfo" value="Modify" name="updateProject">
+            <button>Modify</button>
             </form>
         </div>
     
