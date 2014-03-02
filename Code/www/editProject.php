@@ -15,6 +15,14 @@ if($addProject){
 		mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('DONE',1000,'$idboard')");		
 }
 
+if($id){
+	
+	mysql_query("DELETE task.* FROM task, state WHERE task.idstate=state.idstate and state.idboard='$id'");
+	mysql_query("DELETE FROM state WHERE idboard='$id'");
+	mysql_query("DELETE FROM userBoard WHERE iduser='".$logged['iduser']."' and idboard='$id'");
+	mysql_query("DELETE FROM board WHERE idboard='$id'");
+}
+
 mysql_close($con);
 
 header("Location: index.php");

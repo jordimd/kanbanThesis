@@ -25,7 +25,6 @@
 		 include 'main.php';
 	}
 	else{ ?>
-		
         
         <div id="login">
         
@@ -33,8 +32,7 @@
         <p>User: <input type="email" name="mail" required> </p>
         <p>Password: <input type="password" name="password" title="Enter a password between 4 to 20 characters" pattern="\S{4,20}" required></p>
         <button style="float:right">Login</button>     
-        </form>      
-         
+        </form>
         <button style="float:left" onClick="register()">Register</button>
         
 		</div>

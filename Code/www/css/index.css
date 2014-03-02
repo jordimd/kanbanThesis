@@ -22,7 +22,6 @@
 	margin-top:10px;
 	border:solid;
 	width:300px;
-	display:block;
 }
 
 .showProjectClass{
@@ -48,11 +47,10 @@
 	cursor:move;
 }
 
-.stateEdit{
+.edit{
 	position:relative;
 	width:100%;
 	margin-top:15px;
 	display:none;
 	text-align:left;
-	margin-bottom:-15px;
 }

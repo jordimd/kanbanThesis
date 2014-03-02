@@ -19,11 +19,6 @@ function validateForm() {
 	}			
 }
 
-function openProject(){
-	
-	document.getElementById("openProject").submit();
-}
-
 function change(){
 	$('#modState').toggle();
 	$('#idBoard').toggle();
@@ -33,8 +28,23 @@ function logout(){
 	window.location.replace("logout.php")
 }
 
-function alertTasks(){
-	alert("Are you sure to delete the tasks inside?")	
+function alertSure(text){
+	var r=confirm(text);
+	if (r==true)
+	  return true;
+	else
+	  return false;
+}
+
+function editProject(id) {
+	
+	if(document.getElementById('editProject_'+id).style.display == "block"){
+   		document.getElementById('editProject_'+id).style.display = "none";
+	}
+	else
+		if(document.getElementById('editProject_'+id).style.display = "none"){
+			document.getElementById('editProject_'+id).style.display = "block";
+		}
 }
 
 function showEdit(id) {

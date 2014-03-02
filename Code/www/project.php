@@ -10,8 +10,7 @@ if($id){
 
 	$logged=array('iduser'=>$iduser,'name'=>$name,'mail'=>$mail,'idboard'=>$id);
 	$_SESSION['logged']=$logged;
-}
-?>
+}?>
 
 <link href="css/index.css" rel="stylesheet" type="text/css"/> 
 <link href="css/board.css" rel="stylesheet" type="text/css"/> 
@@ -46,12 +45,11 @@ if($id){
             <div id="item_<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
             <form method="post" action="editBoard.php" style="float:right;">
             <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-            <input type="submit" onClick="alertTasks()" value="Delete" name="deleteState">
+            <input type="submit" onClick="return alertSure('Are you sure you want to delete the state with the tasks inside?')" value="Delete" name="deleteState">
             </form>
             <button class="buttonInfo" onClick="showEdit(<? echo $row['idstate']?>)">Edit</button>
             
-                <div id="editState_<? echo $row['idstate']?>" class="stateEdit">
-                
+                <div id="editState_<? echo $row['idstate']?>" class="edit" style="margin-bottom:-15px">
                 <form method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
                 Name: <input type="text" name="name" value="<? echo $row['name']?>">
