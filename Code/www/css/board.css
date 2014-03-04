@@ -1,11 +1,9 @@
 @charset "UTF-8";
 /* CSS Document */
-
 .board{
 	position:fixed;
 	overflow:auto;
-	margin-top:5%;
-	margin-left:10%;
+	margin:8% 10%;
 	max-height:80%;
 	max-width:1140px;
 }

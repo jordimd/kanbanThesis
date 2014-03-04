@@ -13,7 +13,11 @@ include 'session.php'?>
       <th align="center">
             <div id="laneName">
             
-                <p><? echo $row['name']?></p>
+                <p><? echo $row['name'];
+						if($row['wip']!=NULL)
+							echo(" / ");
+							echo $row['wip'];				
+				?></p>
             
             </div>
             
@@ -21,7 +25,20 @@ include 'session.php'?>
             </div>
             
             <div id="addTask">
-                <button onClick="showNewTask(<? echo $row['idstate']?>)">+</button>
+                <button onClick="<? 
+				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
+				$wip = mysql_fetch_array($result);
+				
+				$result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
+				$numtasks = mysql_num_rows($result2);
+						
+				if($wip['wip']>$numtasks){?>   
+                	showNewTask(<? echo $row['idstate']?>)<? } 
+				else{?>
+					wip()				
+				<? }?>
+                                
+                ">+</button>
 
             </div>
          
@@ -30,6 +47,15 @@ include 'session.php'?>
                                             
             <div id="newTask_<? echo $row['idstate']?>" class="taskInfo" 
             style="border-top:solid; width:65%; margin-left:0px;">
+            
+            <? 
+				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
+				$wip = mysql_fetch_array($result);
+				
+				$result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
+				$numtasks = mysql_num_rows($result2);
+						
+				if($wip['wip']>$numtasks){?>
             
                 <form name="formTask" method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
@@ -46,6 +72,7 @@ include 'session.php'?>
                 <p>End: <input type="date" name="end" required>                  
                 <input type="submit" class="buttonInfo" value="Add" name="addTask"></p>
                 </form>
+             <? } ?>
         
           </div>   
 

@@ -1,8 +1,13 @@
 <? include 'session.php'?>
 
-<button onClick="logout()">Logout</button>
 
-Hi <? echo $logged['name']?>!
+<div id="menu">
+
+<p><button onClick="logout()">Logout</button>
+
+Hi <? echo $logged['name']?>!</p>
+
+</div>
 
 <? include 'connectionDB.php'?>
 
@@ -42,7 +47,7 @@ while ($row = mysql_fetch_array($query)){?>
                 
             <form method="post" action="editProject.php">
             <input type="hidden" name="idboardUpdate" value="<? echo $row['idboard']?>">
-            Name: <input type="text" name="name" value="<? echo $row['name']?>">
+            Name: <input type="text" name="name" value="<? echo $row['name']?>" required>
             <button>Modify</button>
             </form>
         </div>

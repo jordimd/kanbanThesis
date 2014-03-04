@@ -1,12 +1,20 @@
 @charset "UTF-8";
 /* CSS Document */
 
+body,html{
+	margin:0;
+	padding:0;
+	width:100%;
+	background-color:#FFFFF0;		
+}
+
 #login{
 	position:fixed;
 	border:solid;
-	margin:20% 40%;
-	padding:10px;	
+	margin:20% 45%;
+	padding:10px;
 	display:block;
+	background-color:#FFFFFF;
 }
 
 #register{
@@ -15,6 +23,15 @@
 	margin:15% 43%;
 	padding:10px;
 	display:none;
+}
+
+#menu{
+	padding:5px;
+	padding-left:20px;
+	position:fixed;
+	width:100%;
+	border-bottom:solid;
+	background-color:#B8D4FF;
 }
 
 .projectClass{

@@ -19,6 +19,14 @@ function validateForm() {
 	}			
 }
 
+function openBoard(id){
+
+
+        $.post("project.php", {'id' : id}, function(data){
+            $("#main").load('project.php');
+        });
+}
+
 function change(){
 	$('#modState').toggle();
 	$('#idBoard').toggle();
@@ -116,9 +124,16 @@ $(document).ready(function() {
 			  idstate:idstate.split('state_')[1],
 			  moveTaskLane:"ok"
 			},
-			function(data,status){
-			  //window.location.replace("index.php");
+			function(data){
+				if (data=="false"){
+				alert("You can't move this task because you reached the WIP value");
+			  	window.location.replace("project.php");
+				}
 			}); 
 		}
 	}).disableSelection();
 });
+
+function wip(){
+	alert("You can't add a task because you reached the WIP value");	
+}

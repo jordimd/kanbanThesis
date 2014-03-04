@@ -23,12 +23,30 @@ $idboard=$logged['idboard'];
 		mysql_query("DELETE FROM state WHERE idstate='$idstate'");
 	}
 	
-	if($updateState)
-		mysql_query("UPDATE state SET name='$name' WHERE idstate='$idstate'");
+	if($updateState)	
+		mysql_query("UPDATE state SET name='$name',wip='$wip' WHERE idstate='$idstate'");
 		
-	if($moveTaskLane=="ok")
-		mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
+	if($moveTaskLane=="ok"){
 		
+		$query = mysql_query("SELECT wip FROM state WHERE idstate='$idstate'");
+		$row = mysql_fetch_array($query);
+		
+		if($row['wip']!=NULL){
+		
+			$query2 = mysql_query("SELECT * FROM task WHERE idstate='$idstate'");
+			$numtasks = mysql_num_rows($query2);
+					
+			if($row['wip']>$numtasks)
+				mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
+			else{
+				echo ("false");
+				exit();
+			}
+		}
+		else
+			mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
+	}
+	
 	if($_POST['item']){
 		$i = 1;
 			
