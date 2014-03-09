@@ -11,7 +11,7 @@ Hi <? echo $logged['name']?>!</p>
 
 <? include 'connectionDB.php'?>
 
-<div class="board">
+<div class="main">
 	<form action="editProject.php" method="post">
     <p>New Project: <input type="text" name="name" required>
     <input type="submit" value="Add" name="addProject"></p>

@@ -4,14 +4,13 @@
 body,html{
 	margin:0;
 	padding:0;
-	width:100%;
 	background-color:#FFFFF0;		
 }
 
 #login{
 	position:fixed;
 	border:solid;
-	margin:20% 45%;
+	margin:15% 44%;
 	padding:10px;
 	display:block;
 	background-color:#FFFFFF;
@@ -20,7 +19,7 @@ body,html{
 #register{
 	position:fixed;
 	border:solid;
-	margin:15% 43%;
+	margin:15% 44%;
 	padding:10px;
 	display:none;
 }
@@ -28,10 +27,12 @@ body,html{
 #menu{
 	padding:5px;
 	padding-left:20px;
-	position:fixed;
-	width:100%;
 	border-bottom:solid;
 	background-color:#B8D4FF;
+}
+
+.main{
+	margin: 2% 10%;
 }
 
 .projectClass{
@@ -50,7 +51,7 @@ body,html{
 
 #modState{
 	padding:20px;
-	display:none;
+	display:block;
 	width:auto;
 	height:auto;
 	max-height:70%;

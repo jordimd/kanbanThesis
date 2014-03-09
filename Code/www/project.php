@@ -10,7 +10,9 @@ if($id){
 
 	$logged=array('iduser'=>$iduser,'name'=>$name,'mail'=>$mail,'idboard'=>$id);
 	$_SESSION['logged']=$logged;
-}?>
+}
+
+include 'connectionDB.php' ?>
 
 <link href="css/index.css" rel="stylesheet" type="text/css"/> 
 <link href="css/board.css" rel="stylesheet" type="text/css"/> 
@@ -24,51 +26,177 @@ if($id){
 
 <p><button onClick="logout()">Logout</button>
 <button onClick="cancel()">Projects</button>
-<button onClick="change()">Toggle</button></p>
+<button onClick="editStates()">Edit states</button></p>
 
 </div>
+<? 
+  
+	$query = mysql_query("SELECT * FROM state WHERE idboard='".$logged['idboard']."' ORDER BY pos");
+	$numStates = mysql_num_rows($query);?>
 
-
-<div id="idBoard" class="board">
-    <? include 'board.php' ?>
-</div>
-
-<div id="modState" class="board">
-
-    <form action="editBoard.php" method="post">
-    <p>New State: <input type="text" name="name" required>
-    <input type="submit" value="Add" name="addState"></p>
-    </form>
+<table class="main" <? if($numStates>3){?> style="margin: 2% 1%" <? }?>>
+  <tr>
+  	<? if($numStates>3){?>
+  
+    <td><img id="left" src="images/arrow_left.png"></td>
     
-    <div id="sortable" style="margin-top:40px">
+    <? }?>
+    <td id="idBoard" style="max-width:1140px; overflow:auto; padding:0px;">
+    <table style="background-color:#FFF7F7; position:relative" class="kanboard" border="0">
+  <tr>
+  
+  <?   
+
     
-    <? include 'connectionDB.php';
-        
-        $query = mysql_query("SELECT * FROM state WHERE idboard='".$logged['idboard']."' ORDER BY pos");
-        
-        while ($row = mysql_fetch_array($query)){;?>
+    while ($row = mysql_fetch_array($query)){;?>
+      
+      <th align="center">
+            <div id="laneName">
             
-            <div id="item_<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
-            <form method="post" action="editBoard.php" style="float:right;">
-            <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-            <input type="submit" onClick="return alertSure('Are you sure you want to delete the state with the tasks inside?')" value="Delete" name="deleteState">
-            </form>
-            <button class="buttonInfo" onClick="showEdit(<? echo $row['idstate']?>)">Edit</button>
+                <p><? echo $row['name'];
+						if($row['wip']!=NULL)
+							echo(" / ");
+							echo $row['wip'];				
+				?></p>
             
-                <div id="editState_<? echo $row['idstate']?>" class="edit" style="margin-bottom:-15px">
-                <form method="post" action="editBoard.php">
+            </div>
+            
+            <div id="line">
+            </div>
+            
+            <div id="addTask">
+                <button onClick="<? 
+				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
+				$wip = mysql_fetch_array($result);
+				
+				$result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
+				$numtasks = mysql_num_rows($result2);
+						
+				if($wip['wip']>$numtasks){?>   
+                	showNewTask(<? echo $row['idstate']?>)<? } 
+				else{?>
+					wip()				
+				<? }?>
+                                
+                ">+</button>
+
+            </div>
+         
+            <div id="state_<? echo $row['idstate']?>" class="laneClass">
+            
+                                            
+            <div id="newTask_<? echo $row['idstate']?>" class="taskInfo" 
+            style="border-top:solid; width:65%; margin-left:0px;">
+            
+            <? 
+				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
+				$wip = mysql_fetch_array($result);
+				
+				$result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
+				$numtasks = mysql_num_rows($result2);
+						
+				if($wip['wip']>$numtasks){?>
+            
+                <form name="formTask" method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-                Name: <input type="text" name="name" value="<? echo $row['name']?>"><br><br>
-                WIP: <input type="number" name="wip" value="<? echo $row['wip']?>">
-                <input type="submit" class="buttonInfo" value="Modify" name="updateState">
+                <p>Name: <input type="text" name="name" required></p>
+                <p>Description: <textarea name="description"></textarea> </p>
+                <p>Priority: 
+                <select name="priority">                            
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select></p>
+                <p>Owner: <input type="text" name="owner" value="<? echo $logged['name']?>" required></p>
+                <p>Start: <input type="date" name="start" required></p>
+                <p>End: <input type="date" name="end" required>                  
+                <input type="submit" class="buttonInfo" value="Add" name="addTask"></p>
                 </form>
+             <? } ?>
+        
+          </div>   
 
-               </div>
-            
-           </div>
- 
-        <? } 
-		mysql_close($con)?>
-    
-    </div>
-</div>
+                <?
+                    
+                    $query2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."' ORDER BY pos, end, priority");
+                    
+                    while ($row2 = mysql_fetch_array($query2)){;?>
+
+                        <div id="task_<? echo $row2['idtask']?>" class="taskClass" style="background-color: 
+                        
+                            <? switch ($row2['priority']){
+                                case 1: ?> #FFFF99 <? break;
+                                case 2: ?> #CCFF99 <? break;
+                                case 3: ?> #FF9999 <? break;
+                            } ?>">
+                        
+                            <p><? echo $row2['name']?> 
+                            <button class="buttonInfo" onclick="showInfo(<? echo $row2['idtask']?>)">Info</button></p>
+
+                        
+                         <div id="info_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
+                            
+                            <? switch ($row2['priority']){
+                                case 1: ?> #FFFF99 <? break;
+                                case 2: ?> #CCFF99 <? break;
+                                case 3: ?> #FF9999 <? break;
+                            } ?>">
+                                    
+                            <p>Description: <? echo $row2['description']?></p>
+                            <p>Priority: <? echo $row2['priority']?></p>
+                            <p>Owner: <? echo $row2['owner']?></p>
+                            <p>Start: <? echo $row2['start']?></p>
+                            <p>End: <? echo $row2['end']?> 
+                            <button class="buttonInfo" onClick="edit(<? echo $row2['idtask']?>)">Edit</button></p>
+                            </div>
+                            
+                         <div id="edit_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
+                            
+                            <? switch ($row2['priority']){
+                                case 1: ?> #FFFF99 <? break;
+                                case 2: ?> #CCFF99 <? break;
+                                case 3: ?> #FF9999 <? break;
+                            } ?>">
+
+                            <form name="formTask" method="post" action="editBoard.php">
+                            <input type="hidden" name="idtask" value="<? echo $row2['idtask']?>">
+                            <p>Name: <input type="text" name="name" value="<? echo $row2['name']?>"></p>
+                            <p>Description: <textarea name="description"><? echo $row2['description']?></textarea></p>
+                            <p>Priority: 
+                            <select name="priority">                            
+                                <option value="1"<? if($row2['priority']==1){?>selected<? }?>>1</option>
+                                <option value="2"<? if($row2['priority']==2){?>selected<? }?>>2</option>
+                                <option value="3"<? if($row2['priority']==3){?>selected<? }?>>3</option>
+                            </select> </p>
+                            <p>Owner: <input type="text" name="owner" value="<? echo $row2['owner']?>"></p>
+                            <p>Start: <input type="date" name="start" value="<? echo $row2['start']?>"></p>
+                            <p>End: <input type="date" name="end" value="<? echo $row2['end']?>"></p>
+                            <p><input type="submit" value="Delete" name="deleteTask">
+                            <input type="submit" class="buttonInfo" value="Modify" name="updateTask"></p>
+                            </form>
+
+                            </div>
+                            
+                         </div>
+                        <?
+                    }?>
+                
+                
+                </div>
+          
+          </th>
+            <?
+        } ?>
+        
+      </tr>
+          
+    </table>
+    </td><?
+    if($numStates>3){?>
+        <td><img id="right" src="images/arrow_right.png"></td>
+    <? }?>
+      </tr>
+    </table>
+
+
+

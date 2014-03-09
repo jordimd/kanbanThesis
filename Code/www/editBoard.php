@@ -15,16 +15,26 @@ $idboard=$logged['idboard'];
 	
 	if($updateTask)
 		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner',start='$start',end='$end' WHERE idtask='$idtask'");
-	if($addState)
+	if($addState){
 		mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('$name',1000,'$idboard')");
-	
+		mysql_close($con);
+
+		header("Location: editStates.php");
+	}
 	if($deleteState){
 		mysql_query("DELETE FROM task WHERE idstate='$idstate'");
 		mysql_query("DELETE FROM state WHERE idstate='$idstate'");
+		mysql_close($con);
+
+		header("Location: editStates.php");
 	}
 	
-	if($updateState)	
+	if($updateState){
 		mysql_query("UPDATE state SET name='$name',wip='$wip' WHERE idstate='$idstate'");
+		mysql_close($con);
+
+		header("Location: editStates.php");
+	}
 		
 	if($moveTaskLane=="ok"){
 		
@@ -40,6 +50,7 @@ $idboard=$logged['idboard'];
 				mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
 			else{
 				echo ("false");
+				mysql_close($con);
 				exit();
 			}
 		}
@@ -70,5 +81,4 @@ $idboard=$logged['idboard'];
 	mysql_close($con);
 
 	header("Location: project.php");
-	exit();
 ?>

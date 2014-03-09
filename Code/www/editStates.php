@@ -1,0 +1,57 @@
+<? include 'session.php'?>
+
+<link href="css/index.css" rel="stylesheet" type="text/css"/> 
+<link href="css/board.css" rel="stylesheet" type="text/css"/> 
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+
+<script src="js/scripts.js" type="text/javascript"></script>
+
+<div id="menu">
+
+<p><button onClick="logout()">Logout</button>
+<button onClick="cancel()">Projects</button>
+<button onClick="board()">Board</button></p>
+
+</div>
+
+<div id="modState" class="main" style="max-height:75%; overflow:auto">
+
+    <form action="editBoard.php" method="post">
+    New State: <input type="text" name="name" required>
+    <input type="submit" value="Add" name="addState">
+    </form>
+    
+    <div id="sortable" style="margin-top:40px">
+    
+    <? include 'connectionDB.php';
+        
+        $query = mysql_query("SELECT * FROM state WHERE idboard='".$logged['idboard']."' ORDER BY pos");
+        
+        while ($row = mysql_fetch_array($query)){;?>
+            
+            <div id="item_<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
+            <form method="post" action="editBoard.php" style="float:right;">
+            <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
+            <input type="submit" onClick="return alertSure('Are you sure you want to delete the state with the tasks inside?')" value="Delete" name="deleteState">
+            </form>
+            <button class="buttonInfo" onClick="showEdit(<? echo $row['idstate']?>)">Edit</button>
+            
+                <div id="editState_<? echo $row['idstate']?>" class="edit" style="margin-bottom:-15px">
+                <form method="post" action="editBoard.php">
+                <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
+                Name: <input type="text" name="name" value="<? echo $row['name']?>"><br><br>
+                WIP: <input type="number" name="wip" value="<? echo $row['wip']?>">
+                <input type="submit" class="buttonInfo" value="Modify" name="updateState">
+                </form>
+
+               </div>
+            
+           </div>
+ 
+        <? } 
+		mysql_close($con)?>
+    
+    </div>
+</div>

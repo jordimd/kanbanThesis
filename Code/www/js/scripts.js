@@ -20,16 +20,26 @@ function validateForm() {
 }
 
 function openBoard(id){
-
-
-        $.post("project.php", {'id' : id}, function(data){
-            $("#main").load('project.php');
-        });
+	$.post("project.php", {'id' : id}, function(){
+		$("#main").load('project.php');
+	});
 }
 
-function change(){
-	$('#modState').toggle();
-	$('#idBoard').toggle();
+$(document).ready(function(){
+  $("#left").click(function(){
+    $("#idBoard").animate({scrollLeft: "-=379"});
+  });
+  $("#right").click(function(){
+    $("#idBoard").animate({scrollLeft: "+=379"});
+  });
+});
+
+function editStates() {
+	window.location.replace("editStates.php")
+}
+
+function board() {
+	window.location.replace("project.php")
 }
 
 function logout(){
@@ -80,12 +90,10 @@ function showInfo(id) {
 	
 	if(document.getElementById('info_'+id).style.display == "block"){
    		document.getElementById('info_'+id).style.display = "none";
-		document.getElementById('task_'+id).style.marginBottom = "0px";
 	}
 	else
 		if(document.getElementById('edit_'+id).style.display = "none"){
 			document.getElementById('info_'+id).style.display = "block";
-			document.getElementById('task_'+id).style.marginBottom = "190px";
 		}
 }
 
@@ -93,7 +101,6 @@ function edit(id) {
 			
 	document.getElementById('info_'+id).style.display = "none";
 	document.getElementById('edit_'+id).style.display = "block";
-	document.getElementById('task_'+id).style.marginBottom = "326px";
 }
 
 function showNewTask(id){
@@ -110,6 +117,11 @@ $(document).ready(function() {
 	$('.laneClass').sortable({
 		
 		connectWith: '.laneClass',
+		start: function(event, ui) {
+			//var idprevstate = ui.item.parent().attr('id');
+			$(this).attr('idprevstate', ui.item.parent().attr('id'));
+		},
+		
 		stop: function (event, ui){
 			
 			var order = $(this).sortable("serialize");
@@ -117,6 +129,7 @@ $(document).ready(function() {
 			
 			var idtask = ui.item.attr('id');
 			var idstate = ui.item.parent().attr('id');
+			var oldState = $(this).attr('idprevstate');
 
 			$.post("editBoard.php",
 			{
@@ -125,9 +138,13 @@ $(document).ready(function() {
 			  moveTaskLane:"ok"
 			},
 			function(data){
-				if (data=="false"){
-				alert("You can't move this task because you reached the WIP value");
-			  	window.location.replace("project.php");
+				
+				if (data=="false"){	
+					
+					if (oldState.split('state_')[1]!=idstate.split('state_')[1]){
+						alert("You can't move this task because you reached the WIP value");
+						window.location.replace("project.php");
+					}
 				}
 			}); 
 		}

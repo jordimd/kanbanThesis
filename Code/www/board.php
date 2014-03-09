@@ -1,7 +1,8 @@
 <?php 
 include 'session.php'?>
 
-<table class="kanboard" border="0">
+<div id="test">
+<table style="background-color:#FFF7F7" class="kanboard" border="0">
   <tr>
   
   <? include 'connectionDB.php';
@@ -151,7 +152,7 @@ include 'session.php'?>
   </tr>
   
 </table>
-
+</div>
 
 <?
 mysql_close($con);
