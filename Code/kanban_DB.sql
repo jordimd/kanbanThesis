@@ -23,7 +23,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kanban_DB`.`board` (
   `idboard` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `owner` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idboard`),
   UNIQUE INDEX `idboard_UNIQUE` (`idboard` ASC))
 ENGINE = InnoDB;

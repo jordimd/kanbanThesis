@@ -38,7 +38,7 @@ include 'connectionDB.php' ?>
   <tr>
   	<? if($numStates>3){?>
   
-    <td><img id="left" src="images/arrow_left.png"></td>
+    <td><img id="left" src="images/arrow_left.png" style="cursor:pointer"></td>
     
     <? }?>
     <td id="idBoard" style="max-width:1140px; overflow:auto; padding:0px;">
@@ -53,11 +53,11 @@ include 'connectionDB.php' ?>
       <th align="center">
             <div id="laneName">
             
-                <p><? echo $row['name'];
+                <? echo $row['name'];
 						if($row['wip']!=NULL)
 							echo(" / ");
 							echo $row['wip'];				
-				?></p>
+				?>
             
             </div>
             
@@ -72,7 +72,7 @@ include 'connectionDB.php' ?>
 				$result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
 				$numtasks = mysql_num_rows($result2);
 						
-				if($wip['wip']>$numtasks){?>   
+				if($wip['wip']>$numtasks or $wip['wip']==NULL){?>   
                 	showNewTask(<? echo $row['idstate']?>)<? } 
 				else{?>
 					wip()				
@@ -85,17 +85,15 @@ include 'connectionDB.php' ?>
             <div id="state_<? echo $row['idstate']?>" class="laneClass">
             
                                             
-            <div id="newTask_<? echo $row['idstate']?>" class="taskInfo" 
-            style="border-top:solid; width:65%; margin-left:0px;">
+            <div id="newTask_<? echo $row['idstate']?>" class="taskClass" 
+            style="display:none; margin-top:0; background-color:#FFFFFF;">
             
             <? 
 				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
 				$wip = mysql_fetch_array($result);
 				
 				$result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
-				$numtasks = mysql_num_rows($result2);
-						
-				if($wip['wip']>$numtasks){?>
+				$numtasks = mysql_num_rows($result2)?>
             
                 <form name="formTask" method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
@@ -112,7 +110,6 @@ include 'connectionDB.php' ?>
                 <p>End: <input type="date" name="end" required>                  
                 <input type="submit" class="buttonInfo" value="Add" name="addTask"></p>
                 </form>
-             <? } ?>
         
           </div>   
 
@@ -193,7 +190,7 @@ include 'connectionDB.php' ?>
     </table>
     </td><?
     if($numStates>3){?>
-        <td><img id="right" src="images/arrow_right.png"></td>
+        <td><img id="right" src="images/arrow_right.png" style="cursor:pointer"></td>
     <? }?>
       </tr>
     </table>

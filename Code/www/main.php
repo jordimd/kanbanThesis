@@ -35,9 +35,9 @@ while ($row = mysql_fetch_array($query)){?>
         <div style="float:right">
                    
             <button onClick="editProject(<? echo $row['idboard']?>)">Edit</button>
-            
+            <button onClick="shareProject(<? echo $row['idboard']?>)">Share</button>
         </div>    
-        <div style="float:right;">
+        <div style="float:right">
             <form action="project.php" method="post">
             <input type="hidden" value="<? echo $row['idboard']?>" name="id">        
             <button>Open</button>
@@ -49,6 +49,15 @@ while ($row = mysql_fetch_array($query)){?>
             <input type="hidden" name="idboardUpdate" value="<? echo $row['idboard']?>">
             Name: <input type="text" name="name" value="<? echo $row['name']?>" required>
             <button>Modify</button>
+            </form>
+        </div>
+        <div id="shareProject_<? echo $row['idboard']?>" class="edit">
+                
+            <form method="post" action="editProject.php">
+            <p>Please introduce the email of the user you want to share the project</p>
+            <input type="hidden" name="idboardShare" value="<? echo $row['idboard']?>">
+            Email: <input type="text" name="mail" required>
+            <button>Share</button>
             </form>
         </div>
     

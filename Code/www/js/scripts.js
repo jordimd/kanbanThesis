@@ -19,12 +19,6 @@ function validateForm() {
 	}			
 }
 
-function openBoard(id){
-	$.post("project.php", {'id' : id}, function(){
-		$("#main").load('project.php');
-	});
-}
-
 $(document).ready(function(){
   $("#left").click(function(){
     $("#idBoard").animate({scrollLeft: "-=379"});
@@ -62,6 +56,17 @@ function editProject(id) {
 	else
 		if(document.getElementById('editProject_'+id).style.display = "none"){
 			document.getElementById('editProject_'+id).style.display = "block";
+		}
+}
+
+function shareProject(id) {
+	
+	if(document.getElementById('shareProject_'+id).style.display == "block"){
+   		document.getElementById('shareProject_'+id).style.display = "none";
+	}
+	else
+		if(document.getElementById('shareProject_'+id).style.display = "none"){
+			document.getElementById('shareProject_'+id).style.display = "block";
 		}
 }
 

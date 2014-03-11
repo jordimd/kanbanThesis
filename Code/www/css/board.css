@@ -6,7 +6,6 @@
 	border-top:solid;
 	border-bottom:solid;
 	border-left:solid;
-	
 }
 
 .kanboard th{
@@ -16,7 +15,9 @@
 }
 
 #laneName{
-	margin-top:1px;
+	background-color:#5A5A5A;
+	color:white;
+	padding:10px 0px;
 }
 
 #line{
@@ -30,7 +31,6 @@
 	width:29px;
 	float:right;
 	border:solid;
-	
 }
 
 .laneClass{
@@ -38,7 +38,6 @@
 	overflow:auto;
 	width:376px;
 	padding-bottom:20px;
-
 }
 
 .taskClass{

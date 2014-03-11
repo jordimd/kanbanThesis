@@ -18,6 +18,15 @@ if(mysql_num_rows($query)==0){
 	$logged=array('iduser'=>$row['iduser'],'name'=>$name,'mail'=>$mail);
 	$_SESSION['logged']=$logged;
 			
+	mysql_query("INSERT INTO board (name) VALUES ('First project')");
+	$idboard=mysql_insert_id();
+
+	mysql_query("INSERT INTO userBoard (iduser, idboard) VALUES ('".$row['iduser']."','$idboard')");
+	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('TO DO',1000,'$idboard')");
+	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('DOING',1000,'$idboard')");
+	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('DONE',1000,'$idboard')");
+	
+	
 	mysql_close($con);
 	header("Location: index.php");	
 }
@@ -29,11 +38,7 @@ else{
     
     <link href="css/index.css" rel="stylesheet" type="text/css"/> 
     
-    <script>
-    function cancel(){
-        window.location.replace("index.php")
-    }
-	</script>
+    <script>function cancel(){window.location.replace("index.php")}</script>
         
     <div id="register" style="display:block">
     

@@ -34,7 +34,17 @@
             <div id="item_<? echo $row['idstate']?>" class="listClass"><? echo $row['name']?>
             <form method="post" action="editBoard.php" style="float:right;">
             <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-            <input type="submit" onClick="return alertSure('Are you sure you want to delete the state with the tasks inside?')" value="Delete" name="deleteState">
+            <input type="submit" value="Delete" name="deleteState"
+            
+            <? $query2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
+			 $numTasks = mysql_num_rows($query2);
+			 
+			 if($numTasks>0){?>            
+            
+            onClick="return alertSure('Are you sure you want to delete the state with the tasks inside?')"
+            
+            <? }?> 
+             >
             </form>
             <button class="buttonInfo" onClick="showEdit(<? echo $row['idstate']?>)">Edit</button>
             
