@@ -1,22 +1,24 @@
 <?php
 
 include 'session.php';
-include 'connectionDB.php';
+include 'connectionDB.php';	
 	
-$idboard=$logged['idboard'];	
-	
-	extract($_REQUEST);
+extract($_REQUEST);
+
+mysql_query("UPDATE board SET updated=NOW(), modified='".$logged['iduser']."' WHERE idboard='".$logged['idboard']."'");
 
 	if($deleteTask)		
 		mysql_query("DELETE FROM task WHERE idtask='$idtask'");
 	
 	if($addTask)
-		mysql_query("INSERT INTO task (name, description, priority, owner, start, end, idstate) VALUES ('$name','$description','$priority','$owner','$start','$end','$idstate')");
+		mysql_query("INSERT INTO task (name, description, priority, owner, created, end, idstate) VALUES ('$name','$description','$priority','$owner',CURDATE(),'$end','$idstate')");
 	
-	if($updateTask)
-		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner',start='$start',end='$end' WHERE idtask='$idtask'");
+	if($updateTask){
+		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner',end='$end' WHERE idtask='$idtask'");
+		mysql_query("UPDATE task SET updated=NOW(), modified='".$logged['iduser']."' WHERE idtask='$idtask'");
+	}
 	if($addState){
-		mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('$name',1000,'$idboard')");
+		mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('$name',1000,'".$logged['idboard']."')");
 		mysql_close($con);
 
 		header("Location: editStates.php");
@@ -46,16 +48,20 @@ $idboard=$logged['idboard'];
 			$query2 = mysql_query("SELECT * FROM task WHERE idstate='$idstate'");
 			$numtasks = mysql_num_rows($query2);
 					
-			if($row['wip']>$numtasks)
+			if($row['wip']>$numtasks){
 				mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
+				mysql_query("UPDATE task SET updated=NOW(), modified='".$logged['iduser']."' WHERE idtask='$idtask'");
+			}
 			else{
 				echo ("false");
 				mysql_close($con);
 				exit();
 			}
 		}
-		else
+		else{
 			mysql_query("UPDATE task SET idstate='$idstate' WHERE idtask='$idtask'");
+			mysql_query("UPDATE task SET updated=NOW(), modified='".$logged['iduser']."' WHERE idtask='$idtask'");
+		}
 	}
 	
 	if($_POST['item']){

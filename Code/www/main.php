@@ -16,6 +16,8 @@ Hi <? echo $logged['name']?>!</p>
     <p>New Project: <input type="text" name="name" required>
     <input type="submit" value="Add" name="addProject"></p>
     </form>
+    
+<div style="margin-top:40px">
 
 <?
 $query = mysql_query("SELECT board.* FROM board, userBoard 
@@ -33,7 +35,7 @@ while ($row = mysql_fetch_array($query)){?>
             </form>  
         </div> 
         <div style="float:right">
-                   
+            <button onClick="infoProject(<? echo $row['idboard']?>)">Info</button>        
             <button onClick="editProject(<? echo $row['idboard']?>)">Edit</button>
             <button onClick="shareProject(<? echo $row['idboard']?>)">Share</button>
         </div>    
@@ -60,6 +62,36 @@ while ($row = mysql_fetch_array($query)){?>
             <button>Share</button>
             </form>
         </div>
+        <div id="infoProject_<? echo $row['idboard']?>" class="edit">
+                
+            <p>This project was created by <?
+				$result = mysql_query("SELECT * FROM user WHERE iduser='".$row['owner']."'");
+				$row2 = mysql_fetch_array($result);
+				if($row2['iduser']==$logged['iduser'])
+					echo("you");
+				else
+					echo $row2['name'];
+				echo(" on ");				
+			 	echo $row['created']?>.</p>
+             <p><? 
+			 	
+				if($row['updated']){
+			 		echo ("Last time modified ");
+					echo $row['updated']; 
+					echo(" by ");
+				 
+					$result = mysql_query("SELECT * FROM user WHERE iduser='".$row['modified']."'");
+					$row2 = mysql_fetch_array($result);
+					if($row2['iduser']==$logged['iduser'])
+						echo("you");
+					else
+						echo $row2['name'];
+				}
+				else{?>Never modified<? }
+			 
+			 	?>.</p>
+            
+        </div>
     
 	</div>
         
@@ -67,4 +99,5 @@ while ($row = mysql_fetch_array($query)){?>
 }
 mysql_close($con);
 ?>
+</div>
 </div>

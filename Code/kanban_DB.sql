@@ -24,7 +24,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `kanban_DB`.`board` (
   `idboard` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
-  `owner` VARCHAR(45) NOT NULL,
+  `owner` INT NOT NULL,
+  `created` DATE NOT NULL,
+  `updated` DATETIME NULL,
+  `modified` INT NULL,
   PRIMARY KEY (`idboard`),
   UNIQUE INDEX `idboard_UNIQUE` (`idboard` ASC))
 ENGINE = InnoDB;
@@ -60,8 +63,10 @@ CREATE TABLE IF NOT EXISTS `kanban_DB`.`task` (
   `description` VARCHAR(45) NULL,
   `priority` INT NOT NULL,
   `owner` VARCHAR(45) NOT NULL,
-  `start` DATE NULL,
+  `created` DATE NOT NULL,
   `end` DATE NULL,
+  `updated` DATETIME NULL,
+  `modified` INT NULL,
   `idstate` INT NOT NULL,
   PRIMARY KEY (`idtask`, `idstate`),
   INDEX `fk_task_state1_idx` (`idstate` ASC),

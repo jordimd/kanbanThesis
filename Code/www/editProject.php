@@ -6,10 +6,8 @@ include 'connectionDB.php';
 extract($_REQUEST);
 
 if($addProject){
-	
-	mysql_query("INSERT INTO board (name, owner) VALUES ('$name','".$logged['iduser']."')");
+	mysql_query("INSERT INTO board (name, owner, created) VALUES ('$name','".$logged['iduser']."',CURDATE())");
 	$idboard=mysql_insert_id();
-
 	mysql_query("INSERT INTO userBoard (iduser, idboard) VALUES ('".$logged['iduser']."','$idboard')");
 	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('TO DO',1000,'$idboard')");
 	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('DOING',1000,'$idboard')");
@@ -26,7 +24,7 @@ if($idboardShare){
 }
 
 if($idboardUpdate)
-	mysql_query("UPDATE board SET name='$name' WHERE idboard='$idboardUpdate'");
+	mysql_query("UPDATE board SET name='$name', updated=NOW(), modified='".$logged['iduser']."' WHERE idboard='$idboardUpdate'");
 
 if($idboardDel){
 	

@@ -106,7 +106,6 @@ include 'connectionDB.php' ?>
                     <option value="3">3</option>
                 </select></p>
                 <p>Owner: <input type="text" name="owner" value="<? echo $logged['name']?>" required></p>
-                <p>Start: <input type="date" name="start" required></p>
                 <p>End: <input type="date" name="end" required>                  
                 <input type="submit" class="buttonInfo" value="Add" name="addTask"></p>
                 </form>
@@ -142,8 +141,17 @@ include 'connectionDB.php' ?>
                             <p>Description: <? echo $row2['description']?></p>
                             <p>Priority: <? echo $row2['priority']?></p>
                             <p>Owner: <? echo $row2['owner']?></p>
-                            <p>Start: <? echo $row2['start']?></p>
-                            <p>End: <? echo $row2['end']?> 
+                            <p>Created: <? echo $row2['created']?></p>
+                            <p>Expected done: <? echo $row2['end']?></p>
+                            <p>Modified: <? echo $row2['updated']?><p>
+                            <p>by <?							
+								$result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['modified']."'");
+								$row3 = mysql_fetch_array($result);
+								if($row3['iduser']==$logged['iduser'])
+									echo("you");
+								else
+									echo $row3['name']?>
+                          
                             <button class="buttonInfo" onClick="edit(<? echo $row2['idtask']?>)">Edit</button></p>
                             </div>
                             
@@ -166,7 +174,6 @@ include 'connectionDB.php' ?>
                                 <option value="3"<? if($row2['priority']==3){?>selected<? }?>>3</option>
                             </select> </p>
                             <p>Owner: <input type="text" name="owner" value="<? echo $row2['owner']?>"></p>
-                            <p>Start: <input type="date" name="start" value="<? echo $row2['start']?>"></p>
                             <p>End: <input type="date" name="end" value="<? echo $row2['end']?>"></p>
                             <p><input type="submit" value="Delete" name="deleteTask">
                             <input type="submit" class="buttonInfo" value="Modify" name="updateTask"></p>

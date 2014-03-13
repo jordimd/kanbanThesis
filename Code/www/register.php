@@ -18,7 +18,7 @@ if(mysql_num_rows($query)==0){
 	$logged=array('iduser'=>$row['iduser'],'name'=>$name,'mail'=>$mail);
 	$_SESSION['logged']=$logged;
 			
-	mysql_query("INSERT INTO board (name) VALUES ('First project')");
+	mysql_query("INSERT INTO board (name, owner, created) VALUES ('First project','".$row['iduser']."',CURDATE())");
 	$idboard=mysql_insert_id();
 
 	mysql_query("INSERT INTO userBoard (iduser, idboard) VALUES ('".$row['iduser']."','$idboard')");

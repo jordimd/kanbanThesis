@@ -70,6 +70,17 @@ function shareProject(id) {
 		}
 }
 
+function infoProject(id) {
+	
+	if(document.getElementById('infoProject_'+id).style.display == "block"){
+   		document.getElementById('infoProject_'+id).style.display = "none";
+	}
+	else
+		if(document.getElementById('infoProject_'+id).style.display = "none"){
+			document.getElementById('infoProject_'+id).style.display = "block";
+		}
+}
+
 function showEdit(id) {
 	
 	if(document.getElementById('editState_'+id).style.display == "block"){
