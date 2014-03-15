@@ -8,23 +8,34 @@ extract($_REQUEST);
 if($addProject){
 	mysql_query("INSERT INTO board (name, owner, created) VALUES ('$name','".$logged['iduser']."',CURDATE())");
 	$idboard=mysql_insert_id();
-	mysql_query("INSERT INTO userBoard (iduser, idboard) VALUES ('".$logged['iduser']."','$idboard')");
+	mysql_query("INSERT INTO userBoard (iduser, new, idboard) VALUES ('".$logged['iduser']."',FALSE,'$idboard')");
 	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('TO DO',1000,'$idboard')");
 	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('DOING',1000,'$idboard')");
 	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('DONE',1000,'$idboard')");		
 }
 
-if($idboardShare){
+if($checkMail){
 	
-	$query=mysql_query("SELECT * FROM user WHERE mail='$mail'");
-	$row = mysql_fetch_array($query);
+	$query=mysql_query("SELECT * FROM user WHERE mail='$checkMail'");
+	$row=mysql_fetch_array($query);
+	
 	if($row){
-		mysql_query("INSERT INTO userBoard (iduser, idboard) VALUES ('".$row['iduser']."','$idboardShare')");
+		mysql_query("INSERT INTO userBoard (iduser, new, idboard) VALUES ('".$row['iduser']."',TRUE,'$idboard')");
+		echo $row['name'];
 	}
+	else
+		echo("not");
+	exit();	
 }
 
-if($idboardUpdate)
+if($idboardShare)
+	mysql_query("INSERT INTO userBoard (iduser, new, idboard) VALUES ('".$row['iduser']."',TRUE,'$idboardShare')");
+
+
+if($idboardUpdate){
 	mysql_query("UPDATE board SET name='$name', updated=NOW(), modified='".$logged['iduser']."' WHERE idboard='$idboardUpdate'");
+	mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='$idboardUpdate' and iduser='".$logged['iduser']."'");
+}
 
 if($idboardDel){
 	

@@ -34,36 +34,36 @@ include 'connectionDB.php' ?>
 	$query = mysql_query("SELECT * FROM state WHERE idboard='".$logged['idboard']."' ORDER BY pos");
 	$numStates = mysql_num_rows($query);?>
 
-<table class="main" <? if($numStates>3){?> style="margin: 2% 1%" <? }?>>
+<table class="main" <? if($numStates>3){?> style="margin: 2% 5%" <? }?>>
   <tr>
   	<? if($numStates>3){?>
   
-    <td><img id="left" src="images/arrow_left.png" style="cursor:pointer"></td>
+    <td style="padding:15px"><img id="left" src="images/arrow_left.png" style="cursor:pointer"></td>
     
     <? }?>
-    <td id="idBoard" style="max-width:1140px; overflow:auto; padding:0px;">
-    <table style="background-color:#FFF7F7; position:relative" class="kanboard" border="0">
+    <td>
+    <div id="idBoard">
+    <table class="kanboard">
   <tr>
   
   <?   
 
-    
-    while ($row = mysql_fetch_array($query)){;?>
+    $count=0;
+    while ($row = mysql_fetch_array($query)){$count++?>    
       
-      <th align="center">
+      <th align="center"<? if($count==$numStates){?>style="border-right:none"<? }?>>
             <div id="laneName">
             
                 <? echo $row['name'];
-						if($row['wip']!=NULL)
+					 if($row['wip']!=NULL){
 							echo(" / ");
-							echo $row['wip'];				
-				?>
-            
+							echo $row['wip'];		
+					 }?>
             </div>
             
             <div id="line">
             </div>
-            
+ 
             <div id="addTask">
                 <button onClick="<? 
 				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
@@ -101,12 +101,26 @@ include 'connectionDB.php' ?>
                 <p>Description: <textarea name="description"></textarea> </p>
                 <p>Priority: 
                 <select name="priority">                            
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
+                    <option value="1">Low</option>
+                    <option value="2" selected>Normal</option>
+                    <option value="3">High</option>
                 </select></p>
-                <p>Owner: <input type="text" name="owner" value="<? echo $logged['name']?>" required></p>
-                <p>End: <input type="date" name="end" required>                  
+                <? 
+					$assignResult = mysql_query("SELECT user.* FROM user, userBoard WHERE userBoard.idboard='".$logged['idboard']."' and userBoard.iduser=user.iduser");
+					$numShare = mysql_num_rows($assignResult);
+				
+					if($numShare>1){?>
+                    <p>Assign to: 
+                    <select name="assigned">
+                    <?
+                            
+                            while ($assignRow = mysql_fetch_array($assignResult)){?>
+                                <option value="<? echo($assignRow['iduser'])?>"><? echo($assignRow['name'])?></option>
+                            <? }?>
+                       
+                    </select></p>
+                <? }?>
+                <p>Expected done: <input type="date" name="end" required>                  
                 <input type="submit" class="buttonInfo" value="Add" name="addTask"></p>
                 </form>
         
@@ -116,14 +130,14 @@ include 'connectionDB.php' ?>
                     
                     $query2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."' ORDER BY pos, end, priority");
                     
-                    while ($row2 = mysql_fetch_array($query2)){;?>
+                    while ($row2 = mysql_fetch_array($query2)){?>
 
                         <div id="task_<? echo $row2['idtask']?>" class="taskClass" style="background-color: 
                         
                             <? switch ($row2['priority']){
-                                case 1: ?> #FFFF99 <? break;
-                                case 2: ?> #CCFF99 <? break;
-                                case 3: ?> #FF9999 <? break;
+                                case 1: ?> #CCFF99<? break;
+                                case 2: ?> #FFFF99<? break;
+                                case 3: ?> #FF9999<? break;
                             } ?>">
                         
                             <p><? echo $row2['name']?> 
@@ -133,24 +147,46 @@ include 'connectionDB.php' ?>
                          <div id="info_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
                             
                             <? switch ($row2['priority']){
-                                case 1: ?> #FFFF99 <? break;
-                                case 2: ?> #CCFF99 <? break;
-                                case 3: ?> #FF9999 <? break;
+                                case 1: ?> #CCFF99<? break;
+                                case 2: ?> #FFFF99<? break;
+                                case 3: ?> #FF9999<? break;
                             } ?>">
                                     
                             <p>Description: <? echo $row2['description']?></p>
-                            <p>Priority: <? echo $row2['priority']?></p>
-                            <p>Owner: <? echo $row2['owner']?></p>
+                            <p>Priority: <? switch ($row2['priority']){
+													case 1: ?>Low<? break;
+													case 2: ?>Normal<? break;
+													case 3: ?>High<? break;
+                            					} ?></p>
+                            
+                            <? if($row2['assigned']){?>
+                            		<p>Assigned to: <? echo $row2['assigned']?></p>
+                            <? }?>
+                            
                             <p>Created: <? echo $row2['created']?></p>
-                            <p>Expected done: <? echo $row2['end']?></p>
-                            <p>Modified: <? echo $row2['updated']?><p>
                             <p>by <?							
-								$result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['modified']."'");
+								$result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['owner']."'");
 								$row3 = mysql_fetch_array($result);
 								if($row3['iduser']==$logged['iduser'])
 									echo("you");
 								else
-									echo $row3['name']?>
+									echo $row3['name']?></p>
+                            <p>Expected done: <? echo $row2['end']?></p>
+                            
+                            <? if($row2['updated']){?>                      
+                                <p>Modified: <? echo $row2['updated']?><p>
+                                <p>by <?							
+                                    $result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['modified']."'");
+                                    $row3 = mysql_fetch_array($result);
+                                    if($row3['iduser']==$logged['iduser'])
+                                        echo("you");
+                                    else
+                                        echo $row3['name'];
+								}
+								else{?>
+									<p>Never modified
+									
+								<? }?>                                   
                           
                             <button class="buttonInfo" onClick="edit(<? echo $row2['idtask']?>)">Edit</button></p>
                             </div>
@@ -158,9 +194,9 @@ include 'connectionDB.php' ?>
                          <div id="edit_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
                             
                             <? switch ($row2['priority']){
-                                case 1: ?> #FFFF99 <? break;
-                                case 2: ?> #CCFF99 <? break;
-                                case 3: ?> #FF9999 <? break;
+                                case 1: ?> #CCFF99<? break;
+                                case 2: ?> #FFFF99<? break;
+                                case 3: ?> #FF9999<? break;
                             } ?>">
 
                             <form name="formTask" method="post" action="editBoard.php">
@@ -169,12 +205,12 @@ include 'connectionDB.php' ?>
                             <p>Description: <textarea name="description"><? echo $row2['description']?></textarea></p>
                             <p>Priority: 
                             <select name="priority">                            
-                                <option value="1"<? if($row2['priority']==1){?>selected<? }?>>1</option>
-                                <option value="2"<? if($row2['priority']==2){?>selected<? }?>>2</option>
-                                <option value="3"<? if($row2['priority']==3){?>selected<? }?>>3</option>
+                                <option value="1"<? if($row2['priority']==1){?>selected<? }?>>Low</option>
+                                <option value="2"<? if($row2['priority']==2){?>selected<? }?>>Normal</option>
+                                <option value="3"<? if($row2['priority']==3){?>selected<? }?>>High</option>
                             </select> </p>
-                            <p>Owner: <input type="text" name="owner" value="<? echo $row2['owner']?>"></p>
-                            <p>End: <input type="date" name="end" value="<? echo $row2['end']?>"></p>
+                            <p>Assigned to: <input type="text" name="owner" value="<? echo $row2['assigned']?>"></p>
+                            <p>Expected done: <input type="date" name="end" value="<? echo $row2['end']?>"></p>
                             <p><input type="submit" value="Delete" name="deleteTask">
                             <input type="submit" class="buttonInfo" value="Modify" name="updateTask"></p>
                             </form>
@@ -195,9 +231,10 @@ include 'connectionDB.php' ?>
       </tr>
           
     </table>
+    </div>
     </td><?
     if($numStates>3){?>
-        <td><img id="right" src="images/arrow_right.png" style="cursor:pointer"></td>
+        <td style="padding:15px"><img id="right" src="images/arrow_right.png" style="cursor:pointer"></td>
     <? }?>
       </tr>
     </table>

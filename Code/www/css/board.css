@@ -1,11 +1,18 @@
 @charset "UTF-8";
 /* CSS Document */
 
+#idBoard{
+	max-width:1146px; 
+	overflow:hidden; 
+	padding:0px;
+	border:solid;
+	border-radius:25px;
+}
+
 .kanboard{
 	border-collapse:collapse;
-	border-top:solid;
-	border-bottom:solid;
-	border-left:solid;
+	background-color:#FFF7F7;
+	position:relative;
 }
 
 .kanboard th{
@@ -25,18 +32,16 @@
 }
 
 #addTask{
-	margin-top:-3px;
-	margin-right:-3px;
 	height:22px;
 	width:29px;
 	float:right;
-	border:solid;
+	border-bottom:solid;
+	border-left:solid;
 }
 
 .laneClass{
-	height:478px;
 	overflow:auto;
-	width:376px;
+	width:380px;
 	padding-bottom:20px;
 }
 

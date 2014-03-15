@@ -62,8 +62,9 @@ CREATE TABLE IF NOT EXISTS `kanban_DB`.`task` (
   `name` VARCHAR(45) NOT NULL,
   `description` VARCHAR(45) NULL,
   `priority` INT NOT NULL,
-  `owner` VARCHAR(45) NOT NULL,
+  `owner` INT NOT NULL,
   `created` DATE NOT NULL,
+  `assigned` INT NULL,
   `end` DATE NULL,
   `updated` DATETIME NULL,
   `modified` INT NULL,
@@ -84,6 +85,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `kanban_DB`.`userBoard` (
   `iduser` INT NOT NULL,
+  `new` TINYINT(1) NOT NULL,
   `idboard` INT NOT NULL,
   PRIMARY KEY (`iduser`, `idboard`),
   INDEX `fk_user_has_board_board1_idx` (`idboard` ASC),

@@ -6,12 +6,17 @@ include 'connectionDB.php';
 extract($_REQUEST);
 
 mysql_query("UPDATE board SET updated=NOW(), modified='".$logged['iduser']."' WHERE idboard='".$logged['idboard']."'");
+mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='".$logged['idboard']."' and iduser='".$logged['iduser']."'");
 
 	if($deleteTask)		
 		mysql_query("DELETE FROM task WHERE idtask='$idtask'");
 	
-	if($addTask)
-		mysql_query("INSERT INTO task (name, description, priority, owner, created, end, idstate) VALUES ('$name','$description','$priority','$owner',CURDATE(),'$end','$idstate')");
+	if($addTask){
+		if($assigned)
+			mysql_query("INSERT INTO task (name, description, priority, owner, assigned, created, end, idstate) VALUES ('$name','$description','$priority','".$logged['iduser']."','$assigned',CURDATE(),'$end','$idstate')");
+		else
+			mysql_query("INSERT INTO task (name, description, priority, owner, created, end, idstate) VALUES ('$name','$description','$priority','".$logged['iduser']."',CURDATE(),'$end','$idstate')");
+	}
 	
 	if($updateTask){
 		mysql_query("UPDATE task SET name='$name',description='$description',priority='$priority',owner='$owner',end='$end' WHERE idtask='$idtask'");

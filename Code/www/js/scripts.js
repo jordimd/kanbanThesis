@@ -20,11 +20,17 @@ function validateForm() {
 }
 
 $(document).ready(function(){
+	var screenHeight=window.screen.availHeight;
+	var percentHeight=screenHeight*63/100;
+	$('.laneClass').css("height",percentHeight);
+});
+
+$(document).ready(function(){
   $("#left").click(function(){
-    $("#idBoard").animate({scrollLeft: "-=379"});
+    $("#idBoard").animate({scrollLeft: "-=383"});
   });
   $("#right").click(function(){
-    $("#idBoard").animate({scrollLeft: "+=379"});
+    $("#idBoard").animate({scrollLeft: "+=383"});
   });
 });
 
@@ -68,6 +74,27 @@ function shareProject(id) {
 		if(document.getElementById('shareProject_'+id).style.display = "none"){
 			document.getElementById('shareProject_'+id).style.display = "block";
 		}
+}
+
+function checkMail(idboard){
+
+	$.ajaxSetup({async:false});
+	var returnData = null;
+	$.post("editProject.php",
+			{
+			  checkMail:$("#emailShare_"+idboard).val(),
+			  idboard:idboard
+			},
+			function(data){returnData=data});
+	$.ajaxSetup({async:true});
+	if(returnData=="not"){
+		alert("This user is not registered")
+		return false;
+	}
+	else{
+		alert(returnData+" is now in this project");
+		return true;
+	}
 }
 
 function infoProject(id) {

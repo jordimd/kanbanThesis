@@ -8,9 +8,10 @@ body,html{
 }
 
 #login{
-	position:fixed;
+	position:absolute;
 	border:solid;
-	margin:15% 44%;
+	left:44%;
+	top:39%;
 	padding:10px;
 	display:block;
 	background-color:#FFFFFF;
@@ -19,7 +20,8 @@ body,html{
 #register{
 	position:fixed;
 	border:solid;
-	margin:15% 44%;
+	left:44%;
+	top:36%;
 	padding:10px;
 	display:none;
 }
