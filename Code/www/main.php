@@ -4,13 +4,15 @@
 
 <p><button onClick="logout()">Logout</button>
 
-Hi <? echo $logged['name']?>!</p>
+Hi <? echo $logged['name']?>!
+
+<button id="editUserButton" onClick="showDiv('main','editUserName'); hideID('editUserButton')">Edit User</button></p>
 
 </div>
 
 <? include 'connectionDB.php'?>
 
-<div class="main">
+<div id="main">
 	<form action="editProject.php" method="post">
     <p>New Project: <input type="text" name="name" required>
     <input type="submit" value="Add" name="addProject"></p>
@@ -129,9 +131,41 @@ while ($row = mysql_fetch_array($query)){?>
     
 	</div>
         
-<?
-}
-mysql_close($con);
-?>
+<? }?>
 </div>
 </div>
+<div id="editUserName" class="editUser">
+	<form action="editUser.php" method="post" onSubmit="return checkPasswordMail()">
+    <p>Name: <input type="text" name="editName" value="<? echo $logged['name']?>" required> </p>
+    <p>Email: <input id="mailUser" type="email" name="mail" value="<? echo $logged['mail']?>" required> </p>
+    <p>Password: <input id="passwordUser" type="password" name="password" required></p>
+    <button style="float:right">Modify</button>
+    </form>
+    
+    <button onClick="showDiv('editUserName','editUserPass')">Change Password</button>
+    <button onClick="showDiv('editUserName','editDeleteUser')">Delete User</button>
+    <button style="float:left" onClick="cancel()">Cancel</button>
+</div>
+
+<div id="editUserPass" class="editUser">
+	<form name="formPass" action="editUser.php" method="post" onSubmit="return checkPass()">
+    <p>Old password: <input id="passUser" type="password" name="oldPassword" required> </p>
+    <p>New Password: <input type="password" name="newPassword" required> </p>
+    <p>Repeat: <input type="password" name="newPassword2" required></p>
+    <button style="float:right">Modify</button>
+    </form>
+    <button style="float:left" onClick="cancel()">Cancel</button>
+</div>
+
+<div id="editDeleteUser" class="editUser">
+    
+    <form action="editUser.php" method="post" onSubmit="return deleteUser()">
+    <p>Please write your password to delete the user</p>
+    <p><input id="passUserDelete" type="password" name="deleteUserPass" placeholder="Password" required> </p>
+    <button style="float:right">Delete</button>
+    </form>
+    <button style="float:left" onClick="cancel()">Cancel</button>
+
+</div>
+
+<? mysql_close($con)?>

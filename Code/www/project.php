@@ -34,7 +34,7 @@ include 'connectionDB.php' ?>
 	$query = mysql_query("SELECT * FROM state WHERE idboard='".$logged['idboard']."' ORDER BY pos");
 	$numStates = mysql_num_rows($query);?>
 
-<table class="main" <? if($numStates>3){?> style="margin: 2% 5%" <? }?>>
+<table id="mainTable" <? if($numStates>3){?> style="margin: 2% 5%" <? }?>>
   <tr>
   	<? if($numStates>3){?>
   
@@ -105,17 +105,19 @@ include 'connectionDB.php' ?>
                     <option value="2" selected>Normal</option>
                     <option value="3">High</option>
                 </select></p>
-                <? 
+                <?
+                    $shared=false;
 					$assignResult = mysql_query("SELECT user.* FROM user, userBoard WHERE userBoard.idboard='".$logged['idboard']."' and userBoard.iduser=user.iduser");
 					$numShare = mysql_num_rows($assignResult);
 				
-					if($numShare>1){?>
+					if($numShare>1){
+                    $shared=true?>
                     <p>Assign to: 
                     <select name="assigned">
                     <?
                             
                             while ($assignRow = mysql_fetch_array($assignResult)){?>
-                                <option value="<? echo($assignRow['iduser'])?>"><? echo($assignRow['name'])?></option>
+                                <option value="<? echo($assignRow['iduser'])?>"<? if($logged['iduser']==$assignRow['iduser']){?>selected<? }?>><? echo($assignRow['name'])?></option>
                             <? }?>
                        
                     </select></p>
@@ -159,34 +161,42 @@ include 'connectionDB.php' ?>
 													case 3: ?>High<? break;
                             					} ?></p>
                             
-                            <? if($row2['assigned']){?>
-                            		<p>Assigned to: <? echo $row2['assigned']?></p>
+                            <? if($shared){?>
+                            		<p>Assigned to: <?
+                                    $result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['assigned']."'");
+                                    $row3 = mysql_fetch_array($result);
+                                
+                                    echo $row3['name']?></p>
                             <? }?>
                             
                             <p>Created: <? echo $row2['created']?></p>
-                            <p>by <?							
+                            <? if($shared){?>
+                                <p>by <?
 								$result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['owner']."'");
 								$row3 = mysql_fetch_array($result);
 								if($row3['iduser']==$logged['iduser'])
 									echo("you");
 								else
 									echo $row3['name']?></p>
+                            <? }?>
                             <p>Expected done: <? echo $row2['end']?></p>
                             
                             <? if($row2['updated']){?>                      
                                 <p>Modified: <? echo $row2['updated']?><p>
-                                <p>by <?							
+                                <? if($shared){?>
+                                    <p>by <?
                                     $result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['modified']."'");
                                     $row3 = mysql_fetch_array($result);
                                     if($row3['iduser']==$logged['iduser'])
                                         echo("you");
                                     else
                                         echo $row3['name'];
-								}
-								else{?>
-									<p>Never modified
+                                }
+                            }
+                            else{?>
+                                <p>Never modified
 									
-								<? }?>                                   
+                            <? }?>
                           
                             <button class="buttonInfo" onClick="edit(<? echo $row2['idtask']?>)">Edit</button></p>
                             </div>
@@ -209,7 +219,16 @@ include 'connectionDB.php' ?>
                                 <option value="2"<? if($row2['priority']==2){?>selected<? }?>>Normal</option>
                                 <option value="3"<? if($row2['priority']==3){?>selected<? }?>>High</option>
                             </select> </p>
-                            <p>Assigned to: <input type="text" name="owner" value="<? echo $row2['assigned']?>"></p>
+                            <? if($shared){?>
+                                <p>Assigned to: <select name="assigned">
+                                <?
+                                $assignResult = mysql_query("SELECT user.* FROM user, userBoard WHERE userBoard.idboard='".$logged['idboard']."' and userBoard.iduser=user.iduser");
+                                while ($assignRow = mysql_fetch_array($assignResult)){?>
+                                    <option value="<? echo($assignRow['iduser'])?>"<? if($row2['assigned']==$assignRow['iduser']){?>selected<? }?>><? echo($assignRow['name'])?></option>
+                                    <? }?>
+                                
+                                </select></p>
+                            <? }?>
                             <p>Expected done: <input type="date" name="end" value="<? echo $row2['end']?>"></p>
                             <p><input type="submit" value="Delete" name="deleteTask">
                             <input type="submit" class="buttonInfo" value="Modify" name="updateTask"></p>

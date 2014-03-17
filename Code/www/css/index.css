@@ -8,7 +8,7 @@ body,html{
 }
 
 #login{
-	position:absolute;
+	position:fixed;
 	border:solid;
 	left:44%;
 	top:39%;
@@ -24,6 +24,7 @@ body,html{
 	top:36%;
 	padding:10px;
 	display:none;
+	background-color:#FFFFFF;
 }
 
 #menu{
@@ -33,8 +34,19 @@ body,html{
 	background-color:#B8D4FF;
 }
 
-.main{
-	margin: 2% 10%;
+.editUser{
+	position:fixed;
+	border:solid;
+	left:44%;
+	top:36%;
+	padding:10px;
+	display:none;
+	background-color:#FFFFFF;	
+}
+
+#main{
+	margin:2% 10%;
+	display:block;
 }
 
 .projectClass{

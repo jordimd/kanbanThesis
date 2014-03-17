@@ -16,7 +16,7 @@
 
 </div>
 
-<div id="modState" class="main" style="max-height:75%; overflow:auto">
+<div id="modState" style="max-height:75%; overflow:auto; margin:2% 10%">
 
     <form action="editBoard.php" method="post">
     New State: <input type="text" name="name" required>

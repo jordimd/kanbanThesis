@@ -9,6 +9,10 @@
 	border-radius:25px;
 }
 
+#mainTable{
+	margin:2% 10%;
+}
+
 .kanboard{
 	border-collapse:collapse;
 	background-color:#FFF7F7;

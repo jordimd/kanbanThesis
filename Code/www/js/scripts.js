@@ -1,6 +1,10 @@
-function register(){
-	document.getElementById('login').style.display = "none";
-	document.getElementById('register').style.display = "block";
+function showDiv(prevDiv, newDiv){
+	document.getElementById(prevDiv).style.display = "none";
+	document.getElementById(newDiv).style.display = "block";
+}
+
+function hideID(id){
+	document.getElementById(id).style.display = "none";
 }
 
 function cancel(){
@@ -11,7 +15,21 @@ function validateForm() {
 	
 	if (document.forms["formRegister"]["password"].value == document.forms["formRegister"]["password2"].value)
 	{
-		return true;
+		$.ajaxSetup({async:false});
+		var returnData = null;
+		$.post("register.php",
+				{
+				  newMail:$("#registerEmail").val()
+				},
+				function(data){returnData=data});
+				
+		$.ajaxSetup({async:true});
+		if(returnData=="ok")
+			return true;
+		else{
+			alert("This email is already registered")
+			return false;
+		}
 	} 
 	else{
 		alert("Passwords do not match")
@@ -47,8 +65,8 @@ function logout(){
 }
 
 function alertSure(text){
-	var r=confirm(text);
-	if (r==true)
+	var sure=confirm(text);
+	if (sure==true)
 	  return true;
 	else
 	  return false;
@@ -86,6 +104,7 @@ function checkMail(idboard){
 			  idboard:idboard
 			},
 			function(data){returnData=data});
+			
 	$.ajaxSetup({async:true});
 	if(returnData=="not"){
 		alert("This user is not registered")
@@ -95,6 +114,79 @@ function checkMail(idboard){
 		alert(returnData+" is now in this project");
 		return true;
 	}
+}
+
+function checkPasswordMail(){
+	
+	$.ajaxSetup({async:false});
+	var returnData = null;
+	$.post("editUser.php",
+			{
+			  checkPasswordMail:$("#passwordUser").val(),
+			  mail:$("#mailUser").val()
+			},
+			function(data){returnData=data});
+			
+	$.ajaxSetup({async:true});
+	if(returnData=="ok")
+		return true;
+	else{
+		if(returnData=="nomail")
+			alert("This email is already registered")
+		else
+			alert("Incorrect password")
+		return false;
+	}
+}
+
+function checkPass() {
+	
+	if (document.forms["formPass"]["newPassword"].value == document.forms["formPass"]["newPassword2"].value)
+	{
+		$.ajaxSetup({async:false});
+		var returnData = null;
+		$.post("editUser.php",
+				{
+				  checkPassword:$("#passUser").val()
+				},
+				function(data){returnData=data});
+				
+		$.ajaxSetup({async:true});
+		if(returnData=="ok")
+			return true;
+		else{
+			alert("Incorrect old password")
+			return false;
+		}
+	} 
+	else{
+		alert("Check the repeat password")
+		return false;
+	}			
+}
+
+function deleteUser(){
+	
+	$.ajaxSetup({async:false});
+		var returnData = null;
+		$.post("editUser.php",
+				{
+				  checkPassword:$("#passUserDelete").val()
+				},
+				function(data){returnData=data});
+				
+		$.ajaxSetup({async:true});
+		if(returnData=="ok"){
+			var sure=confirm("Are you sure you want to delete your user and loose all your projects?");
+			if (sure==true)
+			  return true;
+			else
+			  return false;
+		}
+		else{
+			alert("Incorrect password")
+			return false;
+		}
 }
 
 function infoProject(id) {
