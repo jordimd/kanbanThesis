@@ -39,8 +39,10 @@ function validateForm() {
 
 $(document).ready(function(){
 	var screenHeight=window.screen.availHeight;
-	var percentHeight=screenHeight*63/100;
+	var percentHeight=screenHeight*67/100;
 	$('.laneClass').css("height",percentHeight);
+    $('.sortableClass').css("height",percentHeight-27);
+                  
 });
 
 $(document).ready(function(){
@@ -221,37 +223,65 @@ $(document).ready(function () {
 	}).disableSelection();
 });
 
+$(document).ready(function(){
+    $("#buttona").click(function(){
+        $("#info_16").animate({
+            height:'toggle'
+        });
+    });
+});
+
 function showInfo(id) {
+    
+    $("#info_"+id).animate({
+        height:'toggle'
+    });
+    
 	
-	if(document.getElementById('info_'+id).style.display == "block"){
+	/*if(document.getElementById('info_'+id).style.display == "block"){
    		document.getElementById('info_'+id).style.display = "none";
 	}
 	else
 		if(document.getElementById('edit_'+id).style.display = "none"){
 			document.getElementById('info_'+id).style.display = "block";
-		}
+		}*/
 }
 
 function edit(id) {
+    
+    $("#info_"+id).animate({
+        height:'toggle'
+    });
 			
-	document.getElementById('info_'+id).style.display = "none";
-	document.getElementById('edit_'+id).style.display = "block";
+    $("#edit_"+id).animate({
+        height:'toggle'
+    });
+    
+    document.getElementById('infoButton_'+id).style.display = "none";
+    
+	/*document.getElementById('info_'+id).style.display = "none";
+	document.getElementById('edit_'+id).style.display = "block";*/
 }
 
 function showNewTask(id){
+    
+    $("#newTask_"+id).animate({
+        height:'toggle'
+    });
+    
 	
-	if(document.getElementById('newTask_'+id).style.display == "block")
+	/*if(document.getElementById('newTask_'+id).style.display == "block")
    		document.getElementById('newTask_'+id).style.display = "none";
 	else
 		if(document.getElementById('newTask_'+id).style.display = "none")
-			document.getElementById('newTask_'+id).style.display = "block";
+			document.getElementById('newTask_'+id).style.display = "block";*/
 }
 
 $(document).ready(function() {
 
-	$('.laneClass').sortable({
+	$('.sortableClass').sortable({
 		
-		connectWith: '.laneClass',
+		connectWith: '.sortableClass',
 		start: function(event, ui) {
 			//var idprevstate = ui.item.parent().attr('id');
 			$(this).attr('idprevstate', ui.item.parent().attr('id'));

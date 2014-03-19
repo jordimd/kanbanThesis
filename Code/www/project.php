@@ -53,40 +53,46 @@ include 'connectionDB.php' ?>
       
       <th align="center"<? if($count==$numStates){?>style="border-right:none"<? }?>>
             <div id="laneName">
-            
+        
                 <? echo $row['name'];
-					 if($row['wip']!=NULL){
-							echo(" / ");
-							echo $row['wip'];		
-					 }?>
+        
+                if($row['wip']!=NULL){
+                    
+                    ?><span style="color:#FF6666"><?
+                    echo(" (");
+                    echo $row['wip'];
+                    echo(")");
+                    ?></span><?
+                }?>
             </div>
             
             <div id="line">
             </div>
  
-            <div id="addTask">
-                <button onClick="<? 
-				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
-				$wip = mysql_fetch_array($result);
-				
-				$result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
-				$numtasks = mysql_num_rows($result2);
-						
-				if($wip['wip']>$numtasks or $wip['wip']==NULL){?>   
-                	showNewTask(<? echo $row['idstate']?>)<? } 
-				else{?>
-					wip()				
-				<? }?>
-                                
-                ">+</button>
-
-            </div>
          
-            <div id="state_<? echo $row['idstate']?>" class="laneClass">
-            
-                                            
+            <div class="laneClass">
+        
+            <div id="addTask">
+            <img onClick="<?
+            $result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
+            $wip = mysql_fetch_array($result);
+        
+            $result2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."'");
+            $numtasks = mysql_num_rows($result2);
+        
+            if($wip['wip']>$numtasks or $wip['wip']==NULL){?>
+                showNewTask(<? echo $row['idstate']?>)<? }
+            else{?>
+                wip()
+                <? }?>
+        
+            " src="images/Plus.png" alt="Add Task" width="20" height="20" style="cursor:pointer">
+        
+            </div>
+        <div id="state_<? echo $row['idstate']?>" class="sortableClass">
+        
             <div id="newTask_<? echo $row['idstate']?>" class="taskClass" 
-            style="display:none; margin-top:0; background-color:#FFFFFF;">
+            style="display:none; background-color:#FFFFFF;">
             
             <? 
 				$result = mysql_query("SELECT wip FROM state WHERE idstate='".$row['idstate']."'");
@@ -97,7 +103,7 @@ include 'connectionDB.php' ?>
             
                 <form name="formTask" method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-                <p>Name: <input type="text" name="name" required></p>
+                <p>Name: <input type="text" name="name" maxlength="18" required></p>
                 <p>Description: <textarea name="description"></textarea> </p>
                 <p>Priority: 
                 <select name="priority">                            
@@ -126,7 +132,7 @@ include 'connectionDB.php' ?>
                 <input type="submit" class="buttonInfo" value="Add" name="addTask"></p>
                 </form>
         
-          </div>   
+            </div>
 
                 <?
                     
@@ -134,27 +140,23 @@ include 'connectionDB.php' ?>
                     
                     while ($row2 = mysql_fetch_array($query2)){?>
 
-                        <div id="task_<? echo $row2['idtask']?>" class="taskClass" style="background-color: 
+                        <div id="task_<? echo $row2['idtask']?>" class="taskClass"
                         
                             <? switch ($row2['priority']){
-                                case 1: ?> #CCFF99<? break;
-                                case 2: ?> #FFFF99<? break;
-                                case 3: ?> #FF9999<? break;
-                            } ?>">
-                        
-                            <p><? echo $row2['name']?> 
-                            <button class="buttonInfo" onclick="showInfo(<? echo $row2['idtask']?>)">Info</button></p>
+                                case 1: ?> style="background-color:#CCFF99; border-color:#006600"><? break;
+                                case 2: ?> style="background-color:#FFFF99; border-color:#808000"><? break;
+                                case 3: ?> style="background-color:#FF9999; border-color:#990000"><? break;
+                            } ?>
+            
+                            <code style="font-size:20; text-transform:uppercase; cursor:default"><? echo $row2['name']?></code>
+                            <img id="infoButton_<? echo $row2['idtask']?>" onclick="showInfo(<? echo $row2['idtask']?>)" src="images/info.png" alt="Info" width="25" height="25" style="margin-top:-1px; float:right; cursor:pointer">
 
                         
-                         <div id="info_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
-                            
-                            <? switch ($row2['priority']){
-                                case 1: ?> #CCFF99<? break;
-                                case 2: ?> #FFFF99<? break;
-                                case 3: ?> #FF9999<? break;
-                            } ?>">
+                         <div id="info_<? echo $row2['idtask']?>" class="taskInfo">
                                     
-                            <p>Description: <? echo $row2['description']?></p>
+                            <? if($row2['description']){?>
+                                <code><? echo $row2['description']?></code>
+                            <? }?>
                             <p>Priority: <? switch ($row2['priority']){
 													case 1: ?>Low<? break;
 													case 2: ?>Normal<? break;
@@ -201,17 +203,11 @@ include 'connectionDB.php' ?>
                             <button class="buttonInfo" onClick="edit(<? echo $row2['idtask']?>)">Edit</button></p>
                             </div>
                             
-                         <div id="edit_<? echo $row2['idtask']?>" class="taskInfo" style="background-color: 
-                            
-                            <? switch ($row2['priority']){
-                                case 1: ?> #CCFF99<? break;
-                                case 2: ?> #FFFF99<? break;
-                                case 3: ?> #FF9999<? break;
-                            } ?>">
+                         <div id="edit_<? echo $row2['idtask']?>" class="taskInfo">
 
                             <form name="formTask" method="post" action="editBoard.php">
                             <input type="hidden" name="idtask" value="<? echo $row2['idtask']?>">
-                            <p>Name: <input type="text" name="name" value="<? echo $row2['name']?>"></p>
+                            <p>Name: <input type="text" name="name" value="<? echo $row2['name']?>" maxlength="18" required></p>
                             <p>Description: <textarea name="description"><? echo $row2['description']?></textarea></p>
                             <p>Priority: 
                             <select name="priority">                            
@@ -239,7 +235,7 @@ include 'connectionDB.php' ?>
                          </div>
                         <?
                     }?>
-                
+                </div>
                 
                 </div>
           

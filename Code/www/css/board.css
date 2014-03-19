@@ -28,7 +28,10 @@
 #laneName{
 	background-color:#5A5A5A;
 	color:white;
-	padding:10px 0px;
+    padding: 10 0px;
+    font-size:25;
+    text-transform:uppercase;
+    font-family:"arial"
 }
 
 #line{
@@ -36,36 +39,43 @@
 }
 
 #addTask{
-	height:22px;
-	width:29px;
-	float:right;
+    padding:2px;
+    margin-left:353px;
 	border-bottom:solid;
 	border-left:solid;
+    position:absolute;
 }
 
 .laneClass{
 	overflow:auto;
 	width:380px;
-	padding-bottom:20px;
+}
+
+.sortableClass{
+    overflow:auto; 
+    padding-top:27px;
 }
 
 .taskClass{
 	height:auto;
 	width:65%;
-	margin-top:20px;
+	margin-bottom:20px;
 	border:solid;
 	text-align:left;
-	padding-left:20px;
-	padding-right:20px;
+	padding: 15 20px;
 	display:block;
 	border-radius:10px;
+    text-align:center;
 }
 
 .buttonInfo{
 	float:right;
+    border-radius:10px;
+    margin-top:-2;
 }
 
 .taskInfo{
+    position:relative;
 	display:none;
 	text-align:left;
 }

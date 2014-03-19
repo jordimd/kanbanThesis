@@ -19,7 +19,7 @@
 <div id="modState" style="max-height:75%; overflow:auto; margin:2% 10%">
 
     <form action="editBoard.php" method="post">
-    New State: <input type="text" name="name" required>
+    New State: <input type="text" name="name" maxlength="15" required>
     <input type="submit" value="Add" name="addState">
     </form>
     
@@ -51,8 +51,8 @@
                 <div id="editState_<? echo $row['idstate']?>" class="edit" style="margin-bottom:-15px">
                 <form method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-                Name: <input type="text" name="name" value="<? echo $row['name']?>"><br><br>
-                WIP: <input type="number" name="wip" value="<? echo $row['wip']?>">
+                Name: <input type="text" name="name" maxlength="15" value="<? echo $row['name']?>"required ><br><br>
+                WIP: <input type="number" name="wip" max="99" min="1" value="<? echo $row['wip']?>">
                 <input type="submit" class="buttonInfo" value="Modify" name="updateState">
                 </form>
 

@@ -39,10 +39,14 @@ mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='".$logged['idboard'].
 	}
 	
 	if($updateState){
-		mysql_query("UPDATE state SET name='$name',wip='$wip' WHERE idstate='$idstate'");
-		mysql_close($con);
-
-		header("Location: editStates.php");
+		mysql_query("UPDATE state SET name='$name' WHERE idstate='$idstate'");
+        if($wip=="")
+            mysql_query("UPDATE state SET wip=NULL WHERE idstate='$idstate'");
+        else
+            mysql_query("UPDATE state SET wip='$wip' WHERE idstate='$idstate'");
+        
+        mysql_close($con);
+        header("Location: editStates.php");
 	}
 		
 	if($moveTaskLane=="ok"){
