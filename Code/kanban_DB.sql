@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `kanban_DB`.`task` (
   `idtask` INT NOT NULL AUTO_INCREMENT,
   `pos` INT NULL,
   `name` VARCHAR(45) NOT NULL,
-  `description` VARCHAR(45) NULL,
+  `description` VARCHAR(100) NULL,
   `priority` INT NOT NULL,
   `owner` INT NOT NULL,
   `created` DATE NOT NULL,

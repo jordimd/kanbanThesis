@@ -1,6 +1,6 @@
 <? include 'session.php'?>
 
-<div id="menu">
+<div class="menu">
 
 <p><button onClick="logout()">Logout</button>
 

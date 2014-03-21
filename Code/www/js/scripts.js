@@ -1,3 +1,33 @@
+$(document).ready(function(){
+
+	var screenHeight=window.screen.availHeight;
+	var screenWidth=window.screen.availWidth;
+	var percentHeight=screenHeight*0.67;
+	var percentWidth=screenWidth*0.28;
+
+	$('#mainTable').css("margin-top",screenHeight*0.04);
+	$('#mainTable').css("margin-left",screenWidth*0.03);
+
+	$('.laneClass').css("height",percentHeight);
+	$('.laneClass').css("width",percentWidth);
+    $('.sortableClass').css("height",percentHeight-27);
+
+    $('#idBoard').css("max-width",percentWidth*3+6);
+
+    $('.addTask').css("margin-left",percentWidth-26);
+
+
+  $("#left").click(function(){
+    $("#idBoard").animate({scrollLeft: "-="+(percentWidth+2)});
+  });
+  $("#right").click(function(){
+    $("#idBoard").animate({scrollLeft: "+="+(percentWidth+3)});
+  });
+
+  document.getElementById('mainTable').style.display = "block";
+
+});
+
 function showDiv(prevDiv, newDiv){
 	document.getElementById(prevDiv).style.display = "none";
 	document.getElementById(newDiv).style.display = "block";
@@ -10,6 +40,10 @@ function hideID(id){
 function cancel(){
 	window.location.replace("index.php")	
 }
+
+$(function() {
+    $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
+});
 
 function validateForm() {
 	
@@ -36,23 +70,6 @@ function validateForm() {
 		return false;
 	}			
 }
-
-$(document).ready(function(){
-	var screenHeight=window.screen.availHeight;
-	var percentHeight=screenHeight*67/100;
-	$('.laneClass').css("height",percentHeight);
-    $('.sortableClass').css("height",percentHeight-27);
-                  
-});
-
-$(document).ready(function(){
-  $("#left").click(function(){
-    $("#idBoard").animate({scrollLeft: "-=383"});
-  });
-  $("#right").click(function(){
-    $("#idBoard").animate({scrollLeft: "+=383"});
-  });
-});
 
 function editStates() {
 	window.location.replace("editStates.php")
@@ -236,7 +253,7 @@ function showInfo(id) {
     $("#info_"+id).animate({
         height:'toggle'
     });
-    
+    document.getElementById('edit_'+id).style.display = "none";
 	
 	/*if(document.getElementById('info_'+id).style.display == "block"){
    		document.getElementById('info_'+id).style.display = "none";
@@ -257,8 +274,6 @@ function edit(id) {
         height:'toggle'
     });
     
-    document.getElementById('infoButton_'+id).style.display = "none";
-    
 	/*document.getElementById('info_'+id).style.display = "none";
 	document.getElementById('edit_'+id).style.display = "block";*/
 }
@@ -268,7 +283,8 @@ function showNewTask(id){
     $("#newTask_"+id).animate({
         height:'toggle'
     });
-    
+
+    //$(".inputName").focus();
 	
 	/*if(document.getElementById('newTask_'+id).style.display == "block")
    		document.getElementById('newTask_'+id).style.display = "none";

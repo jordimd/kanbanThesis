@@ -8,7 +8,7 @@
 
 <script src="js/scripts.js" type="text/javascript"></script>
 
-<div id="menu">
+<div class="menu">
 
 <p><button onClick="logout()">Logout</button>
 <button onClick="cancel()">Projects</button>

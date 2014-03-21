@@ -27,10 +27,11 @@ body,html{
 	background-color:#FFFFFF;
 }
 
-#menu{
+.menu{
 	padding:5px;
 	padding-left:20px;
 	border-bottom:solid;
+	border-color:#000099;
 	background-color:#B8D4FF;
 }
 

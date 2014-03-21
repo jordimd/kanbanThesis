@@ -2,15 +2,14 @@
 /* CSS Document */
 
 #idBoard{
-	max-width:1146px; 
 	overflow:hidden; 
 	padding:0px;
-	border:solid;
+	border:2px solid;
 	border-radius:25px;
 }
 
 #mainTable{
-	margin:2% 10%;
+	display:none;
 }
 
 .kanboard{
@@ -21,7 +20,7 @@
 
 .kanboard th{
 	vertical-align:text-top;
-	border-right:solid;
+	border-right:2px solid;
 	padding:0;
 }
 
@@ -31,24 +30,24 @@
     padding: 10 0px;
     font-size:25;
     text-transform:uppercase;
-    font-family:"arial"
+    cursor:default;
+    font-family:"arial";
 }
 
-#line{
-	border-top:solid;
+.line{
+	border-top:2px solid;
 }
 
-#addTask{
+.addTask{
     padding:2px;
-    margin-left:353px;
-	border-bottom:solid;
-	border-left:solid;
+	border-bottom:2px solid;
+	border-left:2px solid;
     position:absolute;
+    border-radius: 0  10px;
 }
 
 .laneClass{
 	overflow:auto;
-	width:380px;
 }
 
 .sortableClass{
@@ -60,12 +59,71 @@
 	height:auto;
 	width:65%;
 	margin-bottom:20px;
-	border:solid;
-	text-align:left;
+	border:2px solid;
 	padding: 15 20px;
 	display:block;
 	border-radius:10px;
     text-align:center;
+}
+
+.newTaskClass{
+	height:auto;
+	width:65%;
+	margin-bottom:20px;
+	border:2px solid black;
+	padding: 0 20px;
+	display:none;
+	border-radius:10px;
+    text-align:left;
+    background-color:#FFFFFF; 
+    font-family:arial;
+    line-height:18px;
+    font-size:12px;
+    color:#999;
+}
+
+.newTaskClass input{
+	width:100%;
+	font-size:12px;
+    padding:5px 10px;
+    border-radius: 5px;
+    border:1px solid #CCC;
+}
+
+.inputTextarea{
+	width:100%;
+    font-size:12px;
+    padding:2px 5px;
+    border-radius: 5px;
+    border:1px solid #CCC;
+}
+
+*:focus {
+    outline: none;
+}
+
+.newTaskClass select{
+	width:75%;
+	float:right;
+	font-size:12px;
+    padding:2px 5px;
+    border-radius: 5px;
+    border:1px solid #CCC;
+}
+
+.inputSubmit{
+	margin-bottom: 7px;
+	color: white;
+}
+
+.inputSubmit:active{
+	background-color:white;
+	color:#999;
+}
+
+.descriptionClass{
+	font-size:15;
+	text-align:center;
 }
 
 .buttonInfo{
@@ -78,4 +136,6 @@
     position:relative;
 	display:none;
 	text-align:left;
+	font-family: arial;
+	cursor:default;
 }
