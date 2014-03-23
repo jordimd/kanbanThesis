@@ -6,11 +6,11 @@ include 'connectionDB.php';
 extract($_REQUEST);
 
 if($newName){
+
+	$newName=ucwords($newName);
 	
 	mysql_query("INSERT INTO user (name, password, mail) VALUES ('$newName', md5('$password'),'$mail')");
-	
 	$query2=mysql_query("SELECT iduser FROM user WHERE mail='$mail'");
-	
 	$row = mysql_fetch_array($query2);
 
 	$logged=array('iduser'=>$row['iduser'],'name'=>$newName,'mail'=>$mail);

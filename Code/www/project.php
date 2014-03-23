@@ -12,7 +12,7 @@ if($id){
 	$_SESSION['logged']=$logged;
 }
 
-include 'connectionDB.php' ?>
+include 'connectionDB.php'?>
 
 <link href="css/index.css" rel="stylesheet" type="text/css"/> 
 <link href="css/board.css" rel="stylesheet" type="text/css"/> 
@@ -119,7 +119,7 @@ include 'connectionDB.php' ?>
         				
         					if($numShare>1){
                             $shared=true?>
-                            <p>Assign 
+                            <p>Assign
                             <select name="assigned">
                             <?
                                     while ($assignRow = mysql_fetch_array($assignResult)){?>
@@ -134,8 +134,7 @@ include 'connectionDB.php' ?>
                 
                     </div>
 
-                        <?
-                            
+                        <?                            
                             $query2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."' ORDER BY pos, end, priority");
                             
                             while ($row2 = mysql_fetch_array($query2)){?>
@@ -148,14 +147,14 @@ include 'connectionDB.php' ?>
                                         case 3: ?> style="background-color:#FF9999; border-color:#990000"><? break;
                                     }?>
                     
-                                    <code style="font-size:20; text-transform:uppercase; cursor:default"><? echo $row2['name']?></code>
-                                    <img id="infoButton_<? echo $row2['idtask']?>" onclick="showInfo(<? echo $row2['idtask']?>)" src="images/info.png" alt="Info" width="25" height="25" style="margin-top:-1px; float:right; cursor:pointer">
+                                    <p class="nameTask"><code><? echo $row2['name']?></code>
+                                    <img id="infoButton_<? echo $row2['idtask']?>" class="infoButton" onclick="showInfo(<? echo $row2['idtask']?>)" src="images/info.png" alt="Info" width="25" height="25"></p>
 
                                 
                                  <div id="info_<? echo $row2['idtask']?>" class="taskInfo">
                                             
                                     <? if($row2['description']){?>
-                                        <p class="descriptionClass"><code><? echo $row2['description']?></code></p>
+                                        <p class="descriptionClass"><? echo $row2['description']?></p>
                                     <? }else{?> <br><? }?>
                                     <div class="line" <? switch ($row2['priority']){
                                         case 1: ?> style="border-color:#006600"><? break;
@@ -163,23 +162,43 @@ include 'connectionDB.php' ?>
                                         case 3: ?> style="border-color:#990000"><? break;
                                     }?>
                                     </div>
-                                    <p>Priority: <? switch ($row2['priority']){
+                                    <p><div class="label" <? switch ($row2['priority']){
+                                        case 1: ?> style="color:#006600"><? break;
+                                        case 2: ?> style="color:#808000"><? break;
+                                        case 3: ?> style="color:#990000"><? break;
+                                    }?>
+                                    Priority</div><? switch ($row2['priority']){
         													case 1: ?>Low<? break;
         													case 2: ?>Normal<? break;
         													case 3: ?>High<? break;
                                     					} ?></p>
                                     
                                     <? if($shared){?>
-                                    		<p>Assigned to: <?
+                                    		<p><div class="label" <? switch ($row2['priority']){
+                                                case 1: ?> style="color:#006600"><? break;
+                                                case 2: ?> style="color:#808000"><? break;
+                                                case 3: ?> style="color:#990000"><? break;
+                                            }?>
+                                            Assigned</div><?
                                             $result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['assigned']."'");
                                             $row3 = mysql_fetch_array($result);
                                         
                                             echo $row3['name']?></p>
                                     <? }?>
                                     
-                                    <p>Created: <? echo $row2['created']?></p>
+                                    <p><div class="label" <? switch ($row2['priority']){
+                                                case 1: ?> style="color:#006600"><? break;
+                                                case 2: ?> style="color:#808000"><? break;
+                                                case 3: ?> style="color:#990000"><? break;
+                                            }?>
+                                            Created</div><? echo $row2['created']?>
                                     <? if($shared){?>
-                                        <p>by <?
+                                        <span <? switch ($row2['priority']){
+                                                case 1: ?> style="color:#006600"><? break;
+                                                case 2: ?> style="color:#808000"><? break;
+                                                case 3: ?> style="color:#990000"><? break;
+                                            }?>
+                                            by </span><?
         								$result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['owner']."'");
         								$row3 = mysql_fetch_array($result);
         								if($row3['iduser']==$logged['iduser'])
@@ -187,42 +206,96 @@ include 'connectionDB.php' ?>
         								else
         									echo $row3['name']?></p>
                                     <? }?>
-                                    <p>Expected done: <? echo $row2['end']?></p>
+                                    <p><div class="label" <? switch ($row2['priority']){
+                                                case 1: ?> style="color:#006600"><? break;
+                                                case 2: ?> style="color:#808000"><? break;
+                                                case 3: ?> style="color:#990000"><? break;
+                                            }?>
+                                            Expected</div><? echo $row2['end']?></p>
                                     
-                                    <? if($row2['updated']){?>                      
-                                        <p>Modified: <? echo $row2['updated']?><p>
-                                        <? if($shared){?>
-                                            <p>by <?
-                                            $result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['modified']."'");
-                                            $row3 = mysql_fetch_array($result);
-                                            if($row3['iduser']==$logged['iduser'])
-                                                echo("you");
-                                            else
-                                                echo $row3['name'];
+                                    
+                                    <p><div class="label"<? switch ($row2['priority']){
+                                            case 1: ?> style="color:#006600"><? break;
+                                            case 2: ?> style="color:#808000"><? break;
+                                            case 3: ?> style="color:#990000"><? break;
+                                            }?>
+                                            Modified</div><? 
+                                        if($row2['updated']){
+                                            echo $row2['updated'];
+                                                                                
+                                            if($shared){?>
+                                                <span <? switch ($row2['priority']){
+                                                    case 1: ?> style="color:#006600"><? break;
+                                                    case 2: ?> style="color:#808000"><? break;
+                                                    case 3: ?> style="color:#990000"><? break;
+                                                }?>
+                                                by </span><?
+                                                $result = mysql_query("SELECT * FROM user WHERE iduser='".$row2['modified']."'");
+                                                $row3 = mysql_fetch_array($result);
+                                                if($row3['iduser']==$logged['iduser'])
+                                                    echo("you");
+                                                else
+                                                    echo $row3['name'];
+                                            }
                                         }
-                                    }
-                                    else{?>
-                                        <p>Never modified
-        									
-                                    <? }?>
+                                        else
+                                            echo ("Never");
+
+                                        ?></p>
+                                    
                                   
-                                    <button class="buttonInfo" onClick="edit(<? echo $row2['idtask']?>)">Edit</button></p>
+                                    <button class="button" <? switch ($row2['priority']){
+                                                case 1: ?> style="background-color:#CCFF99; border-color:#006600; color:#006600"<? break;
+                                                case 2: ?> style="background-color:#FFFF99; border-color:#808000; color:#808000"<? break;
+                                                case 3: ?> style="background-color:#FF9999; border-color:#990000; color:#990000"<? break;
+                                            }?> onClick="edit(<? echo $row2['idtask']?>)">Edit</button>
                                     </div>
                                     
-                                 <div id="edit_<? echo $row2['idtask']?>" class="taskInfo">
+                                 <div id="edit_<? echo $row2['idtask']?>" class="taskInfo"><br>
 
                                     <form name="formTask" method="post" action="editBoard.php">
                                     <input type="hidden" name="idtask" value="<? echo $row2['idtask']?>">
-                                    <p>Name: <input type="text" name="name" value="<? echo $row2['name']?>" maxlength="18" size="18" required></p>
-                                    <p>Description: <textarea name="description" maxlength="100" rows="2" style="width: 100%"><? echo $row2['description']?></textarea></p>
-                                    <p>Priority: 
-                                    <select name="priority">                            
+                                    <p><div class="label" <? switch ($row2['priority']){
+                                        case 1: ?> style="color:#006600"><? break;
+                                        case 2: ?> style="color:#808000"><? break;
+                                        case 3: ?> style="color:#990000"><? break;
+                                    }?>Name</div><input type="text" name="name" value="<? echo $row2['name']?>" maxlength="18" size="18" required <? switch ($row2['priority']){
+                                        case 1: ?> style="background-color:#E0FFD6; border-color:#006600;"><? break;
+                                        case 2: ?> style="background-color:#FFFFCC; border-color:#808000;"><? break;
+                                        case 3: ?> style="background-color:#FFCCCC; border-color:#990000;"><? break;
+                                    }?></p>
+                                    <p><div class="label" <? switch ($row2['priority']){
+                                        case 1: ?> style="color:#006600"><? break;
+                                        case 2: ?> style="color:#808000"><? break;
+                                        case 3: ?> style="color:#990000"><? break;
+                                    }?>Description</div><textarea class="inputTextareaEdit" name="description" maxlength="100" rows="3" <? switch ($row2['priority']){
+                                        case 1: ?> style="background-color:#E0FFD6; border-color:#006600;"><? break;
+                                        case 2: ?> style="background-color:#FFFFCC; border-color:#808000;"><? break;
+                                        case 3: ?> style="background-color:#FFCCCC; border-color:#990000;"><? break;
+                                    }?><? echo $row2['description']?></textarea></p><br>
+                                    <p><div class="label" <? switch ($row2['priority']){
+                                        case 1: ?> style="color:#006600"><? break;
+                                        case 2: ?> style="color:#808000"><? break;
+                                        case 3: ?> style="color:#990000"><? break;
+                                    }?>Priority</div><select name="priority" <? switch ($row2['priority']){
+                                        case 1: ?> style="background-color:#E0FFD6; border-color:#006600;"><? break;
+                                        case 2: ?> style="background-color:#FFFFCC; border-color:#808000;"><? break;
+                                        case 3: ?> style="background-color:#FFCCCC; border-color:#990000;"><? break;
+                                    }?>                            
                                         <option value="1"<? if($row2['priority']==1){?>selected<? }?>>Low</option>
                                         <option value="2"<? if($row2['priority']==2){?>selected<? }?>>Normal</option>
                                         <option value="3"<? if($row2['priority']==3){?>selected<? }?>>High</option>
-                                    </select> </p>
+                                    </select></p>
                                     <? if($shared){?>
-                                        <p>Assigned to: <select name="assigned">
+                                        <p><div class="label" <? switch ($row2['priority']){
+                                        case 1: ?> style="color:#006600"><? break;
+                                        case 2: ?> style="color:#808000"><? break;
+                                        case 3: ?> style="color:#990000"><? break;
+                                    }?>Assigned</div><select name="assigned" <? switch ($row2['priority']){
+                                        case 1: ?> style="background-color:#E0FFD6; border-color:#006600;"><? break;
+                                        case 2: ?> style="background-color:#FFFFCC; border-color:#808000;"><? break;
+                                        case 3: ?> style="background-color:#FFCCCC; border-color:#990000;"><? break;
+                                    }?>
                                         <?
                                         $assignResult = mysql_query("SELECT user.* FROM user, userBoard WHERE userBoard.idboard='".$logged['idboard']."' and userBoard.iduser=user.iduser");
                                         while ($assignRow = mysql_fetch_array($assignResult)){?>
@@ -231,9 +304,25 @@ include 'connectionDB.php' ?>
                                         
                                         </select></p>
                                     <? }?>
-                                    <p>Expected done: <input class="datePicker" autocomplete="off" type="text" size="11" name="end" value="<? echo $row2['end']?>" required></p>
-                                    <p><input type="submit" value="Delete" name="deleteTask">
-                                    <input type="submit" class="buttonInfo" value="Modify" name="updateTask"></p>
+                                    <p><div class="label" <? switch ($row2['priority']){
+                                        case 1: ?> style="color:#006600"><? break;
+                                        case 2: ?> style="color:#808000"><? break;
+                                        case 3: ?> style="color:#990000"><? break;
+                                    }?>Expected</div><input class="datePicker" autocomplete="off" type="text" size="11" name="end" value="<? echo $row2['end']?>" required <? switch ($row2['priority']){
+                                        case 1: ?> style="background-color:#E0FFD6; border-color:#006600;"><? break;
+                                        case 2: ?> style="background-color:#FFFFCC; border-color:#808000;"><? break;
+                                        case 3: ?> style="background-color:#FFCCCC; border-color:#990000;"><? break;
+                                    }?></p><br>
+                                    .<input type="submit" style="width:49%; left:0; <? switch ($row2['priority']){
+                                                case 1: ?> background-color:#CCFF99; border-color:#006600; color:#006600"<? break;
+                                                case 2: ?> background-color:#FFFF99; border-color:#808000; color:#808000"<? break;
+                                                case 3: ?> background-color:#FF9999; border-color:#990000; color:#990000"<? break;
+                                            }?> class="button" value="Delete" name="deleteTask" >
+                                    <input type="submit" style="width:49%; <? switch ($row2['priority']){
+                                                case 1: ?> background-color:#CCFF99; border-color:#006600; color:#006600"<? break;
+                                                case 2: ?> background-color:#FFFF99; border-color:#808000; color:#808000"<? break;
+                                                case 3: ?> background-color:#FF9999; border-color:#990000; color:#990000"<? break;
+                                            }?> class="button" value="Modify" name="updateTask">
                                     </form>
 
                                     </div>
@@ -259,6 +348,4 @@ include 'connectionDB.php' ?>
     <? }?>
       </tr>
     </table>
-
-
 

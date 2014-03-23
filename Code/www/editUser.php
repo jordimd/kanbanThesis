@@ -8,8 +8,10 @@ $iduser=$logged['iduser'];
 extract($_REQUEST);
 
 if($editName){
+
+	$editName=ucwords($editName);
 	mysql_query("UPDATE user SET name='$editName', mail='$mail' WHERE iduser='$iduser'");
-	
+
 	$logged=array('iduser'=>$iduser,'name'=>$editName,'mail'=>$mail);
 	$_SESSION['logged']=$logged;
 }
@@ -70,7 +72,9 @@ if($deleteUserPass){
 			mysql_query("DELETE FROM userBoard WHERE iduser='$iduser' and idboard='".$row['idboard']."'");
 		}		
 	}
-	//mysql_query("DELETE FROM user WHERE iduser='$iduser'");
+	mysql_query("DELETE FROM user WHERE iduser='$iduser'");
+	mysql_close($con);
+	header("Location: logout.php");
 }
 
 mysql_close($con);

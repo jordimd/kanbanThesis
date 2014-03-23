@@ -44,6 +44,7 @@
 	border-left:2px solid;
     position:absolute;
     border-radius: 0  10px;
+    background-color: white;
 }
 
 .laneClass{
@@ -57,7 +58,7 @@
 
 .taskClass{
 	height:auto;
-	width:65%;
+	width:69%;
 	margin-bottom:20px;
 	border:2px solid;
 	padding: 15 20px;
@@ -66,9 +67,22 @@
     text-align:center;
 }
 
+.nameTask{
+	font-size:20; 
+	text-transform:uppercase; 
+	cursor:default;
+	margin:1 0px;
+}
+
+.infoButton{
+	margin-top:-1px;
+	cursor:pointer;
+	display:inline-block;
+	float: right;
+}
+
 .newTaskClass{
-	height:auto;
-	width:65%;
+	width:69%;
 	margin-bottom:20px;
 	border:2px solid black;
 	padding: 0 20px;
@@ -77,22 +91,19 @@
     text-align:left;
     background-color:#FFFFFF; 
     font-family:arial;
-    line-height:18px;
-    font-size:12px;
+    font-size:13px;
     color:#999;
 }
 
 .newTaskClass input{
 	width:100%;
-	font-size:12px;
-    padding:5px 10px;
+    padding:5px 5px;
     border-radius: 5px;
     border:1px solid #CCC;
 }
 
 .inputTextarea{
 	width:100%;
-    font-size:12px;
     padding:2px 5px;
     border-radius: 5px;
     border:1px solid #CCC;
@@ -105,14 +116,14 @@
 .newTaskClass select{
 	width:75%;
 	float:right;
-	font-size:12px;
-    padding:2px 5px;
-    border-radius: 5px;
+	height: 22px;
+    border-radius:5px;
     border:1px solid #CCC;
+    margin-top:-3px;
 }
 
 .inputSubmit{
-	margin-bottom: 7px;
+	margin-bottom: 4px;
 	color: white;
 }
 
@@ -121,15 +132,12 @@
 	color:#999;
 }
 
-.descriptionClass{
-	font-size:15;
-	text-align:center;
-}
-
-.buttonInfo{
-	float:right;
-    border-radius:10px;
-    margin-top:-2;
+.button{
+	width: 100%;
+	padding: 5px 5px;
+	border-radius: 5px;
+	border: 1px solid #CCC;
+	font-size: 13px;
 }
 
 .taskInfo{
@@ -138,4 +146,39 @@
 	text-align:left;
 	font-family: arial;
 	cursor:default;
+	font-size:13px;
+}
+
+.label{
+	margin: 0;
+	width: 70px;
+	display:inline-block;
+}
+
+.taskInfo input{
+	position: absolute;
+	right: 0;
+	margin-top:-4px;
+	width:70%;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid;
+}
+
+.taskInfo select{
+	width:70%;
+	float:right;
+	height: 22px;
+    border-radius:5px;
+    border:1px solid;
+    margin-top:-3px;
+}
+
+.inputTextareaEdit{
+	width: 70%;
+	float:right;
+    padding:4px 5px;
+    border-radius: 5px;
+    border:1px solid;
+    margin-top:-2px;
 }
