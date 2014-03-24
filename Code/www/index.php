@@ -10,6 +10,7 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 <script src="js/scripts.js" type="text/javascript"></script>
 
@@ -25,27 +26,24 @@
 	}
 	else{ ?>
         
-        <div id="login">
-        
-        <form action="login.php" method="post">
-        User<br><input type="email" name="mail" required>
-        <p>Password<br><input type="password" name="password" title="Enter a password between 4 to 20 characters" pattern="\S{4,20}" required></p>
-        <button style="float:right">Login</button>     
+        <div class="login" align="center">
+        <form action="login.php" method="post" onSubmit="return validateLogin()">
+        <input id="mailLogin" type="email" name="mail" placeholder="User" maxlength="45" required>
+        <p><input id="passLogin" type="password" name="password" placeholder="Password" maxlength="30" required></p>
+        <button onClick="return checkBrowser()" style="float:right">Login</button>     
         </form>
-        <button style="float:left" onClick="showDiv('login','register')">Register</button>
-        
+        <button id="reg" style="float:left">Register</button>
 		</div>
         
-        <div id="register">
+        <div id="register" class="login" align="center">
     	 <form name="formRegister" action="register.php" method="post" onSubmit="return validateForm()">
-        <p><input type="text" name="newName" placeholder="Name" required> </p>
-        <p><input id="registerEmail" type="email" name="mail" placeholder="Email" required> </p>
-        <p><input type="password" name="password" placeholder="Password" title="Enter a password between 4 to 20 characters" pattern="\S{4,20}" required></p>
-        <p><input type="password" name="password2" placeholder="Repeat the password" title="Repeat the previous password" required></p>
-        <button style="float:right">Register</button>        
+        <input type="text" name="newName" placeholder="Name" maxlength="20" required>
+        <p><input id="registerEmail" type="email" name="mail" placeholder="Email" maxlength="45" required> </p>
+        <p><input type="password" name="password" placeholder="Password" maxlength="30" required></p>
+        <p><input id="passwordRepeat" type="password" name="password2" placeholder="Repeat the password" maxlength="30" required></p>
+        <button onClick="return checkBrowser()" style="float:right">Register</button>        
         </form>
         <button style="float:left" onClick="cancel()">Cancel</button>
-    	
 		</div>
 		
 	<? }?>

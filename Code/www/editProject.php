@@ -60,6 +60,6 @@ if($idboardDel){
 
 mysql_close($con);
 
-header("Location: index.php");
+header("Location: index");
 
 ?>

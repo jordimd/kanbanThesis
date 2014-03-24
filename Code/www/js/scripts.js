@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+	var val = navigator.userAgent.toLowerCase(); 
+	  
+	if(val.indexOf("chrome") > -1){}
+	else
+		alert("This application only works with Google Chrome");
+
 	var screenHeight=window.screen.availHeight;
 	var screenWidth=window.screen.availWidth;
 	var percentHeight=screenHeight*0.67;
@@ -24,26 +30,117 @@ $(document).ready(function(){
     $("#idBoard").animate({scrollLeft: "+="+(percentWidth+3)});
   });
 
-  document.getElementById('mainTable').style.display = "block";
+  $("#reg").click(function(){
+    $(".login").fadeOut(function() {
+    	$("#register").fadeIn(2000);
+    });
+  });
 
+  $('#mainTable').css("display","block");
+
+  $(".sortableStates").sortable({
+
+		stop: function () {
+				
+			var order = $(this).sortable("serialize");
+			$.post("editBoard.php", order, function(){});
+		}
+	}).disableSelection();
+
+	$('.sortableClass').sortable({
+		
+		connectWith: '.sortableClass',
+		start: function(event, ui) {
+			$(this).attr('idprevstate', ui.item.parent().attr('id'));
+		},
+		
+		stop: function (event, ui){
+			
+			var order = $(this).sortable("serialize");
+			$.post("editBoard.php", order, function(){});
+			
+			var idtask = ui.item.attr('id');
+			var idstate = ui.item.parent().attr('id');
+			var oldState = $(this).attr('idprevstate');
+
+			$.post("editBoard.php",
+			{
+			  idtask:idtask.split('task_')[1],
+			  idstate:idstate.split('state_')[1],
+			  moveTaskLane:"ok"
+			},
+			function(data){
+				
+				if (data=="false"){	
+					
+					if (oldState.split('state_')[1]!=idstate.split('state_')[1]){
+						alert("You can't move this task because you reached the WIP value");
+						window.location.replace("project.php");
+					}
+				}
+			}); 
+		}
+	}).disableSelection();
 });
 
+function checkBrowser(){
+
+	var val = navigator.userAgent.toLowerCase(); 
+	  
+	  if(val.indexOf("chrome") > -1)
+	  	return true;
+	  else{
+	  	alert("This application only works with Google Chrome");
+	  	return false;
+	  }
+}
+
 function showDiv(prevDiv, newDiv){
+
 	document.getElementById(prevDiv).style.display = "none";
 	document.getElementById(newDiv).style.display = "block";
 }
+
 
 function hideID(id){
 	document.getElementById(id).style.display = "none";
 }
 
 function cancel(){
-	window.location.replace("index.php")	
+	window.location.replace("index")	
 }
 
 $(function() {
     $( ".datepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
 });
+
+function validateLogin(){
+
+	$.ajaxSetup({async:false});
+	var returnData = null;
+	$.post("login.php",
+			{
+			  mailLogin:$("#mailLogin").val(),
+			  passLogin:$("#passLogin").val()
+			},
+			function(data){returnData=data});
+			
+	$.ajaxSetup({async:true});
+	if(returnData=="ok"){
+		return true;
+	}
+	else{
+		if(returnData=="mail"){
+			alert("There isn't any user registered with this email");
+			$("#mailLogin").focus();
+		}
+		else{
+			alert("Incorrect password")
+			$("#passLogin").focus();
+		}	
+		return false;
+	}
+}
 
 function validateForm() {
 	
@@ -61,22 +158,24 @@ function validateForm() {
 		if(returnData=="ok")
 			return true;
 		else{
-			alert("This email is already registered")
+			alert("This email is already registered");
+			$("#registerEmail").focus();
 			return false;
 		}
 	} 
 	else{
-		alert("Passwords do not match")
+		alert("Passwords do not match");
+		$("#passwordRepeat").focus();
 		return false;
 	}			
 }
 
 function editStates() {
-	window.location.replace("editStates.php")
+	window.location.replace("editStates")
 }
 
 function board() {
-	window.location.replace("project.php")
+	window.location.replace("project")
 }
 
 function logout(){
@@ -230,30 +329,20 @@ function showEdit(id) {
 		}
 }
 
-$(document).ready(function () {
-	$("#sortable").sortable({
-		stop: function () {
-				
-			var order = $(this).sortable("serialize");
-			$.post("editBoard.php", order, function(){});
-		}
-	}).disableSelection();
-});
-
-$(document).ready(function(){
-    $("#buttona").click(function(){
-        $("#info_16").animate({
-            height:'toggle'
-        });
-    });
-});
-
 function showInfo(id) {
     
-    $("#info_"+id).animate({
-        height:'toggle'
-    });
-    document.getElementById('edit_'+id).style.display = "none";
+    if(document.getElementById('edit_'+id).style.display == "block"){
+
+    	$("#edit_"+id).animate({
+        	height:'toggle'
+  		});
+    }
+    else{
+
+    	$("#info_"+id).animate({
+	        height:'toggle'
+	    });
+    }
 	
 	/*if(document.getElementById('info_'+id).style.display == "block"){
    		document.getElementById('info_'+id).style.display = "none";
@@ -292,45 +381,6 @@ function showNewTask(id){
 		if(document.getElementById('newTask_'+id).style.display = "none")
 			document.getElementById('newTask_'+id).style.display = "block";*/
 }
-
-$(document).ready(function() {
-
-	$('.sortableClass').sortable({
-		
-		connectWith: '.sortableClass',
-		start: function(event, ui) {
-			//var idprevstate = ui.item.parent().attr('id');
-			$(this).attr('idprevstate', ui.item.parent().attr('id'));
-		},
-		
-		stop: function (event, ui){
-			
-			var order = $(this).sortable("serialize");
-			$.post("editBoard.php", order, function(){});
-			
-			var idtask = ui.item.attr('id');
-			var idstate = ui.item.parent().attr('id');
-			var oldState = $(this).attr('idprevstate');
-
-			$.post("editBoard.php",
-			{
-			  idtask:idtask.split('task_')[1],
-			  idstate:idstate.split('state_')[1],
-			  moveTaskLane:"ok"
-			},
-			function(data){
-				
-				if (data=="false"){	
-					
-					if (oldState.split('state_')[1]!=idstate.split('state_')[1]){
-						alert("You can't move this task because you reached the WIP value");
-						window.location.replace("project.php");
-					}
-				}
-			}); 
-		}
-	}).disableSelection();
-});
 
 function wip(){
 	alert("You can't add a task because you reached the WIP value");	

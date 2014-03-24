@@ -10,6 +10,8 @@
 
 #mainTable{
 	display:none;
+	cursor: default;
+	-webkit-user-select: none;
 }
 
 .kanboard{

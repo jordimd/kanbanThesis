@@ -27,7 +27,7 @@ if($newName){
 	mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('DONE',1000,'$idboard')");
 		
 	mysql_close($con);
-	header("Location: index.php");
+	header("Location: index");
 }
 
 if($newMail){

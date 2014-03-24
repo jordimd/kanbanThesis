@@ -7,32 +7,81 @@ body,html{
 	background-color:#FFFFF0;		
 }
 
-#login{
-	position:fixed;
-	border:solid;
-	left:44%;
-	top:39%;
-	padding:10px;
+.login{
+	padding: 20px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 200px;
+	height: 110px;
+	margin-top: -70px;
+	margin-left: -120px;
+	border:2px solid #000099;
 	display:block;
-	background-color:#FFFFFF;
+	background-color:#B8D4FF;
+	border-radius:10px;
+}
+
+.login input{
+	width:100%;
+	padding: 5px 0px;
+    border-radius: 5px;
+    border:0px;
+    text-indent: 5px;
+}
+
+.login button{
+
+	width:49%;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid #000099;
+    background-color:#B8D4FF;
+    color: #000099;
+}
+
+.login button:active{
+	background-color:#000099;
+    color: #B8D4FF;
+}
+
+.login button:focus{
+	outline: none;
 }
 
 #register{
-	position:fixed;
-	border:solid;
-	left:44%;
-	top:36%;
-	padding:10px;
 	display:none;
-	background-color:#FFFFFF;
+	height: 196px;
+	margin-top: -113px;
 }
 
 .menu{
-	padding:5px;
-	padding-left:20px;
-	border-bottom:solid;
-	border-color:#000099;
+	padding:15px 130px;
+	border-bottom:solid #000099;
 	background-color:#B8D4FF;
+	font-family: arial;
+	font-size:26px;
+	cursor: default;
+	-webkit-user-select: none;
+}
+
+.titleMenu{
+	display: inline-block;
+	color: #B8D4FF;
+}
+
+
+.personalInfo{
+	float: right;
+	color: #B8D4FF;
+	text-shadow: -1px 0 #000099, 0 1px #000099, 1px 0 #000099, 0 -1px #000099;
+	padding-right: 13px;
+}
+
+.imagesMenu{
+	float:right;
+	cursor:pointer; 
+	display: inline-block;
 }
 
 .editUser{
@@ -42,12 +91,16 @@ body,html{
 	top:36%;
 	padding:10px;
 	display:none;
-	background-color:#FFFFFF;	
+	background-color:#FFFFFF;
+	cursor: default;
+	-webkit-user-select: none;	
 }
 
 #main{
 	margin:2% 10%;
 	display:block;
+	cursor: default;
+	-webkit-user-select: none;
 }
 
 .projectClass{
@@ -70,6 +123,8 @@ body,html{
 	width:auto;
 	height:auto;
 	max-height:70%;
+	cursor: default;
+	-webkit-user-select: none;
 }
 
 .listClass{
@@ -78,10 +133,10 @@ body,html{
 	border:solid;
 	width:300px;
 	cursor:move;
+	display: block;
 }
 
 .edit{
-	position:relative;
 	width:100%;
 	margin-top:15px;
 	display:none;

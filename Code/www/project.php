@@ -23,13 +23,13 @@ include 'connectionDB.php'?>
 
 <script src="js/scripts.js" type="text/javascript"></script>
 
+
 <div class="menu">
-
-<p><button onClick="logout()">Logout</button>
-<button onClick="cancel()">Projects</button>
-<button onClick="editStates()">Edit states</button></p>
-
+    <button onClick="logout()">Logout</button>
+    <button onClick="cancel()">Projects</button>
+    <button onClick="editStates()">Edit states</button>
 </div>
+
 <? 
   
 	$query = mysql_query("SELECT * FROM state WHERE idboard='".$logged['idboard']."' ORDER BY pos");

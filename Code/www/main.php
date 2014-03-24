@@ -1,13 +1,16 @@
 <? include 'session.php'?>
 
 <div class="menu">
-
-<p><button onClick="logout()">Logout</button>
-
-Hi <? echo $logged['name']?>!
-
-<button id="editUserButton" onClick="showDiv('main','editUserName'); hideID('editUserButton')">Edit User</button></p>
-
+    <div class="titleMenu">
+        .
+    </div>
+    <div class="imagesMenu">
+        <img src="images/edit.png" alt="Logout" width="30" height="30" onClick="showDiv('main','editUserName'); hideID('editUserButton')"/>&nbsp;
+        <img src="images/logout3.png" alt="Logout" width="30" height="30" onClick="logout()"/>
+    </div>
+    <div class="personalInfo">
+        <b><? echo $logged['name']?></b>
+    </div>
 </div>
 
 <? include 'connectionDB.php'?>
@@ -46,7 +49,7 @@ while ($row = mysql_fetch_array($query)){?>
             <button onClick="shareProject(<? echo $row['idboard']?>)">Share</button>
         </div>    
         <div style="float:right">
-            <form action="project.php" method="post">
+            <form action="project" method="post">
             <input type="hidden" value="<? echo $row['idboard']?>" name="id">        
             <button>Open</button>
             </form>
