@@ -59,7 +59,6 @@
 }
 
 .taskClass{
-	height:auto;
 	width:69%;
 	margin-bottom:20px;
 	border:2px solid;
@@ -143,7 +142,7 @@
 }
 
 .taskInfo{
-    position:relative;
+	position: relative;
 	display:none;
 	text-align:left;
 	font-family: arial;

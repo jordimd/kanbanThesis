@@ -40,6 +40,8 @@ $(document).ready(function(){
 
   $(".sortableStates").sortable({
 
+  		axis: 'y',
+
 		stop: function () {
 				
 			var order = $(this).sortable("serialize");
@@ -101,13 +103,16 @@ function showDiv(prevDiv, newDiv){
 	document.getElementById(newDiv).style.display = "block";
 }
 
-
 function hideID(id){
-	document.getElementById(id).style.display = "none";
+	$('.'+id).css("display","none");
 }
 
 function cancel(){
 	window.location.replace("index")	
+}
+
+function cancelEdit(){
+	location.reload();
 }
 
 $(function() {
@@ -170,10 +175,6 @@ function validateForm() {
 	}			
 }
 
-function editStates() {
-	window.location.replace("editStates")
-}
-
 function board() {
 	window.location.replace("project")
 }
@@ -226,6 +227,7 @@ function checkMail(idboard){
 	$.ajaxSetup({async:true});
 	if(returnData=="not"){
 		alert("This user is not registered")
+		$("#emailShare_"+idboard).focus();
 		return false;
 	}
 	else{
@@ -249,10 +251,14 @@ function checkPasswordMail(){
 	if(returnData=="ok")
 		return true;
 	else{
-		if(returnData=="nomail")
-			alert("This email is already registered")
-		else
-			alert("Incorrect password")
+		if(returnData=="nomail"){
+			alert("This email is already registered");
+			$("#mailUser").focus();
+		}
+		else{
+			alert("Incorrect password");
+			$("#passwordUser").focus();
+		}
 		return false;
 	}
 }
@@ -273,12 +279,14 @@ function checkPass() {
 		if(returnData=="ok")
 			return true;
 		else{
-			alert("Incorrect old password")
+			alert("Incorrect old password");
+			$("#passUser").focus();
 			return false;
 		}
 	} 
 	else{
-		alert("Check the repeat password")
+		alert("Check the repeat password");
+		$("#newPassUser").focus();
 		return false;
 	}			
 }
@@ -302,7 +310,8 @@ function deleteUser(){
 			  return false;
 		}
 		else{
-			alert("Incorrect password")
+			alert("Incorrect password");
+			$("#passUserDelete").focus();
 			return false;
 		}
 }
@@ -319,14 +328,18 @@ function infoProject(id) {
 }
 
 function showEdit(id) {
+
+	$("#editState_"+id).animate({
+        height:'toggle'
+    });
 	
-	if(document.getElementById('editState_'+id).style.display == "block"){
+	/*if(document.getElementById('editState_'+id).style.display == "block"){
    		document.getElementById('editState_'+id).style.display = "none";
 	}
 	else
 		if(document.getElementById('editState_'+id).style.display = "none"){
 			document.getElementById('editState_'+id).style.display = "block";
-		}
+		}*/
 }
 
 function showInfo(id) {
@@ -382,6 +395,45 @@ function showNewTask(id){
 			document.getElementById('newTask_'+id).style.display = "block";*/
 }
 
+function formDelete(id){
+	$("#deleteState_"+id).submit();
+}
+
 function wip(){
 	alert("You can't add a task because you reached the WIP value");	
 }
+
+
+
+$(document).ready(function(){
+	TriggerClick = false;
+	$(".plusStateImg").click(function(){
+		if(!TriggerClick){
+		    TriggerClick=true;
+
+		    $(".plusStateClass").animate({
+		        width: 300
+		    }, function() {
+		    	$(".addStateClass").animate({
+		    		opacity: "toggle"
+		    	});
+		  	});
+
+		}else{
+		    TriggerClick=false;
+
+		    $(".addStateClass").animate({
+		        opacity: "toggle"
+		    }, function() {
+		    	$(".plusStateClass").animate({
+		    		width: 26
+		    	});
+		  	});
+		};
+	});
+});
+
+	
+
+    
+

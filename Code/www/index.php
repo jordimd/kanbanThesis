@@ -3,7 +3,6 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>Kanban Board</title>
 
 <link href="css/index.css" rel="stylesheet" type="text/css"/>
@@ -25,6 +24,8 @@
 		 include 'main.php';
 	}
 	else{ ?>
+
+        <div class="title"><code><b>KanBoard</b></code></div>
         
         <div class="login" align="center">
         <form action="login.php" method="post" onSubmit="return validateLogin()">
@@ -36,7 +37,7 @@
 		</div>
         
         <div id="register" class="login" align="center">
-    	 <form name="formRegister" action="register.php" method="post" onSubmit="return validateForm()">
+    	<form name="formRegister" action="register.php" method="post" onSubmit="return validateForm()">
         <input type="text" name="newName" placeholder="Name" maxlength="20" required>
         <p><input id="registerEmail" type="email" name="mail" placeholder="Email" maxlength="45" required> </p>
         <p><input type="password" name="password" placeholder="Password" maxlength="30" required></p>

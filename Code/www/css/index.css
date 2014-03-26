@@ -7,6 +7,15 @@ body,html{
 	background-color:#FFFFF0;		
 }
 
+.title{
+	position:absolute; 
+	font-size:75px; 
+	top:18%; 
+	left:38%; 
+	color:#000099;
+	text-shadow: -2px 0 #B8D4FF, 0 2px #B8D4FF, 2px 0 #B8D4FF, 0 -2px #B8D4FF;
+}
+
 .login{
 	padding: 20px;
 	position: absolute;
@@ -17,7 +26,6 @@ body,html{
 	margin-top: -70px;
 	margin-left: -120px;
 	border:2px solid #000099;
-	display:block;
 	background-color:#B8D4FF;
 	border-radius:10px;
 }
@@ -31,7 +39,6 @@ body,html{
 }
 
 .login button{
-
 	width:49%;
     padding:5px 5px;
     border-radius: 5px;
@@ -40,7 +47,7 @@ body,html{
     color: #000099;
 }
 
-.login button:active{
+.login button:hover{
 	background-color:#000099;
     color: #B8D4FF;
 }
@@ -56,22 +63,52 @@ body,html{
 }
 
 .menu{
-	padding:15px 130px;
+	padding:1% 5% 3% 5%;
 	border-bottom:solid #000099;
 	background-color:#B8D4FF;
 	font-family: arial;
-	font-size:26px;
 	cursor: default;
 	-webkit-user-select: none;
+	color: #000099;
+}
+
+.buttonMenu{
+	position: absolute;
+	left: 43%;
+	display: inline-block;
+}
+
+.editStates{
+    padding:5px 0px;
+    width: 200px;
+    border: 1px solid #000099;
+    border-radius: 10px;
+    background-color:#B8D4FF; 
+    font-family:arial;
+    font-size:15;
+    font-weight:bold;
+    color:#000099;
+    cursor: pointer;
+}
+.editStates:hover{
+	background-color:#000099;
+	color:#B8D4FF;
+}
+
+.projectBack{
+	float: left;
+	margin-top: 8px;
 }
 
 .titleMenu{
+	float:left;
+	cursor:pointer;
+	margin-right: 10px;
 	display: inline-block;
-	color: #B8D4FF;
 }
 
-
 .personalInfo{
+	font-size:26px;
 	float: right;
 	color: #B8D4FF;
 	text-shadow: -1px 0 #000099, 0 1px #000099, 1px 0 #000099, 0 -1px #000099;
@@ -85,15 +122,61 @@ body,html{
 }
 
 .editUser{
-	position:fixed;
+	position:absolute;
 	border:solid;
-	left:44%;
+	left:38%;
 	top:36%;
-	padding:10px;
+	padding:25px 20px;
+	width: 320px;
+	height: 140px;
 	display:none;
-	background-color:#FFFFFF;
 	cursor: default;
-	-webkit-user-select: none;	
+	-webkit-user-select: none;
+	border:2px solid #000099;
+	background-color:#B8D4FF;
+	border-radius: 10px;
+	font-family: arial;
+	font-size: 14px;
+	font-weight: bold;
+	color: #000099;
+}
+
+.editUser input{
+	position: absolute;
+	right: 20px;
+	width: 60%;
+	margin-top:-4px;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid #000099;
+}
+
+.editUser button{
+	width:49%;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid #000099;
+    background-color:#B8D4FF;
+    color: #000099;
+}
+
+.editUser button:hover{
+	background-color:#000099;
+    color: #B8D4FF;
+}
+
+.editUser button:focus{
+	outline: none;
+}
+
+#editUserPass input{
+	width: 50%;
+}
+
+#editDeleteUser input{
+	margin-top:2px;
+	width:38%; 
+	left:20px;
 }
 
 #main{
@@ -101,6 +184,10 @@ body,html{
 	display:block;
 	cursor: default;
 	-webkit-user-select: none;
+}
+
+#user{
+	display: none;
 }
 
 .projectClass{
@@ -118,27 +205,85 @@ body,html{
 }
 
 #modState{
-	padding:20px;
+	position:absolute;
+	top: 15%;
+	left: 8%;
+	overflow:auto;
 	display:block;
-	width:auto;
-	height:auto;
-	max-height:70%;
+	max-height:80%;
 	cursor: default;
 	-webkit-user-select: none;
+	font-family: arial;
+}
+
+.plusStateClass{
+	width: 300px;
+	padding:11px 15px;
+	border:2px solid;
+	width:auto;
+	border-radius: 10px;
+	background-color: #E6E6E6;
+	display:inline-block;
+}
+
+.addStateClass{
+	margin: 4px 0px -2px 0px;
+	float: right;
+	display: none;
+}
+
+.addStateClass input{
+	margin-top:-4px;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid;
 }
 
 .listClass{
 	padding:15px;
 	margin-top:10px;
-	border:solid;
+	border:2px solid;
 	width:300px;
 	cursor:move;
-	display: block;
+	border-radius: 10px;
+	background-color: #E6E6E6;
+}
+
+.listClass img{
+	cursor: pointer;
+	float: right;
+	margin-right: 10px;
+	display:inline-block;
 }
 
 .edit{
-	width:100%;
-	margin-top:15px;
+	position:relative;
 	display:none;
 	text-align:left;
+	font-family: arial;
+	cursor:default;
+	font-size:13px;
+	
+}
+
+.edit input{
+	margin-top:-4px;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid;
+}
+
+.labelState{
+	margin: 0;
+	width: 50px;
+	display:inline-block;
+}
+
+.editButton{
+	background-color:#E6E6E6;
+}
+
+.editButton:hover{
+	background-color: black;
+	color: #E6E6E6;
 }

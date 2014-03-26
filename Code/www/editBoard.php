@@ -2,7 +2,12 @@
 
 include 'session.php';
 include 'connectionDB.php';	
-	
+
+$iduserSession=$logged['iduser'];
+$nameSession=$logged['name'];
+$mailSession=$logged['mail'];
+$idboardSession=$logged['idboard'];
+
 extract($_REQUEST);
 
 mysql_query("UPDATE board SET updated=NOW(), modified='".$logged['iduser']."' WHERE idboard='".$logged['idboard']."'");
@@ -28,14 +33,15 @@ mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='".$logged['idboard'].
 		mysql_query("INSERT INTO state (name, pos, idboard) VALUES ('$name',1000,'".$logged['idboard']."')");
 		mysql_close($con);
 
-		header("Location: editStates");
+		header("Location: states");
 	}
-	if($deleteState){
-		mysql_query("DELETE FROM task WHERE idstate='$idstate'");
-		mysql_query("DELETE FROM state WHERE idstate='$idstate'");
+	if($idstateDelete){
+
+		mysql_query("DELETE FROM task WHERE idstate='$idstateDelete'");
+		mysql_query("DELETE FROM state WHERE idstate='$idstateDelete'");
 		mysql_close($con);
 
-		header("Location: editStates");
+		header("Location: states");
 	}
 	
 	if($updateState){
@@ -46,7 +52,7 @@ mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='".$logged['idboard'].
             mysql_query("UPDATE state SET wip='$wip' WHERE idstate='$idstate'");
         
         mysql_close($con);
-        header("Location: editStates");
+        header("Location: states");
 	}
 		
 	if($moveTaskLane=="ok"){

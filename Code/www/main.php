@@ -1,12 +1,11 @@
 <? include 'session.php'?>
 
 <div class="menu">
-    <div class="titleMenu">
-        .
-    </div>
+    <div style="position:absolute; float:left; font-size:50px; top:-1px; text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;">
+        <code><b>KanBoard</b></code></div>
     <div class="imagesMenu">
-        <img src="images/edit.png" alt="Logout" width="30" height="30" onClick="showDiv('main','editUserName'); hideID('editUserButton')"/>&nbsp;
-        <img src="images/logout3.png" alt="Logout" width="30" height="30" onClick="logout()"/>
+        <img src="images/edit.png" alt="Logout" width="30" height="30" onClick="showDiv('main','user'); hideID('editUserButton')"/>&nbsp;
+        <img src="images/logout.png" alt="Logout" width="30" height="30" onClick="logout()"/>
     </div>
     <div class="personalInfo">
         <b><? echo $logged['name']?></b>
@@ -137,38 +136,9 @@ while ($row = mysql_fetch_array($query)){?>
 <? }?>
 </div>
 </div>
-<div id="editUserName" class="editUser">
-	<form action="editUser.php" method="post" onSubmit="return checkPasswordMail()">
-    <p>Name: <input type="text" name="editName" value="<? echo $logged['name']?>" required> </p>
-    <p>Email: <input id="mailUser" type="email" name="mail" value="<? echo $logged['mail']?>" required> </p>
-    <p>Password: <input id="passwordUser" type="password" name="password" required></p>
-    <button style="float:right">Modify</button>
-    </form>
-    
-    <button onClick="showDiv('editUserName','editUserPass')">Change Password</button>
-    <button onClick="showDiv('editUserName','editDeleteUser')">Delete User</button>
-    <button style="float:left" onClick="cancel()">Cancel</button>
-</div>
 
-<div id="editUserPass" class="editUser">
-	<form name="formPass" action="editUser.php" method="post" onSubmit="return checkPass()">
-    <p>Old password: <input id="passUser" type="password" name="oldPassword" required> </p>
-    <p>New Password: <input type="password" name="newPassword" required> </p>
-    <p>Repeat: <input type="password" name="newPassword2" required></p>
-    <button style="float:right">Modify</button>
-    </form>
-    <button style="float:left" onClick="cancel()">Cancel</button>
-</div>
-
-<div id="editDeleteUser" class="editUser">
-    
-    <form action="editUser.php" method="post" onSubmit="return deleteUser()">
-    <p>Please write your password to delete the user</p>
-    <p><input id="passUserDelete" type="password" name="deleteUserPass" placeholder="Password" required> </p>
-    <button style="float:right">Delete</button>
-    </form>
-    <button style="float:left" onClick="cancel()">Cancel</button>
-
+<div id="user">
+    <? include 'user.php'?>
 </div>
 
 <? mysql_close($con)?>

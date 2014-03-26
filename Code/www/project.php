@@ -25,9 +25,22 @@ include 'connectionDB.php'?>
 
 
 <div class="menu">
-    <button onClick="logout()">Logout</button>
-    <button onClick="cancel()">Projects</button>
-    <button onClick="editStates()">Edit states</button>
+    <div class="titleMenu">
+        <img src="images/back" alt="Back" width="30" height="30" onClick="cancel()"/> 
+    </div>
+    <div class="projectBack">
+        <b>Projects</b>     
+    </div>    
+    <div class="buttonMenu">
+        <button id="buttonStates" class="editStates" onClick="window.location='states'">Edit states</button>
+    </div>
+    <div class="imagesMenu">
+        <img src="images/edit.png" alt="Logout" width="30" height="30" onClick="showDiv('mainTable','user'); hideID('buttonMenu')"/>&nbsp;
+        <img src="images/logout.png" alt="Logout" width="30" height="30" onClick="logout()"/>
+    </div>
+    <div class="personalInfo">
+        <b><? echo $logged['name']?></b>
+    </div>
 </div>
 
 <? 
@@ -348,4 +361,7 @@ include 'connectionDB.php'?>
     <? }?>
       </tr>
     </table>
+<div id="user">
+    <? include 'user.php'?>
+</div>
 
