@@ -8,10 +8,10 @@ body,html{
 }
 
 .title{
-	position:absolute; 
+	position:relative; 
 	font-size:75px; 
-	top:18%; 
-	left:38%; 
+	margin-top:10%; 
+	text-align:center;
 	color:#000099;
 	text-shadow: -2px 0 #B8D4FF, 0 2px #B8D4FF, 2px 0 #B8D4FF, 0 -2px #B8D4FF;
 }
@@ -179,11 +179,42 @@ body,html{
 	left:20px;
 }
 
-#main{
-	margin:2% 10%;
-	display:block;
+#main{	
+	position:absolute;
+	top: 15%;
+	left: 8%;
+	overflow:auto;
+	max-height:80%;
 	cursor: default;
 	-webkit-user-select: none;
+	font-family: arial;
+}
+
+.plusProjectClass{
+	width: 300px;
+	padding:11px 15px;
+	border:2px solid;
+	width:auto;
+	border-radius: 10px;
+	background-color: #E6E6E6;
+	display:inline-block;
+}
+
+.addProjectClass{
+	margin: 4px 5px -2px 0px;
+	float: right;
+	display: none;
+}
+
+.addProjectClass input{
+	margin-top:-4px;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid;
+}
+
+.addProjectClass input:focus{
+	outline: none;
 }
 
 #user{
@@ -192,9 +223,32 @@ body,html{
 
 .projectClass{
 	padding:15px;
+	padding-bottom: 32px;
 	margin-top:10px;
-	border:solid;
-	width:450px;
+	border:2px solid;
+	width:250px;
+	border-radius: 10px;
+	background-color: black;
+}
+
+.projectClass img{
+	cursor:pointer;
+	float:right;
+	margin-right: 10px;
+	display:inline-block;
+}
+
+.projectClass button{
+	margin-top:-4px;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid;
+    background-color:#E6E6E6;
+}
+
+.projectClass button:hover{
+	background-color: black;
+	color: #E6E6E6;
 }
 
 .showProjectClass{
@@ -204,13 +258,28 @@ body,html{
 	width:100%;
 }
 
+.nameProject{
+	position:absolute;
+	border-right:2px solid;
+	width: 230px;
+	height: 47px;
+	margin:-15px;
+	background-color: #E6E6E6;
+	border-radius: 8px;
+	cursor: pointer;
+} 
+
+.settings{
+	display: inline-block;
+	float:right;
+}
+
 #modState{
 	position:absolute;
 	top: 15%;
 	left: 8%;
 	overflow:auto;
-	display:block;
-	max-height:80%;
+	height:80%;
 	cursor: default;
 	-webkit-user-select: none;
 	font-family: arial;
@@ -258,11 +327,18 @@ body,html{
 
 .edit{
 	position:relative;
+	padding:15px;
 	display:none;
 	text-align:left;
 	font-family: arial;
 	cursor:default;
 	font-size:13px;
+	background-color: #E6E6E6;
+	margin-bottom: -32px;
+	margin-top: 34px;
+	margin-left: -15px;
+	margin-right: -15px;
+	border-radius: 8px;
 	
 }
 
@@ -271,6 +347,15 @@ body,html{
     padding:5px 5px;
     border-radius: 5px;
     border:1px solid;
+    width: 40%;
+}
+
+.edit input:focus{
+	outline: none;
+}
+
+.edit button:focus{
+	outline: none;
 }
 
 .labelState{

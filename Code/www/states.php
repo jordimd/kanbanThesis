@@ -14,9 +14,9 @@ include 'connectionDB.php'?>
 
 <div class="menu">
     <div class="titleMenu">
-        <img src="images/back" alt="Back" width="30" height="30" onClick="cancel()"/> 
+        <img src="images/back" alt="Back" width="30" height="30" onClick="cancel()"/>
     </div>
-    <div class="projectBack">
+    <div class="projectBack" onClick="cancel()">
         <b>Projects</b>     
     </div>    
     <div class="buttonMenu">
@@ -45,7 +45,7 @@ include 'connectionDB.php'?>
         </div>
     </div>
     
-    <div class="sortableStates">
+    <div class="sortableStates" style="margin-top:40px">
     
     <? include 'connectionDB.php';
         

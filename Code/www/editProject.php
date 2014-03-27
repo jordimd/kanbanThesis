@@ -6,6 +6,7 @@ include 'connectionDB.php';
 extract($_REQUEST);
 
 if($addProject){
+	$name=ucfirst($name);
 	mysql_query("INSERT INTO board (name, owner, created) VALUES ('$name','".$logged['iduser']."',CURDATE())");
 	$idboard=mysql_insert_id();
 	mysql_query("INSERT INTO userBoard (iduser, new, idboard) VALUES ('".$logged['iduser']."',FALSE,'$idboard')");

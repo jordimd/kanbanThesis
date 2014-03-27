@@ -28,7 +28,7 @@ include 'connectionDB.php'?>
     <div class="titleMenu">
         <img src="images/back" alt="Back" width="30" height="30" onClick="cancel()"/> 
     </div>
-    <div class="projectBack">
+    <div class="projectBack" onClick="cancel()">
         <b>Projects</b>     
     </div>    
     <div class="buttonMenu">

@@ -15,10 +15,18 @@
 <? include 'connectionDB.php'?>
 
 <div id="main">
-	<form action="editProject.php" method="post">
-    <p>New Project: <input type="text" name="name" required>
-    <input type="submit" value="Add" name="addProject"></p>
-    </form>
+
+<div class="plusProjectClass">
+    <div style="float:left; margin-bottom:-4px">
+        <img src="images/plus.png" id="plusProjectImg" alt="Add project" width="26" height="26" style="cursor:pointer"/>
+    </div>
+    <div class="addProjectClass" style="float:right">
+        <form style="margin-bottom: 0;" action="editProject.php" method="post">
+        <b>New Project<b> <input type="text" name="name" maxlength="15" required>
+        <input class="editButton" type="submit" value="Add" name="addProject">
+        </form>
+    </div>
+</div>
     
 <div style="margin-top:40px">
 
@@ -28,45 +36,56 @@ WHERE board.idboard=userBoard.idboard and userBoard.iduser='".$logged['iduser'].
 
 while ($row = mysql_fetch_array($query)){?>
 
-	<div id="project_<? echo $row['idboard']?>" class="projectClass">
+	<div id="project_<? echo $row['idboard']?>" class="projectClass"
     <?
 		$resultNew = mysql_query("SELECT * FROM userBoard WHERE iduser='".$logged['iduser']."' and idboard='".$row['idboard']."'");
 		$rowNew = mysql_fetch_array($resultNew);
-		if($rowNew['new'])
-			echo("*");
-		echo $row['name']?>
+		if($rowNew['new']){
+			?>style="border-color:red"<?
+        }
+        ?>>
+        <div onClick="openProject(<? echo $row['idboard']?>)" class="nameProject"><?
+		  ?><p style="margin-left:13px; margin-top:15px"><? echo $row['name']?></p>
+        </div>
+
         
-         <div style="float:right">
-            <form action="editProject.php" method="post">
-            <input type="hidden" value="<? echo $row['idboard']?>" name="idboardDel">
-            <button onClick="return alertSure('Are you sure you want to delete the entire project?')">Delete</button>
-            </form>  
-        </div> 
+        
+        <div id="settings_<? echo $row['idboard']?>" class="settings" style="display:none">
+            <div style="display:inline-block">
+                <img src="images/share2.png" alt="Share" width="20" height="20" onClick="shareProject(<? echo $row['idboard']?>)"/>
+                <img src="images/edit2.png" alt="Edit" width="20" height="20" onClick="editProject(<? echo $row['idboard']?>)"/>
+                <img src="images/info2.png" alt="Info" width="20" height="20" onClick="infoProject(<? echo $row['idboard']?>)"/>        
+                
+            </div>
+            <div style="display:inline-block; margin-right:-10px; margin-left:-4px">
+                <form id="deleteProject_<? echo $row['idboard']?>" action="editProject.php" method="post" onSubmit="return alertSure('Are you sure you want to delete the entire project?');">
+                <input type="hidden" value="<? echo $row['idboard']?>" name="idboardDel">
+                <img src="images/trash2.png" alt="Delete" width="20" height="20" onClick="deleteProject(<? echo $row['idboard']?>)"/>
+                </form>  
+            </div> 
+        </div>
+
+        <img src="images/settings2.png" id="setImg_<? echo $row['idboard']?>" style="position:absolute; left:247px" alt="Settings" width="20" height="20" onClick="iconSet(<? echo $row['idboard']?>)"/>
+
         <div style="float:right">
-            <button onClick="infoProject(<? echo $row['idboard']?>)">Info</button>        
-            <button onClick="editProject(<? echo $row['idboard']?>)">Edit</button>
-            <button onClick="shareProject(<? echo $row['idboard']?>)">Share</button>
-        </div>    
-        <div style="float:right">
-            <form action="project" method="post">
-            <input type="hidden" value="<? echo $row['idboard']?>" name="id">        
-            <button>Open</button>
+            <form id="openProject_<? echo $row['idboard']?>" action="project" method="post">
+            <input type="hidden" value="<? echo $row['idboard']?>" name="id">
             </form>
         </div>
         <div id="editProject_<? echo $row['idboard']?>" class="edit">
                 
             <form method="post" action="editProject.php">
-            <input type="hidden" name="idboardUpdate" value="<? echo $row['idboard']?>">
-            Name: <input type="text" name="name" value="<? echo $row['name']?>" required>
+            <input type="hidden" name="idboardUpdate" value="<? echo $row['idboard']?>"><br>
+            Name <input type="text" name="name" value="<? echo $row['name']?>" required>
             <button>Modify</button>
             </form>
         </div>
         <div id="shareProject_<? echo $row['idboard']?>" class="edit">
                 
             <form id="formShare" method="post" action="editProject.php" onSubmit="return checkMail(<? echo $row['idboard']?>)">
-            <p>Please introduce the email of the user you want to share the project</p>
+            Please introduce the email of the user you want to share the project.<br><br>
             <input type="hidden" id="idboardShare" name="idboardShare" value="<? echo $row['idboard']?>">
-            Email: <input id="emailShare_<? echo $row['idboard']?>" type="email" name="mail" required>
+            Email <input id="emailShare_<? echo $row['idboard']?>" type="email" name="mail" required>
             <button>Share</button>
             </form>
         </div>
@@ -78,7 +97,7 @@ while ($row = mysql_fetch_array($query)){?>
 
 				if($numShare>1){?>
                 
-                    <p>This project was created by <?
+                        This project was created by <?
                         $result = mysql_query("SELECT * FROM user WHERE iduser='".$row['owner']."'");
                         $row2 = mysql_fetch_array($result);
                         if($row2['iduser']==$logged['iduser'])
@@ -86,8 +105,8 @@ while ($row = mysql_fetch_array($query)){?>
                         else
                             echo $row2['name'];
                         echo(" on ");				
-                        echo $row['created']?>.</p>
-                     <p><? 
+                        echo $row['created']?>.
+                     <br><br><? 
                         
                         if($row['updated']){
                             echo ("Last time modified ");
@@ -103,10 +122,10 @@ while ($row = mysql_fetch_array($query)){?>
                         }
                         else{?>Never modified<? }
                      
-                        ?>.</p>
+                        ?>.
               <? }
 			   	else{?>
-					<p>This project was created on <? echo $row['created']?>.</p><?
+					This project was created on <? echo $row['created']?>.<br><br><?
 					if($row['updated']){
                             echo ("Last time modified ");
                             echo $row['updated'];
@@ -116,7 +135,7 @@ while ($row = mysql_fetch_array($query)){?>
 				}
 				
 				if($numShare>1){?>
-                    <p>Is shared with: <?
+                    <br><br>Is shared with <?
                      
 					 	$count=0;
 						while ($shareRow = mysql_fetch_array($shareResult)){
@@ -127,7 +146,7 @@ while ($row = mysql_fetch_array($query)){?>
 										echo(", ");	
 								}
 								
-						}?>.</p>
+						}?>.
                 <? }?>            
         </div>
     

@@ -38,6 +38,67 @@ $(document).ready(function(){
 
   $('#mainTable').css("display","block");
 
+/////////////////////////////////////////////////////////////////////
+
+  	TriggerProject = false;
+	
+	$("#plusProjectImg").click(function(){
+		
+		if(!TriggerProject){
+		    TriggerProject=true;
+		    
+		    $(".plusProjectClass").animate({
+		        width: 315
+		    }, function() {
+		    	$(".addProjectClass").animate({
+		    		opacity: "toggle"
+		    	});
+		  	});
+
+		}else{
+		    TriggerProject=false;
+
+		    $(".addProjectClass").animate({
+		        opacity: "toggle"
+		    }, function() {
+		    	$(".plusProjectClass").animate({
+		    		width: 26
+		    	});
+		  	});
+		};
+	});
+
+/////////////////////////////////////////////////////////////////////
+
+
+	TriggerState = false;
+	$(".plusStateImg").click(function(){
+		if(!TriggerState){
+		    TriggerState=true;
+
+		    $(".plusStateClass").animate({
+		        width: 300
+		    }, function() {
+		    	$(".addStateClass").animate({
+		    		opacity: "toggle"
+		    	});
+		  	});
+
+		}else{
+		    TriggerState=false;
+
+		    $(".addStateClass").animate({
+		        opacity: "toggle"
+		    }, function() {
+		    	$(".plusStateClass").animate({
+		    		width: 26
+		    	});
+		  	});
+		};
+	});
+
+/////////////////////////////////////////////////////////////////////
+
   $(".sortableStates").sortable({
 
   		axis: 'y',
@@ -48,6 +109,8 @@ $(document).ready(function(){
 			$.post("editBoard.php", order, function(){});
 		}
 	}).disableSelection();
+
+
 
 	$('.sortableClass').sortable({
 		
@@ -83,7 +146,56 @@ $(document).ready(function(){
 			}); 
 		}
 	}).disableSelection();
+
 });
+
+
+var prevId=0;
+var TriggerSet=false;
+	
+function iconSet(id){
+
+	if(TriggerSet)
+		prevId=0;
+
+	if(prevId!=id){
+	
+		$(".edit").css("display","none");
+
+	    $(".settings").css("display","none");
+
+	   	$(".projectClass").css("width","250px");
+
+	    
+	    $("#project_"+id).animate({
+	        width: 373
+	    }, function() {
+	    	$("#settings_"+id).animate({
+	    		opacity: "toggle"
+	    	});
+	  	});
+
+	    TriggerSet=false;
+	  	prevId=id;
+
+	}
+	else{
+
+		$(".edit").css("display","none");
+		
+	    $("#settings_"+id).animate({
+	        opacity: "toggle"
+	    }, function() {
+	    	$("#project_"+id).animate({
+	    		width: 250
+	    	});
+	  	});
+
+	    TriggerSet=true;
+	    
+	}
+}
+
 
 function checkBrowser(){
 
@@ -191,7 +303,23 @@ function alertSure(text){
 	  return false;
 }
 
+function openProject(id){
+	$("#openProject_"+id).submit();
+}
+
+function infoProject(id) {
+	
+	$("#infoProject_"+id).animate({
+        height:'toggle'
+    });
+}
+
 function editProject(id) {
+
+	$("#editProject_"+id).animate({
+        height:'toggle'
+    });
+    /*
 	
 	if(document.getElementById('editProject_'+id).style.display == "block"){
    		document.getElementById('editProject_'+id).style.display = "none";
@@ -199,18 +327,18 @@ function editProject(id) {
 	else
 		if(document.getElementById('editProject_'+id).style.display = "none"){
 			document.getElementById('editProject_'+id).style.display = "block";
-		}
+		}*/
 }
 
 function shareProject(id) {
-	
-	if(document.getElementById('shareProject_'+id).style.display == "block"){
-   		document.getElementById('shareProject_'+id).style.display = "none";
-	}
-	else
-		if(document.getElementById('shareProject_'+id).style.display = "none"){
-			document.getElementById('shareProject_'+id).style.display = "block";
-		}
+
+	$("#shareProject_"+id).animate({
+        height:'toggle'
+    });
+}
+
+function deleteProject(id){
+	$("#deleteProject_"+id).submit();
 }
 
 function checkMail(idboard){
@@ -316,17 +444,6 @@ function deleteUser(){
 		}
 }
 
-function infoProject(id) {
-	
-	if(document.getElementById('infoProject_'+id).style.display == "block"){
-   		document.getElementById('infoProject_'+id).style.display = "none";
-	}
-	else
-		if(document.getElementById('infoProject_'+id).style.display = "none"){
-			document.getElementById('infoProject_'+id).style.display = "block";
-		}
-}
-
 function showEdit(id) {
 
 	$("#editState_"+id).animate({
@@ -402,38 +519,3 @@ function formDelete(id){
 function wip(){
 	alert("You can't add a task because you reached the WIP value");	
 }
-
-
-
-$(document).ready(function(){
-	TriggerClick = false;
-	$(".plusStateImg").click(function(){
-		if(!TriggerClick){
-		    TriggerClick=true;
-
-		    $(".plusStateClass").animate({
-		        width: 300
-		    }, function() {
-		    	$(".addStateClass").animate({
-		    		opacity: "toggle"
-		    	});
-		  	});
-
-		}else{
-		    TriggerClick=false;
-
-		    $(".addStateClass").animate({
-		        opacity: "toggle"
-		    }, function() {
-		    	$(".plusStateClass").animate({
-		    		width: 26
-		    	});
-		  	});
-		};
-	});
-});
-
-	
-
-    
-
