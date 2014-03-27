@@ -339,7 +339,6 @@ body,html{
 	margin-left: -15px;
 	margin-right: -15px;
 	border-radius: 8px;
-	
 }
 
 .edit input{
@@ -362,6 +361,35 @@ body,html{
 	margin: 0;
 	width: 50px;
 	display:inline-block;
+}
+
+.editState{
+	position:relative;
+	display:none;
+	text-align:left;
+	font-family: arial;
+	cursor:default;
+	font-size:13px;
+	background-color: #E6E6E6;
+	border-radius: 8px;
+	margin-top:10px;
+	margin-bottom: -15px;
+}
+
+.editState input{
+	margin-top:-4px;
+    padding:5px 5px;
+    border-radius: 5px;
+    border:1px solid;
+    width: 40%;
+}
+
+.editState input:focus{
+	outline: none;
+}
+
+.editState button:focus{
+	outline: none;
 }
 
 .editButton{

@@ -72,12 +72,12 @@ include 'connectionDB.php'?>
                 
                 
                 
-                <div id="editState_<? echo $row['idstate']?>" class="edit" style="margin-bottom:-15px"><br>
+                <div id="editState_<? echo $row['idstate']?>" class="editState"><br>
                 <form method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-                <p><div class="labelState"><b>Name</b></div><div style="display:inline-block"><input type="text" style="width:193%" name="name" maxlength="15" value="<? echo $row['name']?>"required></div></p>
+                <div class="labelState"><b>Name</b></div><div style="display:inline-block"><input type="text" style="width:193%" name="name" maxlength="15" value="<? echo $row['name']?>"required></div>
                 <p><div class="labelState"><b>WIP</b></div><input style="width:40px" type="number" name="wip" max="99" min="1" value="<? echo $row['wip']?>"> = Work in Progress (max tasks)</p>
-                <p><input type="submit" class="editButton" style="width:100%" value="Modify" name="updateState"></p>
+                <input type="submit" class="editButton" style="width:100%" value="Modify" name="updateState">
                 </form>
 
                 </div>
