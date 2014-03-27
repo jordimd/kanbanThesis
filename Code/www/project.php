@@ -100,7 +100,7 @@ include 'connectionDB.php'?>
                         wip()
                         <? }?>
                 
-                    " src="images/Plus.png" alt="Add Task" width="20" height="20" style="cursor:pointer">
+                    " src="images/plus.png" alt="Add Task" width="20" height="20" style="cursor:pointer">
                 
                     </div>
                 <div id="state_<? echo $row['idstate']?>" class="sortableClass">

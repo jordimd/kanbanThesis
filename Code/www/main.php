@@ -28,7 +28,7 @@
     </div>
 </div>
     
-<div style="margin-top:40px">
+<div style="margin-top:40px; overflow:auto; height:870%; position:absolute">
 
 <?
 $query = mysql_query("SELECT board.* FROM board, userBoard 

@@ -30,7 +30,7 @@
         <div class="login" align="center">
         <form action="login.php" method="post" onSubmit="return validateLogin()">
         <input id="mailLogin" type="email" name="mail" placeholder="User" maxlength="45" required>
-        <p><input id="passLogin" type="password" name="password" placeholder="Password" maxlength="30" required></p>
+        <p><input id="passLogin" type="password" name="password" placeholder="Password" maxlength="20" required></p>
         <button onClick="return checkBrowser()" style="float:right">Login</button>     
         </form>
         <button id="reg" style="float:left">Register</button>
@@ -40,7 +40,7 @@
     	<form name="formRegister" action="register.php" method="post" onSubmit="return validateForm()">
         <input type="text" name="newName" placeholder="Name" maxlength="20" required>
         <p><input id="registerEmail" type="email" name="mail" placeholder="Email" maxlength="45" required> </p>
-        <p><input type="password" name="password" placeholder="Password" maxlength="30" required></p>
+        <p><input type="password" name="password" placeholder="Password" maxlength="20" title="Enter a password between 4 to 20 characters" pattern="\S{4,20}" required></p>
         <p><input id="passwordRepeat" type="password" name="password2" placeholder="Repeat the password" maxlength="30" required></p>
         <button onClick="return checkBrowser()" style="float:right">Register</button>        
         </form>

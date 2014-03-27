@@ -45,7 +45,7 @@ include 'connectionDB.php'?>
         </div>
     </div>
     
-    <div class="sortableStates" style="margin-top:40px">
+    <div class="sortableStates" style="margin-top:40px; overflow:auto; height:850%; position:absolute">
     
     <? include 'connectionDB.php';
         

@@ -183,8 +183,6 @@ body,html{
 	position:absolute;
 	top: 15%;
 	left: 8%;
-	overflow:auto;
-	max-height:80%;
 	cursor: default;
 	-webkit-user-select: none;
 	font-family: arial;
@@ -278,8 +276,6 @@ body,html{
 	position:absolute;
 	top: 15%;
 	left: 8%;
-	overflow:auto;
-	height:80%;
 	cursor: default;
 	-webkit-user-select: none;
 	font-family: arial;
