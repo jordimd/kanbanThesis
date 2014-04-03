@@ -22,7 +22,7 @@ body,html{
 	top: 50%;
 	left: 50%;
 	width: 200px;
-	height: 110px;
+	height: 120px;
 	margin-top: -70px;
 	margin-left: -120px;
 	border:2px solid #000099;
@@ -58,7 +58,7 @@ body,html{
 
 #register{
 	display:none;
-	height: 196px;
+	height: 210px;
 	margin-top: -113px;
 }
 
@@ -199,7 +199,7 @@ body,html{
 }
 
 .addProjectClass{
-	margin: 4px 5px -2px 0px;
+	margin: 4px -4px -2px 0px;
 	float: right;
 	display: none;
 }
@@ -292,7 +292,7 @@ body,html{
 }
 
 .addStateClass{
-	margin: 4px 0px -2px 0px;
+	margin: 4px -3px -2px 0px;
 	float: right;
 	display: none;
 }

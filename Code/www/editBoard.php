@@ -34,6 +34,7 @@ mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='".$logged['idboard'].
 		mysql_close($con);
 
 		header("Location: states");
+		exit();
 	}
 	if($idstateDelete){
 
@@ -42,6 +43,7 @@ mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='".$logged['idboard'].
 		mysql_close($con);
 
 		header("Location: states");
+		exit();
 	}
 	
 	if($updateState){
@@ -53,6 +55,7 @@ mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='".$logged['idboard'].
         
         mysql_close($con);
         header("Location: states");
+        exit();
 	}
 		
 	if($moveTaskLane=="ok"){

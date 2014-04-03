@@ -109,6 +109,7 @@
     padding:2px 5px;
     border-radius: 5px;
     border:1px solid #CCC;
+    font-family: arial;
 }
 
 *:focus {
@@ -183,4 +184,7 @@
     border-radius: 5px;
     border:1px solid;
     margin-top:-2px;
+    font-family: arial;
+    height: 50px;
+    margin-top: 0px;
 }

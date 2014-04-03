@@ -17,7 +17,7 @@ include 'connectionDB.php'?>
         <img src="images/back" alt="Back" width="30" height="30" onClick="cancel()"/>
     </div>
     <div class="projectBack" onClick="cancel()">
-        <b>Projects</b>     
+        <b>Projects</b>
     </div>    
     <div class="buttonMenu">
         <button id="buttonBoard" class="editStates" onClick="window.location='project'">Board</button>
@@ -38,14 +38,14 @@ include 'connectionDB.php'?>
             <img src="images/plus.png" class="plusStateImg" alt="Add state" width="26" height="26" style="cursor:pointer"/>
         </div>
         <div class="addStateClass">
-            <form style="margin-bottom: 0;" action="editBoard.php" method="post">
-            <b>New State<b> <input type="text" name="name" maxlength="15" required>
+            <form style="margin-bottom: 0" action="editBoard.php" method="post">
+            <b>New State<b> <input type="text" name="name" maxlength="15" size="15" required>
             <input class="editButton" type="submit" value="Add" name="addState">
             </form>
         </div>
     </div>
     
-    <div class="sortableStates" style="margin-top:40px; overflow:auto; height:850%; position:absolute">
+    <div class="sortableStates" style="margin-top:40px; overflow:auto; height:850%; position:absolute; padding-right: 15px">
     
     <? include 'connectionDB.php';
         
@@ -75,7 +75,7 @@ include 'connectionDB.php'?>
                 <div id="editState_<? echo $row['idstate']?>" class="editState"><br>
                 <form method="post" action="editBoard.php">
                 <input type="hidden" name="idstate" value="<? echo $row['idstate']?>">
-                <div class="labelState"><b>Name</b></div><div style="display:inline-block"><input type="text" style="width:193%" name="name" maxlength="15" value="<? echo $row['name']?>"required></div>
+                <div class="labelState"><b>Name</b></div><div style="display:inline-block"><input type="text" style="width:250px" name="name" maxlength="15" value="<? echo $row['name']?>"required></div>
                 <p><div class="labelState"><b>WIP</b></div><input style="width:40px" type="number" name="wip" max="99" min="1" value="<? echo $row['wip']?>"> = Work in Progress (max tasks)</p>
                 <input type="submit" class="editButton" style="width:100%" value="Modify" name="updateState">
                 </form>

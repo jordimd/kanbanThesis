@@ -35,7 +35,7 @@ include 'connectionDB.php'?>
         <button id="buttonStates" class="editStates" onClick="window.location='states'">Edit states</button>
     </div>
     <div class="imagesMenu">
-        <img src="images/edit.png" alt="Logout" width="30" height="30" onClick="showDiv('mainTable','user'); hideID('buttonMenu')"/>&nbsp;
+        <img src="images/edit.png" alt="Logout" width="30" height="30" onClick="showDiv('mainTable','user'); hideID('buttonMenu'); hideID('assigned')"/>&nbsp;
         <img src="images/logout.png" alt="Logout" width="30" height="30" onClick="logout()"/>
     </div>
     <div class="personalInfo">
@@ -148,7 +148,7 @@ include 'connectionDB.php'?>
                     </div>
 
                         <?                            
-                            $query2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."' ORDER BY pos, end, priority");
+                            $query2 = mysql_query("SELECT * FROM task WHERE idstate='".$row['idstate']."' ORDER BY pos, assigned, end, priority");
                             
                             while ($row2 = mysql_fetch_array($query2)){?>
 
@@ -160,7 +160,11 @@ include 'connectionDB.php'?>
                                         case 3: ?> style="background-color:#FF9999; border-color:#990000"><? break;
                                     }?>
                     
-                                    <p class="nameTask"><code><? echo $row2['name']?></code>
+                                    <p class="nameTask"><code><? 
+                                        if($row2['assigned']==$logged['iduser'])
+                                            echo("*");
+
+                                        echo $row2['name']?></code>
                                     <img id="infoButton_<? echo $row2['idtask']?>" class="infoButton" onclick="showInfo(<? echo $row2['idtask']?>)" src="images/info.png" alt="Info" width="25" height="25"></p>
 
                                 
@@ -281,7 +285,7 @@ include 'connectionDB.php'?>
                                         case 1: ?> style="color:#006600"><? break;
                                         case 2: ?> style="color:#808000"><? break;
                                         case 3: ?> style="color:#990000"><? break;
-                                    }?>Description</div><textarea class="inputTextareaEdit" name="description" maxlength="100" rows="3" <? switch ($row2['priority']){
+                                    }?>Description</div><textarea class="inputTextareaEdit" name="description" maxlength="100" <? switch ($row2['priority']){
                                         case 1: ?> style="background-color:#E0FFD6; border-color:#006600;"><? break;
                                         case 2: ?> style="background-color:#FFFFCC; border-color:#808000;"><? break;
                                         case 3: ?> style="background-color:#FFCCCC; border-color:#990000;"><? break;
@@ -361,7 +365,13 @@ include 'connectionDB.php'?>
     <? }?>
       </tr>
     </table>
+    <div class="assigned" style="font-family:arial black; font-weight:bold; font-size:12; margin-left:81%"><?
+    if($shared){
+        echo("* Tasks assigned to you");
+    }?></div>
+
 <div id="user">
     <? include 'user.php'?>
+</div>
 </div>
 

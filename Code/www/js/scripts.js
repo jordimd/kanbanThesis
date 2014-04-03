@@ -48,7 +48,7 @@ $(document).ready(function(){
 		    TriggerProject=true;
 		    
 		    $(".plusProjectClass").animate({
-		        width: 315
+		        width: 320
 		    }, function() {
 		    	$(".addProjectClass").animate({
 		    		opacity: "toggle"

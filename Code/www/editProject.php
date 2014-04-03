@@ -34,6 +34,7 @@ if($idboardShare)
 
 
 if($idboardUpdate){
+	$name=ucfirst($name);
 	mysql_query("UPDATE board SET name='$name', updated=NOW(), modified='".$logged['iduser']."' WHERE idboard='$idboardUpdate'");
 	mysql_query("UPDATE userBoard SET new=FALSE WHERE idboard='$idboardUpdate' and iduser='".$logged['iduser']."'");
 }

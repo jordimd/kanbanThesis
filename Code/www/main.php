@@ -2,7 +2,7 @@
 
 <div class="menu">
     <div style="position:absolute; float:left; font-size:50px; top:-1px; text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;">
-        <code><b>KanBoard</b></code></div>
+        <b><code>KanBoard</code></b></div>
     <div class="imagesMenu">
         <img src="images/edit.png" alt="Logout" width="30" height="30" onClick="showDiv('main','user'); hideID('editUserButton')"/>&nbsp;
         <img src="images/logout.png" alt="Logout" width="30" height="30" onClick="logout()"/>
@@ -22,13 +22,13 @@
     </div>
     <div class="addProjectClass" style="float:right">
         <form style="margin-bottom: 0;" action="editProject.php" method="post">
-        <b>New Project<b> <input type="text" name="name" maxlength="15" required>
+        <b>New Project<b> <input type="text" name="name" maxlength="15" size="16" required>
         <input class="editButton" type="submit" value="Add" name="addProject">
         </form>
     </div>
 </div>
     
-<div style="margin-top:40px; overflow:auto; height:870%; position:absolute">
+<div style="margin-top:40px; overflow:auto; height:870%; position:absolute; padding-right: 15px">
 
 <?
 $query = mysql_query("SELECT board.* FROM board, userBoard 
@@ -76,7 +76,7 @@ while ($row = mysql_fetch_array($query)){?>
                 
             <form method="post" action="editProject.php">
             <input type="hidden" name="idboardUpdate" value="<? echo $row['idboard']?>"><br>
-            Name <input type="text" name="name" value="<? echo $row['name']?>" required>
+            Name <input type="text" name="name" value="<? echo $row['name']?>" maxlength="15" required>
             <button>Modify</button>
             </form>
         </div>
