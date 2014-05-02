@@ -1,7 +1,7 @@
 KanBoard
 ============
-An Open Source Kanban tool
-------------
+###An Open Source Kanban tool
+
 
 •	Unlimited number of Kanban boards available online.
 
@@ -23,4 +23,4 @@ An Open Source Kanban tool
 
 •	Completely free and Open Source.
 
-Try it now on http://130.230.142.90
+**Try it now on http://130.230.142.90**
