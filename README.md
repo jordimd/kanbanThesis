@@ -22,4 +22,4 @@ an Open Source Kanban tool
 
 •	Completely free and Open Source.
 
-Try it now on http://30.230.142.90
+Try it now on http://130.230.142.90
