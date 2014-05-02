@@ -1,6 +1,7 @@
 KanBoard
 ============
-an Open Source Kanban tool
+An Open Source Kanban tool
+------------
 
 •	Unlimited number of Kanban boards available online.
 
