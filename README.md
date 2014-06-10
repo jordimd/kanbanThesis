@@ -5,13 +5,13 @@ KanBoard
 
 •	Unlimited number of Kanban boards available online.
 
-•	Approaches a state global view of the entirely project.
+• Provides the current status of the entirely project
 
-•	Customizable Kanban boards with unlimited states allowing to using it in sever-al scopes.
+•	Customizable Kanban boards with unlimited number of states.
 
 •	Use the mouse to drag & drop the items between states.
 
-•	Limit the items on a state to improve the workflow by WIP limits.
+•	Limit the items on a state to enforce the workflow by WIP limits.
 
 •	Customizable items with description, priority and expected date to finish.
 
